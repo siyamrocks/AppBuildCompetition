@@ -23,7 +23,6 @@ home.style.display = "none";
 var user;
 // login function
 function login() {
-    alert("You clicked this button")
     var un = document.getElementById("username").value
     var pw = document.getElementById("password").value
     if (pw == "123" && un == "abc") {
