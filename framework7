@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <!-- Required meta tags-->
+  <meta charset="utf-8">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <!-- Color theme for statusbar (Android only) -->
+  <meta name="theme-color" content="#2196f3">
+  <!-- Your app title -->
+  <title>Student Manager</title>
+  <!-- Path to Framework7 Library Bundle CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/framework7/framework7-bundle.min.css">
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/framework7-icons@5.0.3/css/framework7-icons.min.css">
+  <!-- Path to CSS -->
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <!-- App root element -->
+  <div id="app">
+
+    <!-- Initial Page, "data-name" contains page name -->
+    <div data-name="home" class="page">
+
+      <!-- Top Navbar -->
+      <div class="navbar">
+        <div class="navbar-bg"></div>
+        <div class="navbar-inner">
+          <div class="title">Student Manager</div>
+        </div>
+      </div>
+
+      <!-- Bottom Toolbar -->
+      <div class="toolbar tabbar-labels toolbar-bottom">
+        <div class="toolbar-inner">
+
+          <a href="#home" class="tab-link">
+            <i class="icon f7-icons if-not-md">building_2_crop_circle</i>
+            <span class="tabbar-label">Home</span>
+          </a>
+
+
+          <a href="#schedule" class="tab-link">
+            <i class="icon f7-icons if-not-md">list_number</i>
+            <span class="tabbar-label">Schedule</span>
+          </a>
+
+          <a href="#extra" class="tab-link">
+            <i class="icon f7-icons if-not-md">plus_square_on_square</i>
+            <span class="tabbar-label">Activities</span>
+          </a>
+
+
+          <a href="#email" class="tab-link">
+            <i class="icon f7-icons if-not-md">envelope_fill</i>
+            <span class="tabbar-label">Email</span>
+          </a>
+
+
+          <a href="#cal" class="tab-link">
+            <i class="icon f7-icons if-not-md">calendar</i>
+            <span class="tabbar-label">Calendar</span>
+          </a>
+
+
+
+          <a href="#lunch" class="tab-link">
+            <img src="restaurant.png" alt="FoodPic" width="28px" height="28px">
+            <span class="tabbar-label">Lunch</span>
+          </a>
+
+
+
+        </div>
+      </div>
+
+      <!-- Tabs -->
+      <div class="tabs">
+
+        <div class="page-content tab tab-active" id="home">
+          <div class="block">
+            <div id="homepage">
+              <h1>This is the homepage, Welcome  <span id="greet"></span> </h1>
+             
+            </div>
+            <div id="LoginScreen">
+              <div class="login-screen-title">Student Login</div>
+                <div class="list">
+                  <ul>
+                    <li class="item-content item-input">
+                      <div class="item-inner">
+                        <div class="item-title item-label">Username</div>
+                        <div class="item-input-wrap">
+                          <input id="username" type="text" name="username" placeholder="Your username" />
+                        </div>
+                      </div>
+                    </li>
+                    <li class="item-content item-input">
+                      <div class="item-inner">
+                        <div class="item-title item-label">Enter your Password</div>
+                        <div class="item-input-wrap">
+                          <input id="password" type="password" name="password" placeholder="Your Password" />
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+                <div class="list">
+                  <ul>
+                    <li><button onclick="login()" class="button button-round-ios button-fill-ios">Sign In</button></li>
+                  </ul>
+                </div>
+            </div>
+          </div>
+        </div>
+
+
+          <div class="page-content tab" id="schedule">
+            <div class="block">
+              <p><b>Schedule</b></p>
+
+            </div>
+          </div>
+
+          <div class="page-content tab" id="extra">
+            <div class="block">
+              <p><b>Here are your extra stuff</b></p>
+            </div>
+          </div>
+
+
+          <div class="page-content tab " id="email">
+            <div class="block">
+              <p><b>Email your teachers and staff.</b></p>
+
+            </div>
+          </div>
+
+          <div class="page-content tab" id="cal">
+            <div class="block">
+              <p><b>Tab 2 content</b></p>
+
+            </div>
+          </div>
+
+
+
+          <div class="page-content tab" id="lunch">
+            <div class="block">
+              <p><b>Tab 3 content</b></p>
+              <h1>Lunch Menu</h1>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <!-- Path to Framework7 Library Bundle JS-->
+  <script src="https://unpkg.com/framework7/framework7-bundle.min.js"></script>
+  <script type="text/javascript" src="app.js"></script>
+</body>
+
+</html>
