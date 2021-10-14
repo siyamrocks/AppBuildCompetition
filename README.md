@@ -1,2 +1,2 @@
 # AppBuildCompetition
-BY: Suraj Hussain and Shafil Alam
+BY: Suraj Hussain, Shafil Alam, and Benito Karkada
