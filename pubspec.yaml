@@ -14,9 +14,8 @@ dependencies:
   cupertino_icons:
 
   firebase_core:
-  firebase_analytics:
   cloud_firestore:
-
+  
   firebase_auth:
   # google_sign_in:
   # apple_sign_in:

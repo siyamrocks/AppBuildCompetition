@@ -14,8 +14,6 @@ import 'package:flutter_starter/ui/ui.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   LanguageProvider().setInitialLocalLanguage();
-  //found bug https://github.com/flutter/flutter/issues/55892
-  //SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]).then((_) async {
   runApp(
     MultiProvider(
       providers: [
