@@ -1,4 +1,4 @@
-#AppBuildCompetition
+# AppBuildCompetition
 
 By: Suraj Hussain, Shafil Alam, and Benito Karkada
 
