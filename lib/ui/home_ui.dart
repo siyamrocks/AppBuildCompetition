@@ -4,6 +4,8 @@ import 'package:flutter_starter/localizations.dart';
 import 'package:flutter_starter/services/services.dart';
 import 'package:flutter_starter/models/models.dart';
 import 'package:flutter_starter/ui/components/components.dart';
+import 'package:flutter_starter/ui/calendar.dart';
+import 'package:flutter_starter/ui/menu.dart';
 
 class HomeUI extends StatefulWidget {
   @override
@@ -58,7 +60,7 @@ class _HomeUIState extends State<HomeUI> {
         child: Center(
           child: Column(
             children: <Widget>[
-              SizedBox(height: 20),
+              SizedBox(height: 30),
               Avatar(user),
               Column(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -84,10 +86,7 @@ class _HomeUIState extends State<HomeUI> {
         inAsyncCall: _loading,
         color: Theme.of(context).scaffoldBackgroundColor,
       ),
-      Text(
-        'Index 1: Calendar',
-        style: optionStyle,
-      ),
+      Calendar(),
       Text(
         'Index 2: Schedule',
         style: optionStyle,
@@ -96,10 +95,7 @@ class _HomeUIState extends State<HomeUI> {
         'Index 3: Email',
         style: optionStyle,
       ),
-      Text(
-        'Index 4: Menu',
-        style: optionStyle,
-      )
+      Menu()
     ];
 
     return Scaffold(
@@ -132,7 +128,7 @@ class _HomeUIState extends State<HomeUI> {
                 label: 'Email',
                 backgroundColor: Color(0xFFD4AF37)),
             BottomNavigationBarItem(
-                icon: Icon(Icons.menu),
+                icon: Icon(Icons.fastfood),
                 label: 'Lunch',
                 backgroundColor: Color(0xFF0B228C))
           ],

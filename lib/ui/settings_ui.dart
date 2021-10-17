@@ -37,6 +37,15 @@ class SettingsUI extends StatelessWidget {
     return ListView(
       shrinkWrap: true,
       children: <Widget>[
+        SizedBox(height: 10),
+        SegmentedSelector(
+          selectedOption: Provider.of<ThemeProvider>(context).getTheme,
+          menuOptions: themeOptions,
+          onValueChanged: (value) {
+            Provider.of<ThemeProvider>(context, listen: false)
+                .updateTheme(value);
+          },
+        ),
         ListTile(
           title: Text(labels.settings.language),
           //trailing: _languageDropdown(context),
@@ -50,20 +59,6 @@ class SettingsUI extends StatelessWidget {
               onChanged: (value) {
                 Provider.of<LanguageProvider>(context, listen: false)
                     .updateLanguage(value);
-              },
-            ),
-          ),
-        ),
-        ListTile(
-          trailing: Container(
-            width: 300,
-            height: 50,
-            child: SegmentedSelector(
-              selectedOption: Provider.of<ThemeProvider>(context).getTheme,
-              menuOptions: themeOptions,
-              onValueChanged: (value) {
-                Provider.of<ThemeProvider>(context, listen: false)
-                    .updateTheme(value);
               },
             ),
           ),

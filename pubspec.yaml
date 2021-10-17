@@ -13,6 +13,10 @@ dependencies:
     sdk: flutter
   cupertino_icons:
 
+  http: ^0.12.2 
+  
+  table_calendar:
+
   firebase_core:
   firebase_analytics:
   cloud_firestore:
