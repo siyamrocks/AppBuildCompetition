@@ -38,7 +38,7 @@ class AuthService extends ChangeNotifier {
 
   // User registration using email and password
   Future<bool> registerWithEmailAndPassword(
-      String name, String email, String password) async {
+      String name, String email, String password, String id) async {
     try {
       await _auth
           .createUserWithEmailAndPassword(email: email, password: password)
@@ -56,6 +56,7 @@ class AuthService extends ChangeNotifier {
         //create the new user object
         UserModel _newUser = UserModel(
             uid: result.user.uid,
+            id: id,
             email: result.user.email,
             name: name,
             photoUrl: gravatarUrl);

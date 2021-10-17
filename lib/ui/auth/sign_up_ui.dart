@@ -14,6 +14,7 @@ class _SignUpUIState extends State<SignUpUI> {
   final TextEditingController _name = new TextEditingController();
   final TextEditingController _email = new TextEditingController();
   final TextEditingController _password = new TextEditingController();
+  final TextEditingController _id = new TextEditingController();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -48,6 +49,14 @@ class _SignUpUIState extends State<SignUpUI> {
                   children: <Widget>[
                     LogoGraphicHeader(),
                     SizedBox(height: 48.0),
+                    FormInputFieldWithIcon(
+                      controller: _id,
+                      iconPrefix: Icons.credit_card,
+                      labelText: "Student ID",
+                      // validator: Validator(labels).name,
+                      onChanged: (value) => null,
+                      onSaved: (value) => _id.text = value,
+                    ),
                     FormInputFieldWithIcon(
                       controller: _name,
                       iconPrefix: Icons.person,
@@ -87,7 +96,10 @@ class _SignUpUIState extends State<SignUpUI> {
                             AuthService _auth = AuthService();
                             bool _isRegisterSucccess =
                                 await _auth.registerWithEmailAndPassword(
-                                    _name.text, _email.text, _password.text);
+                                    _name.text,
+                                    _email.text,
+                                    _password.text,
+                                    _id.text);
 
                             if (_isRegisterSucccess == false) {
                               _scaffoldKey.currentState.showSnackBar(SnackBar(
