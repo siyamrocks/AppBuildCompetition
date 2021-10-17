@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:flutter_starter/models/lunch_model.dart';
+import 'package:flutter_starter/models/food_model.dart';
 import 'package:http/http.dart' as http;
 
 class Menu extends StatefulWidget {
@@ -9,24 +9,24 @@ class Menu extends StatefulWidget {
 }
 
 class _MenuState extends State<Menu> {
-  Future<Lunch> _menu;
+  Future<Food> _menu;
 
   @override
   void initState() {
     super.initState();
-    _menu = fetchMenu("grayson-high");
+    _menu = fetchMenu("grayson-high", "breakfast", "2021/10/15");
   }
 
-  Future<Lunch> fetchMenu(String school) async {
+  Future<Food> fetchMenu(String school, String type, String date) async {
     var url =
-        "https://gwinnett.nutrislice.com/menu/api/digest/school/$school/menu-type/lunch/date/2021/10/15/";
+        "https://gwinnett.nutrislice.com/menu/api/digest/school/$school/menu-type/$type/date/$date";
     var result = await http.get(url);
 
-    var items = Lunch();
+    var items = Food();
 
     if (result.statusCode == 200) {
       var menu = json.decode(result.body);
-      items = Lunch.fromJson(menu);
+      items = Food.fromJson(menu);
     }
 
     return items;
@@ -34,7 +34,7 @@ class _MenuState extends State<Menu> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<Lunch>(
+    return FutureBuilder<Food>(
       future: _menu,
       builder: (context, snapshot) {
         if (snapshot.data == null) {
