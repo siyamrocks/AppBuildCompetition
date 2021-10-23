@@ -4,9 +4,11 @@ class UserModel {
   String id;
   String email;
   String name;
+  String school;
   String photoUrl;
 
-  UserModel({this.uid, this.id, this.email, this.name, this.photoUrl});
+  UserModel(
+      {this.uid, this.id, this.email, this.name, this.school, this.photoUrl});
 
   factory UserModel.fromMap(Map data) {
     return UserModel(
@@ -14,6 +16,7 @@ class UserModel {
       id: data['id'] ?? '',
       email: data['email'] ?? '',
       name: data['name'] ?? '',
+      school: data['school'] ?? '',
       photoUrl: data['photoUrl'] ?? '',
     );
   }
@@ -23,6 +26,7 @@ class UserModel {
         "id": id,
         "email": email,
         "name": name,
+        "school": school,
         "photoUrl": photoUrl
       };
 }

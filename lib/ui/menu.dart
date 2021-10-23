@@ -1,6 +1,9 @@
 import 'dart:convert';
+import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_starter/models/food_model.dart';
+import 'package:flutter_starter/models/user_model.dart';
+import 'package:flutter_starter/services/services.dart';
 import 'package:http/http.dart' as http;
 
 class Menu extends StatefulWidget {
@@ -10,6 +13,7 @@ class Menu extends StatefulWidget {
 
 class _MenuState extends State<Menu> {
   Future<Food> _menu;
+  String school;
   String dropdownValue = "Breakfast";
   DateTime currentDate = DateTime.now();
 
@@ -45,8 +49,8 @@ class _MenuState extends State<Menu> {
       setState(() {
         currentDate = pickedDate;
       });
-      _menu = fetchMenu("grayson-high", dropdownValue.toLowerCase(),
-          convertDate(currentDate));
+      _menu = fetchMenu(
+          school, dropdownValue.toLowerCase(), convertDate(currentDate));
     }
   }
 
@@ -60,6 +64,12 @@ class _MenuState extends State<Menu> {
 
   @override
   Widget build(BuildContext context) {
+    final UserModel user = Provider.of<UserModel>(context);
+    if (user != null) {
+      setState(() {
+        school = user.school;
+      });
+    }
     return FutureBuilder<Food>(
       future: _menu,
       builder: (context, snapshot) {
@@ -72,38 +82,40 @@ class _MenuState extends State<Menu> {
         } else {
           return Column(
             children: [
-              Row(children: [
-                Text(convertDate(currentDate)),
+              SizedBox(height: 5),
+              Text(convertDate(currentDate)),
+              Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                Padding(
+                  padding: const EdgeInsets.only(right: 10.0),
+                  child: DropdownButton<String>(
+                    value: dropdownValue,
+                    icon: const Icon(Icons.arrow_downward),
+                    iconSize: 24,
+                    elevation: 16,
+                    underline: Container(
+                      height: 2,
+                      color: Colors.grey,
+                    ),
+                    onChanged: (String newValue) {
+                      setState(() {
+                        dropdownValue = newValue;
+                        _menu = fetchMenu(school, dropdownValue.toLowerCase(),
+                            convertDate(currentDate));
+                      });
+                    },
+                    items: <String>['Breakfast', 'Lunch']
+                        .map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                  ),
+                ),
                 RaisedButton(
                   onPressed: () => selectDate(context),
                   child: Text('Select date'),
-                ),
-                DropdownButton<String>(
-                  value: dropdownValue,
-                  icon: const Icon(Icons.arrow_downward),
-                  iconSize: 24,
-                  elevation: 16,
-                  underline: Container(
-                    height: 2,
-                    color: Colors.grey,
-                  ),
-                  onChanged: (String newValue) {
-                    setState(() {
-                      dropdownValue = newValue;
-                      _menu = fetchMenu(
-                          "grayson-high",
-                          dropdownValue.toLowerCase(),
-                          convertDate(currentDate));
-                    });
-                  },
-                  items: <String>['Breakfast', 'Lunch']
-                      .map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
-                ),
+                )
               ]),
               Expanded(
                 child: ListView.builder(

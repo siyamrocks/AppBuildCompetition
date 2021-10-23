@@ -1,9 +1,12 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_starter/localizations.dart';
 import 'package:flutter_starter/ui/components/components.dart';
 import 'package:flutter_starter/helpers/helpers.dart';
 import 'package:flutter_starter/services/services.dart';
+import 'package:flutter_starter/models/school_model.dart';
+import 'package:http/http.dart' as http;
 
 class SignUpUI extends StatefulWidget {
   _SignUpUIState createState() => _SignUpUIState();
@@ -17,9 +20,13 @@ class _SignUpUIState extends State<SignUpUI> {
   final TextEditingController _id = new TextEditingController();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
+  Future<List<School>> _schools;
+  String selectedSchool;
+
   @override
   void initState() {
     super.initState();
+    _schools = fetchSchool();
   }
 
   @override
@@ -28,6 +35,21 @@ class _SignUpUIState extends State<SignUpUI> {
     _email.dispose();
     _password.dispose();
     super.dispose();
+  }
+
+  Future<List<School>> fetchSchool() async {
+    var url = "https://gwinnett.nutrislice.com/menu/api/schools/?format=json";
+    var result = await http.get(url);
+
+    var list = List<School>();
+
+    print(result.body);
+    if (result.statusCode == 200) {
+      var schools = json.decode(result.body);
+      for (var school in schools) list.add(School.fromJson(school));
+    }
+
+    return list;
   }
 
   Widget build(BuildContext context) {
@@ -49,6 +71,33 @@ class _SignUpUIState extends State<SignUpUI> {
                   children: <Widget>[
                     LogoGraphicHeader(),
                     SizedBox(height: 48.0),
+                    FutureBuilder<List<School>>(
+                        future: _schools,
+                        builder: (context, snapshot) {
+                          if (snapshot.data == null) {
+                            return Container(
+                              child: Center(
+                                child: Text("Loading schools..."),
+                              ),
+                            );
+                          } else {
+                            return DropdownButton<String>(
+                                hint: Text("Select"),
+                                value: selectedSchool,
+                                onChanged: (newValue) {
+                                  setState(() {
+                                    selectedSchool = newValue;
+                                  });
+                                },
+                                items: snapshot.data
+                                    .map((s) => DropdownMenuItem<String>(
+                                          child: Text(s.name),
+                                          value: s.slug,
+                                        ))
+                                    .toList());
+                          }
+                        }),
+                    FormVerticalSpace(),
                     FormInputFieldWithIcon(
                       controller: _id,
                       iconPrefix: Icons.credit_card,
@@ -57,6 +106,7 @@ class _SignUpUIState extends State<SignUpUI> {
                       onChanged: (value) => null,
                       onSaved: (value) => _id.text = value,
                     ),
+                    FormVerticalSpace(),
                     FormInputFieldWithIcon(
                       controller: _name,
                       iconPrefix: Icons.person,
@@ -99,7 +149,8 @@ class _SignUpUIState extends State<SignUpUI> {
                                     _name.text,
                                     _email.text,
                                     _password.text,
-                                    _id.text);
+                                    _id.text,
+                                    selectedSchool);
 
                             if (_isRegisterSucccess == false) {
                               _scaffoldKey.currentState.showSnackBar(SnackBar(

@@ -37,8 +37,8 @@ class AuthService extends ChangeNotifier {
   }
 
   // User registration using email and password
-  Future<bool> registerWithEmailAndPassword(
-      String name, String email, String password, String id) async {
+  Future<bool> registerWithEmailAndPassword(String name, String email,
+      String password, String id, String school) async {
     try {
       await _auth
           .createUserWithEmailAndPassword(email: email, password: password)
@@ -59,6 +59,7 @@ class AuthService extends ChangeNotifier {
             id: id,
             email: result.user.email,
             name: name,
+            school: school,
             photoUrl: gravatarUrl);
         //update the user in firestore
         _updateUserFirestore(_newUser, result.user);
