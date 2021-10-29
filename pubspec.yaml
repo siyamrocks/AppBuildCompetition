@@ -29,6 +29,12 @@ dependencies:
   shared_preferences:
   # upstate:
 
+  barcode_widget: ^2.0.1
+
+  dio: ^3.0.10
+  xml: ^4.0.0
+  html_unescape: ^1.0.1+3
+
   flutter_platform_widgets:
   flutter_sheet_localization: ^1.0.0
   simple_gravatar:

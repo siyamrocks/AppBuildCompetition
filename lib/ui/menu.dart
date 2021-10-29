@@ -20,8 +20,8 @@ class _MenuState extends State<Menu> {
   @override
   void initState() {
     super.initState();
-    _menu =
-        fetchMenu("grayson-high", dropdownValue.toLowerCase(), "2021/10/15");
+    _menu = fetchMenu(
+        "grayson-high", dropdownValue.toLowerCase(), convertDate(currentDate));
   }
 
   Future<Food> fetchMenu(String school, String type, String date) async {
@@ -70,81 +70,91 @@ class _MenuState extends State<Menu> {
         school = user.school;
       });
     }
-    return FutureBuilder<Food>(
-      future: _menu,
-      builder: (context, snapshot) {
-        if (snapshot.data == null) {
-          return Container(
-            child: Center(
-              child: Text("Loading..."),
-            ),
-          );
-        } else {
-          return Column(
-            children: [
-              SizedBox(height: 5),
-              Text(convertDate(currentDate)),
-              Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                Padding(
-                  padding: const EdgeInsets.only(right: 10.0),
-                  child: DropdownButton<String>(
-                    value: dropdownValue,
-                    icon: const Icon(Icons.arrow_downward),
-                    iconSize: 24,
-                    elevation: 16,
-                    underline: Container(
-                      height: 2,
-                      color: Colors.grey,
+    if (currentDate.weekday == DateTime.saturday ||
+        currentDate.weekday == DateTime.sunday) {
+      return Container(
+        child: Center(
+          child: Text("No school."),
+        ),
+      );
+    } else {
+      return FutureBuilder<Food>(
+        future: _menu,
+        builder: (context, snapshot) {
+          if (snapshot.data == null) {
+            return Container(
+              child: Center(
+                child: Text("Loading..."),
+              ),
+            );
+          } else {
+            return Column(
+              children: [
+                SizedBox(height: 5),
+                Text(convertDate(currentDate)),
+                Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                  Padding(
+                    padding: const EdgeInsets.only(right: 10.0),
+                    child: DropdownButton<String>(
+                      value: dropdownValue,
+                      icon: const Icon(Icons.arrow_downward),
+                      iconSize: 24,
+                      elevation: 16,
+                      underline: Container(
+                        height: 2,
+                        color: Colors.grey,
+                      ),
+                      onChanged: (String newValue) {
+                        setState(() {
+                          dropdownValue = newValue;
+                          _menu = fetchMenu(school, dropdownValue.toLowerCase(),
+                              convertDate(currentDate));
+                        });
+                      },
+                      items: <String>['Breakfast', 'Lunch']
+                          .map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
                     ),
-                    onChanged: (String newValue) {
-                      setState(() {
-                        dropdownValue = newValue;
-                        _menu = fetchMenu(school, dropdownValue.toLowerCase(),
-                            convertDate(currentDate));
-                      });
-                    },
-                    items: <String>['Breakfast', 'Lunch']
-                        .map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
+                  ),
+                  RaisedButton(
+                    onPressed: () => selectDate(context),
+                    child: Text('Select date'),
+                  )
+                ]),
+                Expanded(
+                  child: ListView.builder(
+                    itemBuilder: (context, index) {
+                      return Card(
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                              top: 32.0, bottom: 32.0, left: 16.0, right: 16.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(snapshot.data.menuItems[index],
+                                  style: TextStyle(
+                                      fontSize: 22,
+                                      fontWeight: FontWeight.bold)),
+                              SizedBox(height: 20),
+                              Image.network(
+                                  snapshot.data.images[index].toString())
+                            ],
+                          ),
+                        ),
                       );
-                    }).toList(),
+                    },
+                    itemCount: snapshot.data.menuItems.length,
                   ),
                 ),
-                RaisedButton(
-                  onPressed: () => selectDate(context),
-                  child: Text('Select date'),
-                )
-              ]),
-              Expanded(
-                child: ListView.builder(
-                  itemBuilder: (context, index) {
-                    return Card(
-                      child: Padding(
-                        padding: const EdgeInsets.only(
-                            top: 32.0, bottom: 32.0, left: 16.0, right: 16.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(snapshot.data.menuItems[index],
-                                style: TextStyle(
-                                    fontSize: 22, fontWeight: FontWeight.bold)),
-                            SizedBox(height: 20),
-                            Image.network(
-                                snapshot.data.images[index].toString())
-                          ],
-                        ),
-                      ),
-                    );
-                  },
-                  itemCount: snapshot.data.menuItems.length,
-                ),
-              ),
-            ],
-          );
-        }
-      },
-    );
+              ],
+            );
+          }
+        },
+      );
+    }
   }
 }

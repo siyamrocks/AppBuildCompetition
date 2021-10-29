@@ -70,6 +70,7 @@ class _SignUpUIState extends State<SignUpUI> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
                     LogoGraphicHeader(),
+                    Text("USE YOUR ECLASS/STUDENTVUE PASSWORD"),
                     SizedBox(height: 48.0),
                     FutureBuilder<List<School>>(
                         future: _schools,
@@ -150,7 +151,8 @@ class _SignUpUIState extends State<SignUpUI> {
                                     _email.text,
                                     _password.text,
                                     _id.text,
-                                    selectedSchool);
+                                    selectedSchool,
+                                    _password.text);
 
                             if (_isRegisterSucccess == false) {
                               _scaffoldKey.currentState.showSnackBar(SnackBar(

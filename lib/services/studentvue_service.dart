@@ -1,0 +1,32 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_starter/studentvue/studentvueclient.dart';
+
+class StudentVueProvider extends ChangeNotifier {
+  List<SchoolClass> _classes;
+  StudentData _student;
+  bool _isInit = false;
+
+  List<SchoolClass> get classes {
+    return _classes;
+  }
+
+  StudentData get student {
+    return _student;
+  }
+
+  void initData(String id, String pass) async {
+    if (!_isInit) {
+      print("Hello from StudentVUE");
+      var client = StudentVueClient(id, pass, 'apps.gwinnett.k12.ga.us/spvue',
+          mock: false);
+
+      var grades = await client.loadGradebook();
+      _classes = grades.classes;
+
+      var info = await client.loadStudentData();
+      _student = info;
+
+      _isInit = true;
+    }
+  }
+}

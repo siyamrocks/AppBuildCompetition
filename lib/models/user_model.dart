@@ -5,20 +5,19 @@ class UserModel {
   String email;
   String name;
   String school;
-  String photoUrl;
+  String studentvue;
 
   UserModel(
-      {this.uid, this.id, this.email, this.name, this.school, this.photoUrl});
+      {this.uid, this.id, this.email, this.name, this.school, this.studentvue});
 
   factory UserModel.fromMap(Map data) {
     return UserModel(
-      uid: data['uid'],
-      id: data['id'] ?? '',
-      email: data['email'] ?? '',
-      name: data['name'] ?? '',
-      school: data['school'] ?? '',
-      photoUrl: data['photoUrl'] ?? '',
-    );
+        uid: data['uid'],
+        id: data['id'] ?? '',
+        email: data['email'] ?? '',
+        name: data['name'] ?? '',
+        school: data['school'] ?? '',
+        studentvue: data['studentvue'] ?? '');
   }
 
   Map<String, dynamic> toJson() => {
@@ -27,6 +26,6 @@ class UserModel {
         "email": email,
         "name": name,
         "school": school,
-        "photoUrl": photoUrl
+        "studentvue": studentvue
       };
 }

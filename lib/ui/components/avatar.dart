@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_starter/models/models.dart';
 import 'package:flutter_starter/ui/components/components.dart';
+import 'package:provider/provider.dart';
+import 'package:flutter_starter/services/services.dart';
+import 'dart:convert';
+import 'dart:typed_data';
 
 class Avatar extends StatelessWidget {
   Avatar(
@@ -10,7 +14,8 @@ class Avatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if ((user?.photoUrl == '') || (user?.photoUrl == null)) {
+    String img = Provider.of<StudentVueProvider>(context).student.photo;
+    if ((img == '') || (img == null)) {
       return LogoGraphicHeader();
     }
     return Hero(
@@ -20,11 +25,12 @@ class Avatar extends StatelessWidget {
           backgroundColor: Colors.white,
           radius: 70.0,
           child: ClipOval(
-            child: Image.network(
-              user?.photoUrl,
+            child: Image.memory(
+              base64Decode(img),
               fit: BoxFit.cover,
               width: 120.0,
               height: 120.0,
+              gaplessPlayback: true,
             ),
           )),
     );

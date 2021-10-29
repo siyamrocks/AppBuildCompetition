@@ -6,6 +6,8 @@ import 'package:flutter_starter/models/models.dart';
 import 'package:flutter_starter/ui/components/components.dart';
 import 'package:flutter_starter/ui/calendar.dart';
 import 'package:flutter_starter/ui/menu.dart';
+import 'package:flutter_starter/ui/classes.dart';
+import 'package:barcode_widget/barcode_widget.dart';
 
 class HomeUI extends StatefulWidget {
   @override
@@ -14,7 +16,6 @@ class HomeUI extends StatefulWidget {
 
 class _HomeUIState extends State<HomeUI> {
   bool _loading = true;
-  String _uid = '';
   String _id = '';
   String _name = '';
   String _email = '';
@@ -47,7 +48,6 @@ class _HomeUIState extends State<HomeUI> {
     if (user != null) {
       setState(() {
         _loading = false;
-        _uid = user.uid;
         _id = user.id;
         _name = user.name;
         _school = user.school;
@@ -56,6 +56,8 @@ class _HomeUIState extends State<HomeUI> {
     }
 
     _isUserAdmin();
+
+    Provider.of<StudentVueProvider>(context).initData(user.id, user.studentvue);
 
     List<Widget> _widgetOptions = <Widget>[
       LoadingScreen(
@@ -69,6 +71,13 @@ class _HomeUIState extends State<HomeUI> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
+                    Card(
+                      child: Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: BarcodeWidget(
+                            data: _id, barcode: Barcode.code128()),
+                      ),
+                    ),
                     FormVerticalSpace(),
                     Text(labels.home.uidLabel + ': ' + _id,
                         style: TextStyle(fontSize: 16)),
@@ -93,10 +102,7 @@ class _HomeUIState extends State<HomeUI> {
         color: Theme.of(context).scaffoldBackgroundColor,
       ),
       Calendar(),
-      Text(
-        'Index 2: Schedule',
-        style: optionStyle,
-      ),
+      Classes(),
       Text(
         'Index 3: Email',
         style: optionStyle,
@@ -109,7 +115,10 @@ class _HomeUIState extends State<HomeUI> {
           title: Text(labels.home.title),
           actions: [
             IconButton(
-                icon: Icon(Icons.settings),
+                icon: Icon(
+                  Icons.settings,
+                  color: Colors.white,
+                ),
                 onPressed: () {
                   Navigator.of(context).pushNamed('/settings');
                 }),

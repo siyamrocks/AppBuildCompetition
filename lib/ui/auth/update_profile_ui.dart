@@ -85,8 +85,7 @@ class _UpdateProfileUIState extends State<UpdateProfileUI> {
                         UserModel _updatedUser = UserModel(
                             uid: user?.uid,
                             name: _name.text,
-                            email: _email.text,
-                            photoUrl: user?.photoUrl);
+                            email: _email.text);
                         _updateUserConfirm(context, _updatedUser, user?.email);
                       }
                     }),

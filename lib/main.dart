@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_starter/models/models.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_analytics/observer.dart';
@@ -9,7 +10,6 @@ import 'package:flutter_starter/services/services.dart';
 import 'package:flutter_starter/constants/constants.dart';
 import 'package:flutter_starter/ui/auth/auth.dart';
 import 'package:flutter_starter/ui/ui.dart';
-//import 'dart:js' as js;
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,6 +28,9 @@ void main() {
         ChangeNotifierProvider<AuthService>(
           create: (context) => AuthService(),
         ),
+        ChangeNotifierProvider<StudentVueProvider>(
+          create: (context) => StudentVueProvider(),
+        )
       ],
       child: MyApp(),
     ),
@@ -40,8 +43,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //final labels = AppLocalizations.of(context);
-    // js.context.callMethod("alert", <String>["Your debug message"]);
     return Consumer<LanguageProvider>(
       builder: (_, languageProviderRef, __) {
         return Consumer<ThemeProvider>(

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:simple_gravatar/simple_gravatar.dart';
 import 'package:flutter_starter/models/models.dart';
 
 class AuthService extends ChangeNotifier {
@@ -38,21 +37,13 @@ class AuthService extends ChangeNotifier {
 
   // User registration using email and password
   Future<bool> registerWithEmailAndPassword(String name, String email,
-      String password, String id, String school) async {
+      String password, String id, String school, String studentvue) async {
     try {
       await _auth
           .createUserWithEmailAndPassword(email: email, password: password)
           .then((result) async {
         print('uID: ' + result.user.uid);
         print('email: ' + result.user.email);
-        //get photo url from gravatar if user has one
-        Gravatar gravatar = Gravatar(email);
-        String gravatarUrl = gravatar.imageUrl(
-          size: 200,
-          defaultImage: GravatarImage.retro,
-          rating: GravatarRating.pg,
-          fileExtension: true,
-        );
         //create the new user object
         UserModel _newUser = UserModel(
             uid: result.user.uid,
@@ -60,7 +51,7 @@ class AuthService extends ChangeNotifier {
             email: result.user.email,
             name: name,
             school: school,
-            photoUrl: gravatarUrl);
+            studentvue: studentvue);
         //update the user in firestore
         _updateUserFirestore(_newUser, result.user);
       });
