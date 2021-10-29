@@ -19,7 +19,7 @@ dependencies:
 
   firebase_core:
   firebase_analytics: 
-  cloud_firestore: 0.16.0
+  cloud_firestore:
 
   firebase_auth: 
   # google_sign_in:
