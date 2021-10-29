@@ -46,9 +46,10 @@ class StudentVueClient {
         'Content-Type': ['text/xml']
       };
 
-      var res = await _dio.post(reqURL,
-          data: requestData,
-          options: Options(headers: headers), onSendProgress: (one, two) {
+      _dio.options.headers['content-Type'] = 'text/xml';
+
+      var res = await _dio.post(reqURL, data: requestData,
+          onSendProgress: (one, two) {
         if (callback != null) {
           callback((one / two) * 0.5);
         }
@@ -211,9 +212,10 @@ class StudentVueClient {
         'Content-Type': ['text/xml']
       };
 
-      var res = await _dio.post(reqURL,
-          data: requestData,
-          options: Options(headers: headers), onSendProgress: (one, two) {
+      _dio.options.headers['content-Type'] = 'text/xml';
+
+      var res = await _dio.post(reqURL, data: requestData,
+          onSendProgress: (one, two) {
         if (callback != null) {
           callback((one / two) * 0.5);
         }
@@ -285,10 +287,10 @@ class StudentVueClient {
       };
 
       final _dio = Dio(BaseOptions(validateStatus: (_) => true));
+      _dio.options.headers['content-Type'] = 'text/xml';
       var res = await _dio.post(
           'https://support.edupoint.com/Service/HDInfoCommunication.asmx',
-          data: requestData,
-          options: Options(headers: headers), onSendProgress: (one, two) {
+          data: requestData, onSendProgress: (one, two) {
         if (callback != null) {
           callback((one / two) * 0.5);
         }

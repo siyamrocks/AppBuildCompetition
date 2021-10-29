@@ -27,7 +27,7 @@ class _MenuState extends State<Menu> {
   Future<Food> fetchMenu(String school, String type, String date) async {
     var url =
         "https://gwinnett.nutrislice.com/menu/api/digest/school/$school/menu-type/$type/date/$date";
-    var result = await http.get(url);
+    var result = await http.get(Uri.parse(url));
 
     var items = Food();
 

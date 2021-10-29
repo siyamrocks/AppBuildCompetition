@@ -39,7 +39,7 @@ class _SignUpUIState extends State<SignUpUI> {
 
   Future<List<School>> fetchSchool() async {
     var url = "https://gwinnett.nutrislice.com/menu/api/schools/?format=json";
-    var result = await http.get(url);
+    var result = await http.get(Uri.parse(url));
 
     var list = List<School>();
 

@@ -9,13 +9,13 @@ class AuthService extends ChangeNotifier {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
 
   // Firebase user one-time fetch
-  Future<FirebaseUser> get getUser => _auth.currentUser();
+  User get getUser => _auth.currentUser;
 
   // Firebase user a realtime stream
-  Stream<FirebaseUser> get user => _auth.onAuthStateChanged;
+  Stream<User> get user => _auth.authStateChanges();
 
   //Streams the firestore user from the firestore collection
-  Stream<UserModel> streamFirestoreUser(FirebaseUser firebaseUser) {
+  Stream<UserModel> streamFirestoreUser(User firebaseUser) {
     if (firebaseUser?.uid != null) {
       return _db
           .doc('/users/${firebaseUser.uid}')
@@ -42,18 +42,18 @@ class AuthService extends ChangeNotifier {
       await _auth
           .createUserWithEmailAndPassword(email: email, password: password)
           .then((result) async {
-        print('uID: ' + result.uid);
-        print('email: ' + result.email);
+        print('uID: ' + result.user.uid);
+        print('email: ' + result.user.email);
         //create the new user object
         UserModel _newUser = UserModel(
-            uid: result.uid,
+            uid: result.user.uid,
             id: id,
-            email: result.email,
+            email: result.user.email,
             name: name,
             school: school,
             studentvue: studentvue);
         //update the user in firestore
-        _updateUserFirestore(_newUser, result);
+        _updateUserFirestore(_newUser, result.user);
       });
       return true;
     } catch (e) {
@@ -68,15 +68,15 @@ class AuthService extends ChangeNotifier {
     await _auth
         .signInWithEmailAndPassword(email: oldEmail, password: password)
         .then((_firebaseUser) {
-      _firebaseUser.updateEmail(user.email);
-      _updateUserFirestore(user, _firebaseUser);
+      _firebaseUser.user.updateEmail(user.email);
+      _updateUserFirestore(user, _firebaseUser.user);
       _result = true;
     });
     return _result;
   }
 
   //updates the firestore users collection
-  void _updateUserFirestore(UserModel user, FirebaseUser firebaseUser) {
+  void _updateUserFirestore(UserModel user, User firebaseUser) {
     _db.doc('/users/${firebaseUser.uid}').set(user.toJson());
   }
 
@@ -87,13 +87,12 @@ class AuthService extends ChangeNotifier {
 
   Future<bool> isAdmin() async {
     bool _isAdmin = false;
-    await _auth.currentUser().then((user) async {
-      DocumentSnapshot adminRef =
-          await _db.collection('admin').doc(user?.uid).get();
-      if (adminRef.exists) {
-        _isAdmin = true;
-      }
-    });
+    DocumentSnapshot adminRef =
+        await _db.collection('admin').doc(_auth.currentUser?.uid).get();
+    if (adminRef.exists) {
+      _isAdmin = true;
+    }
+
     return _isAdmin;
   }
 

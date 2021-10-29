@@ -8,15 +8,15 @@ import 'package:provider/provider.dart';
 //https://www.youtube.com/watch?v=B0QX2woHxaU from this tutorial
 class AuthWidgetBuilder extends StatelessWidget {
   const AuthWidgetBuilder({Key key, @required this.builder}) : super(key: key);
-  final Widget Function(BuildContext, AsyncSnapshot<FirebaseUser>) builder;
+  final Widget Function(BuildContext, AsyncSnapshot<User>) builder;
 
   @override
   Widget build(BuildContext context) {
     final authService = Provider.of<AuthService>(context, listen: false);
-    return StreamBuilder<FirebaseUser>(
+    return StreamBuilder<User>(
       stream: authService.user,
-      builder: (BuildContext context, AsyncSnapshot<FirebaseUser> snapshot) {
-        final FirebaseUser user = snapshot.data;
+      builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
+        final User user = snapshot.data;
         if (user != null) {
           /*
           * For any other Provider services that rely on user data can be
@@ -24,7 +24,7 @@ class AuthWidgetBuilder extends StatelessWidget {
           * Once a user has been detected, a re-build will be initiated.
            */
           return MultiProvider(providers: [
-            Provider<FirebaseUser>.value(value: user),
+            Provider<User>.value(value: user),
             StreamProvider<UserModel>.value(
                 value: AuthService().streamFirestoreUser(user))
           ], child: builder(context, snapshot));

@@ -16,13 +16,9 @@ class SignInOptionsUIState extends State<SignInOptionsUI> {
   @override
   void initState() {
     super.initState();
-    auth.getUser.then(
-      (user) {
-        if (user != null) {
-          Navigator.pushReplacementNamed(context, '/topics');
-        }
-      },
-    );
+    if (auth.getUser != null) {
+      Navigator.pushReplacementNamed(context, '/topics');
+    }
   }
 
   @override

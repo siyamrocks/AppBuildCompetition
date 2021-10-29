@@ -17,6 +17,8 @@ class StudentVueProvider extends ChangeNotifier {
   void initData(String id, String pass) async {
     if (!_isInit) {
       print("Hello from StudentVUE");
+      _isInit = true;
+
       var client = StudentVueClient(id, pass, 'apps.gwinnett.k12.ga.us/spvue',
           mock: false);
 
@@ -25,8 +27,6 @@ class StudentVueProvider extends ChangeNotifier {
 
       var info = await client.loadStudentData();
       _student = info;
-
-      _isInit = true;
     }
   }
 }

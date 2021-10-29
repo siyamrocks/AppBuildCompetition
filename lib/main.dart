@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_starter/models/models.dart';
 import 'package:provider/provider.dart';
@@ -11,8 +12,9 @@ import 'package:flutter_starter/constants/constants.dart';
 import 'package:flutter_starter/ui/auth/auth.dart';
 import 'package:flutter_starter/ui/ui.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   LanguageProvider().setInitialLocalLanguage();
   //found bug https://github.com/flutter/flutter/issues/55892
   //SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]).then((_) async {
@@ -49,8 +51,8 @@ class MyApp extends StatelessWidget {
           builder: (_, themeProviderRef, __) {
             //{context, data, child}
             return AuthWidgetBuilder(
-              builder: (BuildContext context,
-                  AsyncSnapshot<FirebaseUser> userSnapshot) {
+              builder:
+                  (BuildContext context, AsyncSnapshot<User> userSnapshot) {
                 return MaterialApp(
                   //begin language translation stuff
                   //https://github.com/aloisdeniel/flutter_sheet_localization
