@@ -3,11 +3,10 @@ import 'package:provider/provider.dart';
 import 'package:flutter_starter/localizations.dart';
 import 'package:flutter_starter/services/services.dart';
 import 'package:flutter_starter/models/models.dart';
-import 'package:flutter_starter/ui/components/components.dart';
 import 'package:flutter_starter/ui/calendar.dart';
 import 'package:flutter_starter/ui/menu.dart';
+import 'package:flutter_starter/ui/dashboard.dart';
 import 'package:flutter_starter/ui/classes.dart';
-import 'package:barcode_widget/barcode_widget.dart';
 
 class HomeUI extends StatefulWidget {
   @override
@@ -36,12 +35,6 @@ class _HomeUIState extends State<HomeUI> {
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
 
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-
   Widget build(BuildContext context) {
     final labels = AppLocalizations.of(context);
     final UserModel user = Provider.of<UserModel>(context);
@@ -60,47 +53,7 @@ class _HomeUIState extends State<HomeUI> {
     Provider.of<StudentVueProvider>(context).initData(user.id, user.studentvue);
 
     List<Widget> _widgetOptions = <Widget>[
-      LoadingScreen(
-        child: Center(
-          child: SingleChildScrollView(
-            child: Column(
-              children: <Widget>[
-                SizedBox(height: 10),
-                Avatar(user),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Card(
-                      child: Padding(
-                        padding: const EdgeInsets.all(12.0),
-                        child: BarcodeWidget(
-                            data: _id, barcode: Barcode.code128()),
-                      ),
-                    ),
-                    FormVerticalSpace(),
-                    Text(labels.home.uidLabel + ': ' + _id,
-                        style: TextStyle(fontSize: 16)),
-                    FormVerticalSpace(),
-                    Text("School: " + _school, style: TextStyle(fontSize: 16)),
-                    FormVerticalSpace(),
-                    Text(labels.home.nameLabel + ': ' + _name,
-                        style: TextStyle(fontSize: 16)),
-                    FormVerticalSpace(),
-                    Text(labels.home.emailLabel + ': ' + _email,
-                        style: TextStyle(fontSize: 16)),
-                    FormVerticalSpace(),
-                    Text(labels.home.adminUserLabel + ': ' + _admin,
-                        style: TextStyle(fontSize: 16)),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ),
-        inAsyncCall: _loading,
-        color: Theme.of(context).scaffoldBackgroundColor,
-      ),
+      Dashboard(),
       Calendar(),
       Classes(),
       Text(
@@ -124,32 +77,72 @@ class _HomeUIState extends State<HomeUI> {
                 }),
           ],
         ),
+        // bottomNavigationBar: BottomNavigationBar(
+        //   items: const <BottomNavigationBarItem>[
+        //     BottomNavigationBarItem(
+        //         icon: Icon(Icons.home),
+        //         label: 'Home',
+        //         backgroundColor: Color(0xFFD4AF37)),
+        //     BottomNavigationBarItem(
+        //         icon: Icon(Icons.calendar_today_rounded),
+        //         label: 'Calendar',
+        //         backgroundColor: Color(0xFF0B228C)),
+        //     BottomNavigationBarItem(
+        //         icon: Icon(Icons.school),
+        //         label: 'Schedule',
+        //         backgroundColor: Color(0xFF057C05)),
+        //     BottomNavigationBarItem(
+        //         icon: Icon(Icons.email),
+        //         label: 'Email',
+        //         backgroundColor: Color(0xFFD4AF37)),
+        //     BottomNavigationBarItem(
+        //         icon: Icon(Icons.fastfood),
+        //         label: 'Lunch',
+        //         backgroundColor: Color(0xFF0B228C))
+        //   ],
+        //   currentIndex: _selectedIndex,
+        //   selectedItemColor: Colors.white,
+        //   onTap: _onItemTapped,
+        // ),
         bottomNavigationBar: BottomNavigationBar(
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-                icon: Icon(Icons.home),
-                label: 'Home',
-                backgroundColor: Color(0xFFD4AF37)),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.calendar_today_rounded),
-                label: 'Calendar',
-                backgroundColor: Color(0xFF0B228C)),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.school),
-                label: 'Schedule',
-                backgroundColor: Color(0xFF057C05)),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.email),
-                label: 'Email',
-                backgroundColor: Color(0xFFD4AF37)),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.fastfood),
-                label: 'Lunch',
-                backgroundColor: Color(0xFF0B228C))
-          ],
           currentIndex: _selectedIndex,
+          onTap: (index) => setState(() => _selectedIndex = index),
+          type: BottomNavigationBarType.fixed,
+          backgroundColor: Colors.white,
+          showSelectedLabels: false,
+          showUnselectedLabels: false,
           selectedItemColor: Colors.white,
-          onTap: _onItemTapped,
+          unselectedItemColor: Colors.grey,
+          elevation: 0.0,
+          items: [
+            Icons.home,
+            Icons.calendar_today_rounded,
+            Icons.school,
+            Icons.email,
+            Icons.fastfood
+          ]
+              .asMap()
+              .map((key, value) => MapEntry(
+                    key,
+                    BottomNavigationBarItem(
+                      title: Text(""),
+                      icon: Container(
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 6.0,
+                          horizontal: 16.0,
+                        ),
+                        decoration: BoxDecoration(
+                          color: _selectedIndex == key
+                              ? Colors.blue[600]
+                              : Colors.transparent,
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
+                        child: Icon(value),
+                      ),
+                    ),
+                  ))
+              .values
+              .toList(),
         ),
         body: _widgetOptions.elementAt(_selectedIndex));
   }

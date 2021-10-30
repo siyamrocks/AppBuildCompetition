@@ -74,7 +74,17 @@ class _MenuState extends State<Menu> {
         currentDate.weekday == DateTime.sunday) {
       return Container(
         child: Center(
-          child: Text("No school."),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text("No school."),
+              RaisedButton(
+                onPressed: () => selectDate(context),
+                child: Text('Select date'),
+              )
+            ],
+          ),
         ),
       );
     } else {
