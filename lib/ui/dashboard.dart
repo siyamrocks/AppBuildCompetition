@@ -72,7 +72,7 @@ class _DashboardState extends State<Dashboard> {
                     Avatar(user),
                     const SizedBox(height: 12),
                     Icon(Icons.card_giftcard),
-                    Text(labels.home.uidLabel + ': ' + _id,
+                    Text("Student ID" + ': ' + _id,
                         style: TextStyle(fontSize: 16)),
                     FormVerticalSpace(),
                     Icon(Icons.school),
