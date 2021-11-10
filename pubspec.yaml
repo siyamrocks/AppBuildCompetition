@@ -24,7 +24,7 @@ dependencies:
   firebase_analytics: 
   cloud_firestore:
 
-  firebase_auth: ^3.1.4
+  firebase_auth: 
   # google_sign_in:
   # apple_sign_in:
 
