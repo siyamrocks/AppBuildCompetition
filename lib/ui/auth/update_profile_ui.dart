@@ -128,7 +128,7 @@ class _UpdateProfileUIState extends State<UpdateProfileUI> {
               maxLines: 1,
             ),
             actions: <Widget>[
-              new FlatButton(
+              new TextButton(
                 child: new Text(labels.auth.cancel.toUpperCase()),
                 onPressed: () {
                   Navigator.of(context).pop();
@@ -137,7 +137,7 @@ class _UpdateProfileUIState extends State<UpdateProfileUI> {
                   });
                 },
               ),
-              new FlatButton(
+              new TextButton(
                 child: new Text(labels.auth.submit.toUpperCase()),
                 onPressed: () async {
                   setState(() {

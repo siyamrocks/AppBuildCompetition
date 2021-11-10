@@ -3,10 +3,11 @@ import 'package:provider/provider.dart';
 import 'package:flutter_starter/localizations.dart';
 import 'package:flutter_starter/services/services.dart';
 import 'package:flutter_starter/models/models.dart';
-import 'package:flutter_starter/ui/calendar.dart';
+import 'package:flutter_starter/ui/helper.dart';
 import 'package:flutter_starter/ui/menu.dart';
 import 'package:flutter_starter/ui/dashboard.dart';
 import 'package:flutter_starter/ui/classes.dart';
+import 'package:flutter_starter/ui/chat.dart';
 
 class HomeUI extends StatefulWidget {
   @override
@@ -32,8 +33,6 @@ class _HomeUIState extends State<HomeUI> {
   }
 
   int _selectedIndex = 0;
-  static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
 
   Widget build(BuildContext context) {
     final labels = AppLocalizations.of(context);
@@ -54,12 +53,9 @@ class _HomeUIState extends State<HomeUI> {
 
     List<Widget> _widgetOptions = <Widget>[
       Dashboard(),
-      Calendar(),
+      Helper(),
       Classes(),
-      Text(
-        'Index 3: Email',
-        style: optionStyle,
-      ),
+      Chat(),
       Menu()
     ];
 
@@ -77,33 +73,6 @@ class _HomeUIState extends State<HomeUI> {
                 }),
           ],
         ),
-        // bottomNavigationBar: BottomNavigationBar(
-        //   items: const <BottomNavigationBarItem>[
-        //     BottomNavigationBarItem(
-        //         icon: Icon(Icons.home),
-        //         label: 'Home',
-        //         backgroundColor: Color(0xFFD4AF37)),
-        //     BottomNavigationBarItem(
-        //         icon: Icon(Icons.calendar_today_rounded),
-        //         label: 'Calendar',
-        //         backgroundColor: Color(0xFF0B228C)),
-        //     BottomNavigationBarItem(
-        //         icon: Icon(Icons.school),
-        //         label: 'Schedule',
-        //         backgroundColor: Color(0xFF057C05)),
-        //     BottomNavigationBarItem(
-        //         icon: Icon(Icons.email),
-        //         label: 'Email',
-        //         backgroundColor: Color(0xFFD4AF37)),
-        //     BottomNavigationBarItem(
-        //         icon: Icon(Icons.fastfood),
-        //         label: 'Lunch',
-        //         backgroundColor: Color(0xFF0B228C))
-        //   ],
-        //   currentIndex: _selectedIndex,
-        //   selectedItemColor: Colors.white,
-        //   onTap: _onItemTapped,
-        // ),
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: _selectedIndex,
           onTap: (index) => setState(() => _selectedIndex = index),

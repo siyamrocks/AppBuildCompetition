@@ -13,7 +13,7 @@ class LabelButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FlatButton(
+    return TextButton(
       child: Text(
         labelText,
       ),

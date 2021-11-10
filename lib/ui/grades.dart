@@ -1,31 +1,37 @@
 import 'package:flutter_starter/studentvue/src/studentgradedata.dart';
-import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_starter/services/services.dart';
-import 'package:flutter_starter/ui/grades.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
-class Classes extends StatefulWidget {
+class AssignmentPage extends StatefulWidget {
+  final List<Assignment> assignments;
+  const AssignmentPage({Key key, @required this.assignments}) : super(key: key);
+
   @override
-  _ClassesState createState() => _ClassesState();
+  _AssignmentState createState() => _AssignmentState(assignments: assignments);
 }
 
-class Grade extends StatelessWidget {
+class GradeAssignment extends StatelessWidget {
   final String grade;
 
-  const Grade({Key key, @required this.grade}) : super(key: key);
+  const GradeAssignment({Key key, @required this.grade}) : super(key: key);
 
   Widget build(BuildContext context) {
+    double percent = double.parse(grade);
+    String points = grade;
     if (double.tryParse(grade) != null) {
+      if (percent > 100) percent = 100;
+      if (percent < 0) points = "N/A";
+      if (percent < 0) percent = 0;
+
       return CircularPercentIndicator(
         radius: 60.0,
         lineWidth: 5.0,
-        percent: double.parse(grade) / 100,
+        percent: percent / 100,
         center: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              grade,
+              points,
               style: TextStyle(
                   fontSize: 22,
                   fontWeight: FontWeight.bold,
@@ -36,7 +42,7 @@ class Grade extends StatelessWidget {
         ),
         progressColor: Colors.green,
       );
-    } else if (grade != "N/A") {
+    } else if (grade != "N/A" && grade.length == 1) {
       return Text(
         grade,
         style: TextStyle(
@@ -52,9 +58,9 @@ class Grade extends StatelessWidget {
   }
 }
 
-class _ClassesState extends State<Classes> {
-  List<SchoolClass> classes;
-
+class _AssignmentState extends State<AssignmentPage> {
+  final List<Assignment> assignments;
+  _AssignmentState({@required this.assignments});
   @override
   void initState() {
     super.initState();
@@ -62,10 +68,11 @@ class _ClassesState extends State<Classes> {
 
   @override
   Widget build(BuildContext context) {
-    classes = Provider.of<StudentVueProvider>(context).classes;
     return Container(
       child: ListView.builder(
         itemBuilder: (context, index) {
+          if (assignments[index].category == "No Category")
+            return SizedBox(height: 0);
           return Padding(
             padding: const EdgeInsets.all(10.0),
             child: Card(
@@ -76,14 +83,12 @@ class _ClassesState extends State<Classes> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(classes[index].className,
+                    Text(assignments[index].assignmentName,
                         style: TextStyle(
                             fontSize: 22, fontWeight: FontWeight.bold)),
                     SizedBox(height: 20),
-                    Text("Teacher: " + classes[index].classTeacher),
-                    Text("Email: " + classes[index].classTeacherEmail),
-                    Text("Room: " + classes[index].roomNumber),
-                    Text("Period: " + classes[index].period.toString()),
+                    Text(assignments[index].category),
+                    Text(assignments[index].date),
                     Padding(
                       padding: const EdgeInsets.all(6.0),
                       child: ButtonBar(
@@ -91,18 +96,14 @@ class _ClassesState extends State<Classes> {
                         children: [
                           TextButton.icon(
                             onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => AssignmentPage(
-                                        assignments:
-                                            classes[index].assignments)),
-                              );
+                              //
                             },
                             icon: Icon(Icons.arrow_forward),
                             label: Text('View'),
                           ),
-                          Grade(grade: classes[index].letterGrade)
+                          GradeAssignment(
+                              grade: (assignments[index].earnedPoints * 100)
+                                  .toStringAsFixed(0))
                         ],
                       ),
                     ),
@@ -112,7 +113,7 @@ class _ClassesState extends State<Classes> {
             ),
           );
         },
-        itemCount: classes.length,
+        itemCount: assignments.length,
       ),
     );
   }

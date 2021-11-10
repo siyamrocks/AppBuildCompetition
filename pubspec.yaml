@@ -17,6 +17,9 @@ dependencies:
   
   table_calendar:
 
+  flutter_rating_bar:
+  intl:
+
   firebase_core:
   firebase_analytics: 
   cloud_firestore:
@@ -38,6 +41,14 @@ dependencies:
   flutter_platform_widgets:
   flutter_sheet_localization: 
   simple_gravatar:
+
+  percent_indicator: ^3.4.0
+  
+  webview_flutter: ^2.3.0
+
+  flutter_svg: ^0.23.0+1
+  url_launcher:
+  url_launcher_web: 
   # flutter_auth_buttons:
 
 dev_dependencies:

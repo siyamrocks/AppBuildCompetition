@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_starter/localizations.dart';
-import 'package:flutter_starter/services/services.dart';
 import 'package:flutter_starter/models/models.dart';
 import 'package:flutter_starter/ui/components/components.dart';
-import 'package:flutter_starter/ui/calendar.dart';
-import 'package:flutter_starter/ui/menu.dart';
-import 'package:flutter_starter/ui/classes.dart';
 import 'package:barcode_widget/barcode_widget.dart';
 
 class Dashboard extends StatefulWidget {
@@ -35,7 +31,6 @@ class _DashboardState extends State<Dashboard> {
   String _name = '';
   String _email = '';
   String _school = '';
-  String _admin = '';
 
   @override
   void initState() {
@@ -46,11 +41,6 @@ class _DashboardState extends State<Dashboard> {
   void dispose() {
     super.dispose();
   }
-
-  static const buttonTextStyle = TextStyle(
-    fontSize: 16.0,
-    fontWeight: FontWeight.w600,
-  );
 
   Widget build(BuildContext context) {
     final labels = AppLocalizations.of(context);
@@ -63,6 +53,7 @@ class _DashboardState extends State<Dashboard> {
         _email = user.email;
       });
     }
+
     return Container(
         child: Center(
       child: SingleChildScrollView(
@@ -70,26 +61,33 @@ class _DashboardState extends State<Dashboard> {
           children: <Widget>[
             id(),
             SizedBox(height: 10),
-            Avatar(user),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                FormVerticalSpace(),
-                Text(labels.home.uidLabel + ': ' + _id,
-                    style: TextStyle(fontSize: 16)),
-                FormVerticalSpace(),
-                Text("School: " + _school, style: TextStyle(fontSize: 16)),
-                FormVerticalSpace(),
-                Text(labels.home.nameLabel + ': ' + _name,
-                    style: TextStyle(fontSize: 16)),
-                FormVerticalSpace(),
-                Text(labels.home.emailLabel + ': ' + _email,
-                    style: TextStyle(fontSize: 16)),
-                FormVerticalSpace(),
-                Text(labels.home.adminUserLabel + ': ' + _admin,
-                    style: TextStyle(fontSize: 16)),
-              ],
+            Card(
+              elevation: 10,
+              child: Container(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Avatar(user),
+                    const SizedBox(height: 12),
+                    Icon(Icons.card_giftcard),
+                    Text(labels.home.uidLabel + ': ' + _id,
+                        style: TextStyle(fontSize: 16)),
+                    FormVerticalSpace(),
+                    Icon(Icons.school),
+                    Text("School: " + _school, style: TextStyle(fontSize: 16)),
+                    FormVerticalSpace(),
+                    Icon(Icons.account_balance),
+                    Text(labels.home.nameLabel + ': ' + _name,
+                        style: TextStyle(fontSize: 16)),
+                    FormVerticalSpace(),
+                    Icon(Icons.email),
+                    Text(labels.home.emailLabel + ': ' + _email,
+                        style: TextStyle(fontSize: 16)),
+                  ],
+                ),
+              ),
             ),
           ],
         ),
@@ -110,11 +108,15 @@ class _DashboardState extends State<Dashboard> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Card(
-            elevation: 10,
-            child: Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: BarcodeWidget(data: _id, barcode: Barcode.code128()),
+          Container(
+            height: 150,
+            width: 300,
+            child: Card(
+              elevation: 10,
+              child: Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: BarcodeWidget(data: _id, barcode: Barcode.code128()),
+              ),
             ),
           ),
         ],

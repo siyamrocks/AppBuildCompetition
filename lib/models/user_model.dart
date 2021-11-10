@@ -6,9 +6,16 @@ class UserModel {
   String name;
   String school;
   String studentvue;
+  List<dynamic> todos;
 
   UserModel(
-      {this.uid, this.id, this.email, this.name, this.school, this.studentvue});
+      {this.uid,
+      this.id,
+      this.email,
+      this.name,
+      this.school,
+      this.studentvue,
+      this.todos});
 
   factory UserModel.fromMap(Map data) {
     return UserModel(
@@ -17,7 +24,8 @@ class UserModel {
         email: data['email'] ?? '',
         name: data['name'] ?? '',
         school: data['school'] ?? '',
-        studentvue: data['studentvue'] ?? '');
+        studentvue: data['studentvue'] ?? '',
+        todos: data['todos'] ?? []);
   }
 
   Map<String, dynamic> toJson() => {
@@ -26,6 +34,7 @@ class UserModel {
         "email": email,
         "name": name,
         "school": school,
-        "studentvue": studentvue
+        "studentvue": studentvue,
+        "todos": todos
       };
 }
