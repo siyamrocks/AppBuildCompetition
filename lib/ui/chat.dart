@@ -1,4 +1,5 @@
 import 'package:flutter_starter/studentvue/src/studentgradedata.dart';
+import 'package:flutter_starter/ui/email.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_starter/services/services.dart';
@@ -62,8 +63,10 @@ class TeacherCard extends StatelessWidget {
               children: [
                 TextButton.icon(
                   onPressed: () {
-                    launch(
-                        'mailto:$email?subject=This is Subject Title&body=This is Body of Email');
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => EmailSender(email: email)));
                   },
                   icon: Icon(Icons.email),
                   label: Text('Email'),

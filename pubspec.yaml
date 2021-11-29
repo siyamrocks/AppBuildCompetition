@@ -49,6 +49,8 @@ dependencies:
   flutter_svg: ^0.23.0+1
   url_launcher:
   url_launcher_web: 
+  image_picker:
+  flutter_email_sender:
   # flutter_auth_buttons:
 
 dev_dependencies:

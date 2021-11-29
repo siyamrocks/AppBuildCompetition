@@ -68,8 +68,11 @@ class _AssignmentState extends State<AssignmentPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: ListView.builder(
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Grades"),
+      ),
+      body: ListView.builder(
         itemBuilder: (context, index) {
           if (assignments[index].category == "No Category")
             return SizedBox(height: 0);
@@ -92,15 +95,15 @@ class _AssignmentState extends State<AssignmentPage> {
                     Padding(
                       padding: const EdgeInsets.all(6.0),
                       child: ButtonBar(
-                        alignment: MainAxisAlignment.spaceBetween,
+                        alignment: MainAxisAlignment.end,
                         children: [
-                          TextButton.icon(
-                            onPressed: () {
-                              //
-                            },
-                            icon: Icon(Icons.arrow_forward),
-                            label: Text('View'),
-                          ),
+                          // TextButton.icon(
+                          //   onPressed: () {
+                          //     //
+                          //   },
+                          //   icon: Icon(Icons.arrow_forward),
+                          //   label: Text('View'),
+                          // ),
                           GradeAssignment(
                               grade: (assignments[index].earnedPoints * 100)
                                   .toStringAsFixed(0))
