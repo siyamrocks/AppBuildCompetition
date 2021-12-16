@@ -79,6 +79,11 @@ class AuthService extends ChangeNotifier {
   //updates the firestore users collection
   void _updateUserFirestore(UserModel user, User firebaseUser) {
     _db.doc('/users/${firebaseUser.uid}').set(user.toJson());
+    _db
+        .doc('/users/${firebaseUser.uid}')
+        .collection("todos")
+        .doc('Welcome!')
+        .set({"todoTitle": "Welcome!"});
   }
 
   //password reset email
