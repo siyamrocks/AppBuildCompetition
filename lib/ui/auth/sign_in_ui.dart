@@ -4,6 +4,7 @@ import 'package:flutter_starter/localizations.dart';
 import 'package:flutter_starter/ui/components/components.dart';
 import 'package:flutter_starter/helpers/helpers.dart';
 import 'package:flutter_starter/services/services.dart';
+import 'package:provider/provider.dart';
 
 class SignInUI extends StatefulWidget {
   _SignInUIState createState() => _SignInUIState();
@@ -79,6 +80,8 @@ class _SignInUIState extends State<SignInUI> {
                                 .signInWithEmailAndPassword(
                                     _email.text, _password.text)
                                 .then((status) {
+                              Provider.of<StudentVueProvider>(context)
+                                  .resetData();
                               setState(() {
                                 _loading = false;
                               });
