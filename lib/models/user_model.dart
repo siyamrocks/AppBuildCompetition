@@ -9,13 +9,7 @@ class UserModel {
   List<dynamic> todos;
 
   UserModel(
-      {this.uid,
-      this.id,
-      this.email,
-      this.name,
-      this.school,
-      this.studentvue,
-      this.todos});
+      {this.uid, this.id, this.email, this.name, this.school, this.studentvue});
 
   factory UserModel.fromMap(Map data) {
     return UserModel(
@@ -24,8 +18,7 @@ class UserModel {
         email: data['email'] ?? '',
         name: data['name'] ?? '',
         school: data['school'] ?? '',
-        studentvue: data['studentvue'] ?? '',
-        todos: data['todos'] ?? []);
+        studentvue: data['studentvue'] ?? '');
   }
 
   Map<String, dynamic> toJson() => {
@@ -35,6 +28,5 @@ class UserModel {
         "name": name,
         "school": school,
         "studentvue": studentvue,
-        "todos": todos
       };
 }
