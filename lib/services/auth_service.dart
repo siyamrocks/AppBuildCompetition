@@ -53,8 +53,7 @@ class AuthService extends ChangeNotifier {
             email: result.user.email,
             name: name,
             school: school,
-            studentvue: studentvue,
-            todos: []);
+            studentvue: studentvue);
         //update the user in firestore
         _updateUserFirestore(_newUser, result.user);
       });
