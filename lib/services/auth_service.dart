@@ -28,7 +28,8 @@ class AuthService extends ChangeNotifier {
   //Method to handle user sign in using email and password
   Future<bool> signInWithEmailAndPassword(String email, String password) async {
     try {
-      await _auth.signInWithEmailAndPassword(email: email, password: password);
+      await _auth.signInWithEmailAndPassword(
+          email: email + "@studentapp.com", password: password);
       return true;
     } catch (e) {
       return false;
@@ -40,7 +41,8 @@ class AuthService extends ChangeNotifier {
       String password, String id, String school, String studentvue) async {
     try {
       await _auth
-          .createUserWithEmailAndPassword(email: email, password: password)
+          .createUserWithEmailAndPassword(
+              email: email + "@studentapp.com", password: password)
           .then((result) async {
         print('uID: ' + result.user.uid);
         print('email: ' + result.user.email);

@@ -1,4 +1,4 @@
-package com.example.flutter_firebase_auth_starter
+package com.sbs.studentapp
 
 import io.flutter.embedding.android.FlutterActivity
 
