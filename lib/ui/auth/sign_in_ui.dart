@@ -51,7 +51,7 @@ class _SignInUIState extends State<SignInUI> {
                       controller: _email,
                       iconPrefix: Icons.email,
                       labelText: labels.auth.emailFormField,
-                      validator: Validator(labels).email,
+                      // validator: Validator(labels).email,
                       keyboardType: TextInputType.emailAddress,
                       onChanged: (value) => null,
                       onSaved: (value) => _email.text = value,

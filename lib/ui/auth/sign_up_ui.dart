@@ -118,16 +118,6 @@ class _SignUpUIState extends State<SignUpUI> {
                     ),
                     FormVerticalSpace(),
                     FormInputFieldWithIcon(
-                      controller: _email,
-                      iconPrefix: Icons.email,
-                      labelText: labels.auth.emailFormField,
-                      validator: Validator(labels).email,
-                      keyboardType: TextInputType.emailAddress,
-                      onChanged: (value) => null,
-                      onSaved: (value) => _email.text = value,
-                    ),
-                    FormVerticalSpace(),
-                    FormInputFieldWithIcon(
                       controller: _password,
                       iconPrefix: Icons.lock,
                       labelText: labels.auth.passwordFormField,
@@ -148,7 +138,7 @@ class _SignUpUIState extends State<SignUpUI> {
                             bool _isRegisterSucccess =
                                 await _auth.registerWithEmailAndPassword(
                                     _name.text,
-                                    _email.text,
+                                    _id.text,
                                     _password.text,
                                     _id.text,
                                     selectedSchool,
