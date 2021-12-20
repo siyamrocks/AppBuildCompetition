@@ -130,12 +130,7 @@ Widget initWidget(BuildContext context) {
               children: [
                 Text("Don't have an account?"),
                 GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => SignUpScreen()));
-                  },
+                  onTap: () {},
                   child: Text("Register Now",
                       style: TextStyle(color: Colors.amber)),
                 )
