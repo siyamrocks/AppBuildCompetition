@@ -2,7 +2,6 @@ import 'package:flutter_starter/helpers/event.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:flutter_starter/models/models.dart';
-import 'package:webview_flutter/webview_flutter.dart';
 import 'package:flutter_starter/ui/calendar.dart';
 import 'package:flutter_starter/ui/todo.dart';
 import 'package:flutter_starter/ui/components/segmented_selector.dart';
@@ -40,7 +39,7 @@ class _HelperState extends State<Helper> {
   final List<Widget> _screens = [
     Expanded(child: Calendar()),
     Expanded(child: Todo()),
-    Text("Clubo")
+    Text("Clubs")
   ];
 
   @override

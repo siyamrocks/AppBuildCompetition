@@ -1,13 +1,22 @@
 import 'package:flutter_starter/studentvue/src/studentgradedata.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/percent_indicator.dart';
+import 'package:flutter_starter/ui/grade_calc.dart';
 
 class AssignmentPage extends StatefulWidget {
   final List<Assignment> assignments;
-  const AssignmentPage({Key key, @required this.assignments}) : super(key: key);
+  final List<AssignmentCategory> category;
+  final String classGrade;
+  const AssignmentPage(
+      {Key key,
+      @required this.assignments,
+      @required this.category,
+      @required this.classGrade})
+      : super(key: key);
 
   @override
-  _AssignmentState createState() => _AssignmentState(assignments: assignments);
+  _AssignmentState createState() => _AssignmentState(
+      assignments: assignments, category: category, classGrade: classGrade);
 }
 
 class GradeAssignment extends StatelessWidget {
@@ -60,7 +69,12 @@ class GradeAssignment extends StatelessWidget {
 
 class _AssignmentState extends State<AssignmentPage> {
   final List<Assignment> assignments;
-  _AssignmentState({@required this.assignments});
+  final List<AssignmentCategory> category;
+  final String classGrade;
+  _AssignmentState(
+      {@required this.assignments,
+      @required this.category,
+      @required this.classGrade});
   @override
   void initState() {
     super.initState();
@@ -97,13 +111,24 @@ class _AssignmentState extends State<AssignmentPage> {
                       child: ButtonBar(
                         alignment: MainAxisAlignment.end,
                         children: [
-                          // TextButton.icon(
-                          //   onPressed: () {
-                          //     //
-                          //   },
-                          //   icon: Icon(Icons.arrow_forward),
-                          //   label: Text('View'),
-                          // ),
+                          TextButton.icon(
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => GradeCalc(
+                                          name:
+                                              assignments[index].assignmentName,
+                                          category: assignments[index].category,
+                                          date: assignments[index].date,
+                                          weight: category[index].weight,
+                                          grade:
+                                              assignments[index].earnedPoints,
+                                          classGrade: classGrade)));
+                            },
+                            icon: Icon(Icons.calculate),
+                            label: Text('Calc'),
+                          ),
                           GradeAssignment(
                               grade: (assignments[index].earnedPoints * 100)
                                   .toStringAsFixed(0))

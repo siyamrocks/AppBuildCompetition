@@ -95,8 +95,13 @@ class _ClassesState extends State<Classes> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => AssignmentPage(
-                                        assignments:
-                                            classes[index].assignments)),
+                                          assignments:
+                                              classes[index].assignments,
+                                          category: classes[index]
+                                              .assignmentCategories,
+                                          classGrade:
+                                              classes[index].letterGrade,
+                                        )),
                               );
                             },
                             icon: Icon(Icons.arrow_forward),

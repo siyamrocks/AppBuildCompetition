@@ -11,6 +11,20 @@ class Menu extends StatefulWidget {
   _MenuState createState() => _MenuState();
 }
 
+class FoodImage extends StatelessWidget {
+  final String img;
+
+  const FoodImage({Key key, @required this.img}) : super(key: key);
+
+  Widget build(BuildContext context) {
+    if (img != "null") {
+      return Image.network(img);
+    } else {
+      return Container();
+    }
+  }
+}
+
 class _MenuState extends State<Menu> {
   Future<Food> _menu;
   String school;
@@ -150,8 +164,8 @@ class _MenuState extends State<Menu> {
                                       fontSize: 22,
                                       fontWeight: FontWeight.bold)),
                               SizedBox(height: 20),
-                              Image.network(
-                                  snapshot.data.images[index].toString())
+                              FoodImage(
+                                  img: snapshot.data.images[index].toString())
                             ],
                           ),
                         ),

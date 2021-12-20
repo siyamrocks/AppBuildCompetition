@@ -65,6 +65,7 @@ flutter:
   assets:
     - assets/images/default.png
     - assets/images/defaultDark.png
+    - assets/SSB_Logo.png
 
 flutter_native_splash:
 

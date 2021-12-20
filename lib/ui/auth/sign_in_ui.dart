@@ -12,7 +12,7 @@ class SignInUI extends StatefulWidget {
 
 class _SignInUIState extends State<SignInUI> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final TextEditingController _email = new TextEditingController();
+  final TextEditingController _id = new TextEditingController();
   final TextEditingController _password = new TextEditingController();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   bool _loading = false;
@@ -24,95 +24,161 @@ class _SignInUIState extends State<SignInUI> {
 
   @override
   void dispose() {
-    _email.dispose();
+    _id.dispose();
     _password.dispose();
     super.dispose();
   }
 
   Widget build(BuildContext context) {
-    final labels = AppLocalizations.of(context);
-
     return Scaffold(
-      key: _scaffoldKey,
-      body: LoadingScreen(
-        child: Form(
-          key: _formKey,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24.0),
-            child: Center(
-              child: SingleChildScrollView(
+      backgroundColor: Colors.black,
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Container(
+              child: Center(
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: <Widget>[
-                    LogoGraphicHeader(),
-                    SizedBox(height: 48.0),
-                    FormInputFieldWithIcon(
-                      controller: _email,
-                      iconPrefix: Icons.email,
-                      labelText: labels.auth.emailFormField,
-                      // validator: Validator(labels).email,
-                      keyboardType: TextInputType.emailAddress,
-                      onChanged: (value) => null,
-                      onSaved: (value) => _email.text = value,
-                    ),
-                    FormVerticalSpace(),
-                    FormInputFieldWithIcon(
-                      controller: _password,
-                      iconPrefix: Icons.lock,
-                      labelText: labels.auth.passwordFormField,
-                      validator: Validator(labels).password,
-                      obscureText: true,
-                      onChanged: (value) => null,
-                      onSaved: (value) => _password.text = value,
-                      maxLines: 1,
-                    ),
-                    FormVerticalSpace(),
-                    PrimaryButton(
-                        labelText: labels.auth.signInButton,
-                        onPressed: () async {
-                          if (_formKey.currentState.validate()) {
-                            setState(() {
-                              _loading = true;
-                            });
-                            AuthService _auth = AuthService();
-                            bool status = await _auth
-                                .signInWithEmailAndPassword(
-                                    _email.text, _password.text)
-                                .then((status) {
-                              Provider.of<StudentVueProvider>(context)
-                                  .resetData();
-                              setState(() {
-                                _loading = false;
-                              });
-                              return status;
-                            });
-                            if (!status) {
-                              _scaffoldKey.currentState.showSnackBar(SnackBar(
-                                content: Text(labels.auth.signInError),
-                              ));
-                            }
-                          }
-                        }),
-                    FormVerticalSpace(),
-                    LabelButton(
-                      labelText: labels.auth.resetPasswordLabelButton,
-                      onPressed: () => Navigator.pushReplacementNamed(
-                          context, '/reset-password'),
-                    ),
-                    LabelButton(
-                      labelText: labels.auth.signUpLabelButton,
-                      onPressed: () =>
-                          Navigator.pushReplacementNamed(context, '/signup'),
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                      child: Image.asset("assets/SSB_Logo.png"),
+                      height: 336,
+                      width: 336,
                     ),
                   ],
                 ),
               ),
             ),
-          ),
+            Container(
+              margin: EdgeInsets.only(left: 20, right: 20, top: 30),
+              padding: EdgeInsets.only(left: 20, right: 20),
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.amber, width: 3),
+                borderRadius: BorderRadius.circular(50),
+                color: Colors.grey[200],
+                boxShadow: [
+                  BoxShadow(
+                      offset: Offset(0, 4),
+                      blurRadius: 70,
+                      color: Colors.grey.shade900)
+                ],
+              ),
+              alignment: Alignment.center,
+              child: TextField(
+                controller: _id,
+                cursorColor: Colors.orange,
+                decoration: InputDecoration(
+                    icon: Icon(
+                      Icons.chrome_reader_mode,
+                      color: Colors.amberAccent,
+                    ),
+                    hintText: "Enter Student ID",
+                    enabledBorder: InputBorder.none,
+                    focusedBorder: InputBorder.none),
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(left: 20, right: 20, top: 15),
+              padding: EdgeInsets.only(left: 20, right: 20),
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.amber, width: 3),
+                borderRadius: BorderRadius.circular(50),
+                color: Colors.grey[200],
+                boxShadow: [
+                  BoxShadow(
+                      offset: Offset(0, 10),
+                      blurRadius: 70,
+                      color: Colors.grey.shade900)
+                ],
+              ),
+              alignment: Alignment.center,
+              child: TextField(
+                controller: _password,
+                obscureText: true,
+                cursorColor: Colors.orange,
+                decoration: InputDecoration(
+                    icon: Icon(
+                      Icons.lock,
+                      color: Colors.amberAccent,
+                    ),
+                    hintText: "Enter Password",
+                    enabledBorder: InputBorder.none,
+                    focusedBorder: InputBorder.none),
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(top: 10, right: 17),
+              alignment: Alignment.centerRight,
+              child: GestureDetector(
+                child: Text("Forgot Password?"),
+                onTap: () => {},
+              ),
+            ),
+            GestureDetector(
+              onTap: () async {
+                setState(() {
+                  _loading = true;
+                });
+                AuthService _auth = AuthService();
+                bool status = await _auth
+                    .signInWithEmailAndPassword(_id.text, _password.text)
+                    .then((status) {
+                  Provider.of<StudentVueProvider>(context).resetData();
+                  setState(() {
+                    _loading = false;
+                  });
+                  return status;
+                });
+                if (!status) {
+                  _scaffoldKey.currentState.showSnackBar(SnackBar(
+                    content: Text("Wrong username or password."),
+                  ));
+                }
+              },
+              child: Container(
+                margin: EdgeInsets.only(left: 20, right: 20, top: 25),
+                alignment: Alignment.center,
+                height: 54,
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.amber, width: 2),
+                  gradient: LinearGradient(colors: [
+                    (new Color(0xDD000000)),
+                    (new Color(0xFF263238))
+                  ], begin: Alignment.centerLeft, end: Alignment.centerRight),
+                  borderRadius: BorderRadius.circular(50),
+                  boxShadow: [
+                    BoxShadow(
+                      offset: Offset(0, 10),
+                      blurRadius: 50,
+                      color: Colors.grey.shade800,
+                    )
+                  ],
+                ),
+                child: Text(
+                  "Login",
+                  style: TextStyle(color: Colors.amber),
+                ),
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(top: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text("Don't have an account?"),
+                  GestureDetector(
+                    onTap: () => {
+                      Navigator.pushReplacementNamed(context, '/signup'),
+                    },
+                    child: Text("Register Now",
+                        style: TextStyle(color: Colors.amber)),
+                  )
+                ],
+              ),
+            )
+          ],
         ),
-        inAsyncCall: _loading,
-        color: Theme.of(context).scaffoldBackgroundColor,
       ),
     );
   }
