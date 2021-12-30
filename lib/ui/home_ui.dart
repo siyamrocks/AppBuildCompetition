@@ -8,6 +8,7 @@ import 'package:flutter_starter/ui/menu.dart';
 import 'package:flutter_starter/ui/dashboard.dart';
 import 'package:flutter_starter/ui/classes.dart';
 import 'package:flutter_starter/ui/chat.dart';
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 
 class HomeUI extends StatefulWidget {
   @override
@@ -73,46 +74,21 @@ class _HomeUIState extends State<HomeUI> {
                 }),
           ],
         ),
-        bottomNavigationBar: BottomNavigationBar(
-          currentIndex: _selectedIndex,
-          onTap: (index) => setState(() => _selectedIndex = index),
-          type: BottomNavigationBarType.fixed,
-          backgroundColor: Colors.white,
-          showSelectedLabels: false,
-          showUnselectedLabels: false,
-          selectedItemColor: Colors.white,
-          unselectedItemColor: Colors.grey,
-          elevation: 0.0,
-          items: [
-            Icons.home,
-            Icons.calendar_today_rounded,
-            Icons.school,
-            Icons.email,
-            Icons.fastfood
-          ]
-              .asMap()
-              .map((key, value) => MapEntry(
-                    key,
-                    BottomNavigationBarItem(
-                      title: Text(""),
-                      icon: Container(
-                        padding: const EdgeInsets.symmetric(
-                          vertical: 6.0,
-                          horizontal: 16.0,
-                        ),
-                        decoration: BoxDecoration(
-                          color: _selectedIndex == key
-                              ? Colors.blue[600]
-                              : Colors.transparent,
-                          borderRadius: BorderRadius.circular(20.0),
-                        ),
-                        child: Icon(value),
-                      ),
-                    ),
-                  ))
-              .values
-              .toList(),
-        ),
+        bottomNavigationBar: CurvedNavigationBar(
+            index: _selectedIndex,
+            onTap: (index) => setState(() => _selectedIndex = index),
+            color: Colors.brown,
+            buttonBackgroundColor: Colors.black,
+            height: 50,
+            items: <Widget>[
+              Icon(Icons.home),
+              Icon(Icons.calendar_today_rounded),
+              Icon(Icons.school),
+              Icon(Icons.email),
+              Icon(Icons.fastfood)
+            ],
+            animationDuration: Duration(milliseconds: 200),
+            animationCurve: Curves.bounceInOut),
         body: _widgetOptions.elementAt(_selectedIndex));
   }
 
