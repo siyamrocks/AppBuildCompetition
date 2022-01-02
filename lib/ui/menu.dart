@@ -20,7 +20,10 @@ class FoodImage extends StatelessWidget {
     if (img != "null") {
       return Image.network(img);
     } else {
-      return Container();
+      return Text(
+        "No image",
+        style: TextStyle(fontStyle: FontStyle.italic),
+      );
     }
   }
 }

@@ -60,9 +60,17 @@ class _HomeUIState extends State<HomeUI> {
       Menu()
     ];
 
+    List<String> pages = <String>[
+      "Dashboard",
+      "Events",
+      "Classes",
+      "Email",
+      "Menu"
+    ];
+
     return Scaffold(
         appBar: AppBar(
-          title: Text(labels.home.title),
+          title: Text(pages[_selectedIndex]),
           actions: [
             IconButton(
                 icon: Icon(
@@ -77,8 +85,6 @@ class _HomeUIState extends State<HomeUI> {
         bottomNavigationBar: CurvedNavigationBar(
             index: _selectedIndex,
             onTap: (index) => setState(() => _selectedIndex = index),
-            // color: Colors.black,
-            buttonBackgroundColor: Colors.grey[200],
             height: 50,
             items: <Widget>[
               Icon(Icons.home),
