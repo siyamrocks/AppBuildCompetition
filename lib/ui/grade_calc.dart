@@ -3,15 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
 class GradeCalc extends StatefulWidget {
+  final List<Assignment> assignments;
   final String name;
   final String category;
   final String date;
-  final double weight;
+  final List<AssignmentCategory> weight;
   final double grade;
   final String classGrade;
 
   GradeCalc(
-      {@required this.name,
+      {@required this.assignments,
+      @required this.name,
       @required this.category,
       @required this.date,
       @required this.weight,
@@ -20,6 +22,7 @@ class GradeCalc extends StatefulWidget {
 
   double newGrade = 0;
   GradeCalcState createState() => GradeCalcState(
+      assignments: assignments,
       name: name,
       category: category,
       date: date,
@@ -29,15 +32,17 @@ class GradeCalc extends StatefulWidget {
 }
 
 class GradeCalcState extends State<GradeCalc> {
+  final List<Assignment> assignments;
   final String name;
   final String category;
   final String date;
-  final double weight;
+  final List<AssignmentCategory> weight;
   final double grade;
   final String classGrade;
 
   GradeCalcState(
-      {@required this.name,
+      {@required this.assignments,
+      @required this.name,
       @required this.category,
       @required this.date,
       @required this.weight,
@@ -45,6 +50,30 @@ class GradeCalcState extends State<GradeCalc> {
       @required this.classGrade});
 
   double newGrade = 0;
+  double newClassGrade = 0;
+
+  void calcGrade() {
+    List<double> weighedGrades = [];
+    for (int i = 0; i < assignments.length; i++) {
+      double correctWeight = 0;
+      for (int j = 0; j < weight.length; j++) {
+        if (weight[j].name == assignments[i].category)
+          correctWeight = weight[j].weight / 100;
+      }
+
+      if (assignments[i].earnedPoints != -1.0) {
+        weighedGrades.add((assignments[i].earnedPoints * 100) * correctWeight);
+      }
+    }
+    // Get each item in list and add it
+    double gradeSum = 0;
+
+    weighedGrades.forEach((num e) {
+      gradeSum += e;
+    });
+
+    newClassGrade = gradeSum / 1;
+  }
 
   Widget build(BuildContext context) {
     return Padding(
@@ -70,12 +99,14 @@ class GradeCalcState extends State<GradeCalc> {
                       setState(() {
                         newGrade = value;
                       });
+                      calcGrade();
                     }),
-                Text(newGrade.toString()),
+                Text((newGrade * 100).toStringAsFixed(0) + "%"),
               ]),
               Padding(
                 padding: const EdgeInsets.all(6.0),
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     // TextButton.icon(
                     //   onPressed: () {
@@ -85,11 +116,11 @@ class GradeCalcState extends State<GradeCalc> {
                     //   label: Text('Calc'),
                     // ),
                     GradeAssignment(
-                      grade: (grade * 100).toStringAsFixed(0),
-                      text: "Current grade",
+                      grade: (classGrade),
+                      text: "Old grade",
                     ),
                     GradeAssignment(
-                      grade: (classGrade),
+                      grade: ((newClassGrade).toStringAsFixed(0)),
                       text: "New grade",
                     )
                   ],

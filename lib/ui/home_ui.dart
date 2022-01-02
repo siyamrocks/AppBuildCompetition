@@ -50,7 +50,7 @@ class _HomeUIState extends State<HomeUI> {
 
     _isUserAdmin();
 
-    Provider.of<StudentVueProvider>(context).initData(user.id, user.studentvue);
+    Provider.of<StudentVueProvider>(context).initData(_id, user.studentvue);
 
     List<Widget> _widgetOptions = <Widget>[
       Dashboard(),
@@ -77,8 +77,8 @@ class _HomeUIState extends State<HomeUI> {
         bottomNavigationBar: CurvedNavigationBar(
             index: _selectedIndex,
             onTap: (index) => setState(() => _selectedIndex = index),
-            color: Colors.brown,
-            buttonBackgroundColor: Colors.black,
+            // color: Colors.black,
+            buttonBackgroundColor: Colors.grey[200],
             height: 50,
             items: <Widget>[
               Icon(Icons.home),

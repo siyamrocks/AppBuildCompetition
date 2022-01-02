@@ -117,11 +117,12 @@ class _AssignmentState extends State<AssignmentPage> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) => GradeCalc(
+                                          assignments: assignments,
                                           name:
                                               assignments[index].assignmentName,
                                           category: assignments[index].category,
                                           date: assignments[index].date,
-                                          weight: category[index].weight,
+                                          weight: category,
                                           grade:
                                               assignments[index].earnedPoints,
                                           classGrade: classGrade)));
