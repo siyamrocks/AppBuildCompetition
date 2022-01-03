@@ -9,8 +9,6 @@ import 'package:flutter_starter/constants/constants.dart';
 import 'package:flutter_starter/ui/auth/auth.dart';
 import 'package:flutter_starter/ui/ui.dart';
 
-// This is the main file
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
