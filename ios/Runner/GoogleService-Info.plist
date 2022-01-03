@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>774787608917-4uj8rqqt4ebt0k129db8b9a0n3plrrdu.apps.googleusercontent.com</string>
+	<string>774787608917-cknb5q400ro5nnhng1muhd9lgto5hs04.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.774787608917-4uj8rqqt4ebt0k129db8b9a0n3plrrdu</string>
+	<string>com.googleusercontent.apps.774787608917-cknb5q400ro5nnhng1muhd9lgto5hs04</string>
 	<key>API_KEY</key>
 	<string>AIzaSyDD8J3e-we9a-7USH_ouFknHHrcUVvOApw</string>
 	<key>GCM_SENDER_ID</key>
@@ -13,7 +13,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.sbs.student</string>
+	<string>com.ssb.studentapp</string>
 	<key>PROJECT_ID</key>
 	<string>student-manager-f58c2</string>
 	<key>STORAGE_BUCKET</key>
@@ -29,6 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:774787608917:ios:7c5090912e1b74a0c07fdc</string>
+	<string>1:774787608917:ios:057046c28bc2a788c07fdc</string>
 </dict>
 </plist>
