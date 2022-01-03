@@ -99,7 +99,7 @@ class _DashboardState extends State<Dashboard> {
     return Container(
       padding: const EdgeInsets.all(20.0),
       decoration: BoxDecoration(
-        color: Colors.blue,
+        color: Colors.black,
         borderRadius: BorderRadius.only(
           bottomLeft: Radius.circular(20.0),
           bottomRight: Radius.circular(20.0),
@@ -112,10 +112,15 @@ class _DashboardState extends State<Dashboard> {
             height: 150,
             width: 300,
             child: Card(
+              color: Colors.white,
               elevation: 10,
               child: Padding(
                 padding: const EdgeInsets.all(12.0),
-                child: BarcodeWidget(data: _id, barcode: Barcode.code128()),
+                child: BarcodeWidget(
+                  data: _id,
+                  barcode: Barcode.code128(),
+                  backgroundColor: Colors.white,
+                ),
               ),
             ),
           ),

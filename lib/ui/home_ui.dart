@@ -70,6 +70,7 @@ class _HomeUIState extends State<HomeUI> {
 
     return Scaffold(
         appBar: AppBar(
+          backgroundColor: Colors.black,
           title: Text(pages[_selectedIndex]),
           actions: [
             IconButton(
@@ -86,12 +87,30 @@ class _HomeUIState extends State<HomeUI> {
             index: _selectedIndex,
             onTap: (index) => setState(() => _selectedIndex = index),
             height: 50,
+            backgroundColor: Colors.white,
+            buttonBackgroundColor: Colors.grey[700],
+            color: Colors.black,
             items: <Widget>[
-              Icon(Icons.home),
-              Icon(Icons.calendar_today_rounded),
-              Icon(Icons.school),
-              Icon(Icons.email),
-              Icon(Icons.fastfood)
+              Icon(
+                Icons.home,
+                color: Colors.white,
+              ),
+              Icon(
+                Icons.calendar_today_rounded,
+                color: Colors.white,
+              ),
+              Icon(
+                Icons.school,
+                color: Colors.white,
+              ),
+              Icon(
+                Icons.email,
+                color: Colors.white,
+              ),
+              Icon(
+                Icons.fastfood,
+                color: Colors.white,
+              )
             ],
             animationDuration: Duration(milliseconds: 200),
             animationCurve: Curves.bounceInOut),

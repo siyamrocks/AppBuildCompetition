@@ -45,7 +45,6 @@ class SettingsUI extends StatelessWidget {
           ),
         ),
         Card(
-          color: Colors.white,
           elevation: 4.0,
           child: Column(
             children: <Widget>[

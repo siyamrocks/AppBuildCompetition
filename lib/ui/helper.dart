@@ -33,13 +33,11 @@ class _HelperState extends State<Helper> {
   final List<MenuOptionsModel> options = [
     MenuOptionsModel(key: "0", value: "Events", icon: Icons.event),
     MenuOptionsModel(key: "1", value: "Todo", icon: Icons.list_alt_rounded),
-    MenuOptionsModel(key: "2", value: "Clubs", icon: Icons.schedule)
   ];
 
   final List<Widget> _screens = [
     Expanded(child: Calendar()),
-    Expanded(child: Todo()),
-    Text("Clubs")
+    Expanded(child: Todo())
   ];
 
   @override

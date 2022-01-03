@@ -57,12 +57,14 @@ class GradeCalcState extends State<GradeCalc> {
     for (int i = 0; i < assignments.length; i++) {
       double correctWeight = 0;
       for (int j = 0; j < weight.length; j++) {
-        if (weight[j].name == assignments[i].category)
+        if (weight[j].name == assignments[i].category) {
           correctWeight = weight[j].weight / 100;
+        }
       }
 
       if (assignments[i].earnedPoints != -1.0) {
         weighedGrades.add((assignments[i].earnedPoints * 100) * correctWeight);
+        print((assignments[i].earnedPoints * 100) * correctWeight);
       }
     }
     // Get each item in list and add it
