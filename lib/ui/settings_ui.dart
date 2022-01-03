@@ -14,8 +14,7 @@ class SettingsUI extends StatelessWidget {
     final labels = AppLocalizations.of(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text(labels.settings.title),
-      ),
+          title: Text(labels.settings.title), backgroundColor: Colors.black),
       body: _buildLayoutSection(context),
     );
   }
@@ -37,6 +36,24 @@ class SettingsUI extends StatelessWidget {
     return ListView(
       padding: EdgeInsets.all(15.0),
       children: <Widget>[
+        Text(
+          "Theme",
+          style: TextStyle(
+            fontSize: 24.0,
+            color: Colors.amber,
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: SegmentedSelector(
+            selectedOption: Provider.of<ThemeProvider>(context).getTheme,
+            menuOptions: themeOptions,
+            onValueChanged: (value) {
+              Provider.of<ThemeProvider>(context, listen: false)
+                  .updateTheme(value);
+            },
+          ),
+        ),
         Text(
           "System",
           style: TextStyle(
@@ -86,6 +103,42 @@ class SettingsUI extends StatelessWidget {
                 ),
               ),
               ListTile(
+                leading: Icon(Icons.bug_report),
+                title: Text("Report Bug"),
+                trailing: Container(
+                  child: ElevatedButton(
+                    onPressed: () async {
+                      Navigator.of(context).pushNamed('/bug-report');
+                    },
+                    style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.all<Color>(Colors.amber)),
+                    child: Text(
+                      "Report Bug",
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ),
+              ),
+              ListTile(
+                leading: Icon(Icons.settings_applications),
+                title: Text("License"),
+                trailing: Container(
+                  child: ElevatedButton(
+                    onPressed: () async {
+                      showLicensePage(context: context);
+                    },
+                    style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.all<Color>(Colors.amber)),
+                    child: Text(
+                      "License",
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ),
+              ),
+              ListTile(
                 leading: Icon(Icons.switch_account),
                 title: Text(labels.settings.signOut),
                 trailing: Container(
@@ -110,24 +163,6 @@ class SettingsUI extends StatelessWidget {
         ),
         Padding(
           padding: EdgeInsets.all(15.0),
-        ),
-        Text(
-          "Theme",
-          style: TextStyle(
-            fontSize: 24.0,
-            color: Colors.amber,
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: SegmentedSelector(
-            selectedOption: Provider.of<ThemeProvider>(context).getTheme,
-            menuOptions: themeOptions,
-            onValueChanged: (value) {
-              Provider.of<ThemeProvider>(context, listen: false)
-                  .updateTheme(value);
-            },
-          ),
         ),
       ],
     );
