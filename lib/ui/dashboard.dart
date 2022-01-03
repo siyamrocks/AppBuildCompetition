@@ -4,6 +4,7 @@ import 'package:flutter_starter/localizations.dart';
 import 'package:flutter_starter/models/models.dart';
 import 'package:flutter_starter/ui/components/components.dart';
 import 'package:barcode_widget/barcode_widget.dart';
+import 'package:intl/intl.dart' show toBeginningOfSentenceCase;
 
 class Dashboard extends StatefulWidget {
   @override
@@ -54,6 +55,11 @@ class _DashboardState extends State<Dashboard> {
       });
     }
 
+    // Correct school name
+    setState(() {
+      _school = toBeginningOfSentenceCase(_school.replaceAll("-", " "));
+    });
+
     return Container(
         child: Center(
       child: SingleChildScrollView(
@@ -80,10 +86,6 @@ class _DashboardState extends State<Dashboard> {
                     FormVerticalSpace(),
                     Icon(Icons.account_balance),
                     Text(labels.home.nameLabel + ': ' + _name,
-                        style: TextStyle(fontSize: 16)),
-                    FormVerticalSpace(),
-                    Icon(Icons.email),
-                    Text(labels.home.emailLabel + ': ' + _email,
                         style: TextStyle(fontSize: 16)),
                   ],
                 ),
