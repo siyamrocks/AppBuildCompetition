@@ -1,5 +1,8 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_starter/models/school_model.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_starter/models/models.dart';
 import 'package:flutter_starter/localizations.dart';
@@ -15,11 +18,32 @@ class _UpdateProfileUIState extends State<UpdateProfileUI> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _name = new TextEditingController();
   final TextEditingController _email = new TextEditingController();
+  final TextEditingController _id = new TextEditingController();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   bool _loading = false;
+
+  Future<List<School>> _schools;
+  String selectedSchool;
+
+  Future<List<School>> fetchSchool() async {
+    var url = "https://gwinnett.nutrislice.com/menu/api/schools/?format=json";
+    var result = await http.get(Uri.parse(url));
+
+    var list = List<School>();
+
+    print(result.body);
+    if (result.statusCode == 200) {
+      var schools = json.decode(result.body);
+      for (var school in schools) list.add(School.fromJson(school));
+    }
+
+    return list;
+  }
+
   @override
   void initState() {
     super.initState();
+    _schools = fetchSchool();
   }
 
   @override
@@ -45,6 +69,8 @@ class _UpdateProfileUIState extends State<UpdateProfileUI> {
     final UserModel user = Provider.of<UserModel>(context);
     _name.text = user?.name;
     _email.text = user?.email;
+    _id.text = user?.id;
+    selectedSchool = user?.school;
     final labels = AppLocalizations.of(context);
     return Form(
       key: _formKey,
@@ -58,6 +84,33 @@ class _UpdateProfileUIState extends State<UpdateProfileUI> {
               children: <Widget>[
                 LogoGraphicHeader(),
                 SizedBox(height: 48.0),
+                FutureBuilder<List<School>>(
+                    future: _schools,
+                    builder: (context, snapshot) {
+                      if (snapshot.data == null) {
+                        return Container(
+                          child: Center(
+                            child: Text("Loading schools..."),
+                          ),
+                        );
+                      } else {
+                        return DropdownButton<String>(
+                            hint: Text("Select"),
+                            value: selectedSchool,
+                            onChanged: (newValue) {
+                              setState(() {
+                                selectedSchool = newValue;
+                              });
+                            },
+                            items: snapshot.data
+                                .map((s) => DropdownMenuItem<String>(
+                                      child: Text(s.name),
+                                      value: s.slug,
+                                    ))
+                                .toList());
+                      }
+                    }),
+                FormVerticalSpace(),
                 FormInputFieldWithIcon(
                   controller: _name,
                   iconPrefix: Icons.person,
@@ -65,6 +118,14 @@ class _UpdateProfileUIState extends State<UpdateProfileUI> {
                   validator: Validator(labels).name,
                   onChanged: (value) => null,
                   onSaved: (value) => _name.text = value,
+                ),
+                FormVerticalSpace(),
+                FormInputFieldWithIcon(
+                  controller: _id,
+                  iconPrefix: Icons.badge,
+                  labelText: "ID",
+                  onChanged: (value) => null,
+                  onSaved: (value) => _id.text = value,
                 ),
                 FormVerticalSpace(),
                 FormInputFieldWithIcon(
@@ -84,8 +145,11 @@ class _UpdateProfileUIState extends State<UpdateProfileUI> {
                         SystemChannels.textInput.invokeMethod('TextInput.hide');
                         UserModel _updatedUser = UserModel(
                             uid: user?.uid,
+                            id: _id.text,
                             name: _name.text,
-                            email: _email.text);
+                            email: _email.text,
+                            school: selectedSchool,
+                            studentvue: user?.studentvue);
                         _updateUserConfirm(context, _updatedUser, user?.email);
                       }
                     }),

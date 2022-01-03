@@ -35,8 +35,90 @@ class SettingsUI extends StatelessWidget {
           key: "dark", value: labels.settings.dark, icon: Icons.brightness_3)
     ];
     return ListView(
-      shrinkWrap: true,
+      padding: EdgeInsets.all(15.0),
       children: <Widget>[
+        Text(
+          "System",
+          style: TextStyle(
+            fontSize: 24.0,
+            color: Colors.amber,
+          ),
+        ),
+        Card(
+          color: Colors.white,
+          elevation: 4.0,
+          child: Column(
+            children: <Widget>[
+              ListTile(
+                leading: Icon(Icons.translate),
+                title: Text(
+                  labels.settings.language,
+                  style: TextStyle(fontSize: 15),
+                ),
+                trailing: Container(
+                  child: DropdownPicker(
+                    menuOptions: Globals.languageOptions,
+                    selectedOption:
+                        Provider.of<LanguageProvider>(context).currentLanguage,
+                    onChanged: (value) {
+                      Provider.of<LanguageProvider>(context, listen: false)
+                          .updateLanguage(value);
+                    },
+                  ),
+                ),
+              ),
+              ListTile(
+                leading: Icon(Icons.person),
+                title: Text(labels.settings.updateProfile),
+                trailing: Container(
+                  width: 90,
+                  child: ElevatedButton(
+                    onPressed: () async {
+                      Navigator.of(context).pushNamed('/update-profile');
+                    },
+                    style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.all<Color>(Colors.amber)),
+                    child: Text(
+                      labels.settings.updateProfile,
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ),
+              ),
+              ListTile(
+                leading: Icon(Icons.switch_account),
+                title: Text(labels.settings.signOut),
+                trailing: Container(
+                  child: ElevatedButton(
+                    onPressed: () {
+                      AuthService _auth = AuthService();
+                      _auth.signOut();
+                      //Navigator.pushReplacementNamed(context, '/signin');
+                    },
+                    style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.all<Color>(Colors.amber)),
+                    child: Text(
+                      labels.settings.signOut,
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+        Padding(
+          padding: EdgeInsets.all(15.0),
+        ),
+        Text(
+          "Theme",
+          style: TextStyle(
+            fontSize: 24.0,
+            color: Colors.amber,
+          ),
+        ),
         Padding(
           padding: const EdgeInsets.all(10.0),
           child: SegmentedSelector(
@@ -48,53 +130,6 @@ class SettingsUI extends StatelessWidget {
             },
           ),
         ),
-        ListTile(
-          title: Text(labels.settings.language),
-          //trailing: _languageDropdown(context),
-          trailing: Container(
-            width: 100,
-            height: 50.0,
-            child: DropdownPicker(
-              menuOptions: Globals.languageOptions,
-              selectedOption:
-                  Provider.of<LanguageProvider>(context).currentLanguage,
-              onChanged: (value) {
-                Provider.of<LanguageProvider>(context, listen: false)
-                    .updateLanguage(value);
-              },
-            ),
-          ),
-        ),
-        ListTile(
-            title: Text(labels.settings.updateProfile),
-            trailing: Container(
-              width: 150,
-              height: 50.0,
-              child: RaisedButton(
-                onPressed: () async {
-                  Navigator.of(context).pushNamed('/update-profile');
-                },
-                child: Text(
-                  labels.settings.updateProfile,
-                ),
-              ),
-            )),
-        ListTile(
-            title: Text(labels.settings.signOut),
-            trailing: Container(
-              width: 150,
-              height: 50.0,
-              child: RaisedButton(
-                onPressed: () {
-                  AuthService _auth = AuthService();
-                  _auth.signOut();
-                  //Navigator.pushReplacementNamed(context, '/signin');
-                },
-                child: Text(
-                  labels.settings.signOut,
-                ),
-              ),
-            ))
       ],
     );
   }
