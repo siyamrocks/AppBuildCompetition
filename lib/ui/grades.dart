@@ -109,25 +109,25 @@ class _AssignmentState extends State<AssignmentPage> {
                       child: ButtonBar(
                         alignment: MainAxisAlignment.end,
                         children: [
-                          TextButton.icon(
-                            onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => GradeCalc(
-                                          assignments: assignments,
-                                          name:
-                                              assignments[index].assignmentName,
-                                          category: assignments[index].category,
-                                          date: assignments[index].date,
-                                          weight: category,
-                                          grade:
-                                              assignments[index].earnedPoints,
-                                          classGrade: classGrade)));
-                            },
-                            icon: Icon(Icons.calculate),
-                            label: Text('Calc'),
-                          ),
+                          // TextButton.icon(
+                          //   onPressed: () {
+                          //     Navigator.push(
+                          //         context,
+                          //         MaterialPageRoute(
+                          //             builder: (context) => GradeCalc(
+                          //                 assignments: assignments,
+                          //                 name:
+                          //                     assignments[index].assignmentName,
+                          //                 category: assignments[index].category,
+                          //                 date: assignments[index].date,
+                          //                 weight: category,
+                          //                 grade:
+                          //                     assignments[index].earnedPoints,
+                          //                 classGrade: classGrade)));
+                          //   },
+                          //   icon: Icon(Icons.calculate),
+                          //   label: Text('Calc'),
+                          // ),
                           GradeAssignment(
                               grade: (assignments[index].earnedPoints * 100)
                                   .toStringAsFixed(0))

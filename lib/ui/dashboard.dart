@@ -65,28 +65,26 @@ class _DashboardState extends State<Dashboard> {
           children: <Widget>[
             id(),
             SizedBox(height: 10),
-            Card(
-              elevation: 10,
-              child: Container(
-                padding: const EdgeInsets.all(16),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Avatar(user),
-                    const SizedBox(height: 12),
-                    Icon(Icons.card_giftcard),
-                    Text("Student ID" + ': ' + _id,
-                        style: TextStyle(fontSize: 16)),
-                    FormVerticalSpace(),
-                    Icon(Icons.school),
-                    Text("School: " + _school, style: TextStyle(fontSize: 16)),
-                    FormVerticalSpace(),
-                    Icon(Icons.account_balance),
-                    Text(labels.home.nameLabel + ': ' + _name,
-                        style: TextStyle(fontSize: 16)),
-                  ],
-                ),
+            Container(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Avatar(user),
+                  const SizedBox(height: 12),
+                  Icon(Icons.card_giftcard),
+                  Text("Student ID" + ': ' + _id,
+                      style: TextStyle(fontSize: 16, color: Colors.amber)),
+                  FormVerticalSpace(),
+                  Icon(Icons.school),
+                  Text("School: " + _school,
+                      style: TextStyle(fontSize: 16, color: Colors.amber)),
+                  FormVerticalSpace(),
+                  Icon(Icons.account_balance),
+                  Text(labels.home.nameLabel + ': ' + _name,
+                      style: TextStyle(fontSize: 16, color: Colors.amber)),
+                ],
               ),
             ),
           ],

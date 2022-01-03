@@ -46,7 +46,7 @@ class AppThemes {
   static const Color _darkPrimaryColor = dodgerBlue;
 
   //Background Colors
-  static const Color _darkBackgroundColor = ebonyClay;
+  static const Color _darkBackgroundColor = Colors.black;
   static const Color _darkBackgroundAppBarColor = _darkPrimaryColor;
   static const Color _darkBackgroundSecondaryColor =
       Color.fromRGBO(0, 0, 0, .6);

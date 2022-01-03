@@ -86,8 +86,8 @@ class _HomeUIState extends State<HomeUI> {
             index: _selectedIndex,
             onTap: (index) => setState(() => _selectedIndex = index),
             height: 75,
-            backgroundColor: Colors.white,
-            buttonBackgroundColor: Colors.grey[700],
+            backgroundColor: Colors.amber,
+            buttonBackgroundColor: Colors.grey[900],
             color: Colors.black,
             items: <Widget>[
               Icon(
