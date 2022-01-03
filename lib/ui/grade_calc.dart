@@ -166,10 +166,7 @@ class GradeAssignment extends StatelessWidget {
                 children: [
                   Text(
                     points,
-                    style: TextStyle(
-                        fontSize: 22,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black54),
+                    style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                   ),
                   Text("%")
                 ],
