@@ -37,7 +37,6 @@ void main() async {
   /* });*/
 }
 
-// Benjamin is stupid and he is very rude and stupid looking
 class MyApp extends StatelessWidget {
   const MyApp({Key key}) : super(key: key);
 
