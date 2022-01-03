@@ -20,7 +20,7 @@ class Grade extends StatelessWidget {
       return CircularPercentIndicator(
         radius: 60.0,
         lineWidth: 5.0,
-        percent: double.parse(grade) / 100,
+        percent: (double.parse(grade) / 100).clamp(0, 1.0),
         center: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
