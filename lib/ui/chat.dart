@@ -55,7 +55,7 @@ class TeacherCard extends StatelessWidget {
               title: Text(name),
               subtitle: Text(
                 email,
-                style: TextStyle(color: Colors.black45, fontSize: 10),
+                style: TextStyle(fontSize: 10),
               ),
             ),
             ButtonBar(

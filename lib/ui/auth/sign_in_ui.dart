@@ -71,6 +71,7 @@ class _SignInUIState extends State<SignInUI> {
               child: TextField(
                 controller: _id,
                 cursorColor: Colors.orange,
+                style: TextStyle(color: Colors.black),
                 decoration: InputDecoration(
                     icon: Icon(
                       Icons.badge,
@@ -101,6 +102,7 @@ class _SignInUIState extends State<SignInUI> {
                 controller: _password,
                 obscureText: true,
                 cursorColor: Colors.orange,
+                style: TextStyle(color: Colors.black),
                 decoration: InputDecoration(
                     icon: Icon(
                       Icons.lock,
