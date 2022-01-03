@@ -17,7 +17,6 @@ class UpdateProfileUI extends StatefulWidget {
 class _UpdateProfileUIState extends State<UpdateProfileUI> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _name = new TextEditingController();
-  final TextEditingController _email = new TextEditingController();
   final TextEditingController _id = new TextEditingController();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   bool _loading = false;
@@ -49,7 +48,6 @@ class _UpdateProfileUIState extends State<UpdateProfileUI> {
   @override
   void dispose() {
     _name.dispose();
-    _email.dispose();
     super.dispose();
   }
 
@@ -68,7 +66,6 @@ class _UpdateProfileUIState extends State<UpdateProfileUI> {
   updateProfileForm(BuildContext context) {
     final UserModel user = Provider.of<UserModel>(context);
     _name.text = user?.name;
-    _email.text = user?.email;
     _id.text = user?.id;
     selectedSchool = user?.school;
     final labels = AppLocalizations.of(context);
@@ -128,16 +125,6 @@ class _UpdateProfileUIState extends State<UpdateProfileUI> {
                   onSaved: (value) => _id.text = value,
                 ),
                 FormVerticalSpace(),
-                FormInputFieldWithIcon(
-                  controller: _email,
-                  iconPrefix: Icons.email,
-                  labelText: labels.auth.emailFormField,
-                  validator: Validator(labels).email,
-                  keyboardType: TextInputType.emailAddress,
-                  onChanged: (value) => null,
-                  onSaved: (value) => _email.text = value,
-                ),
-                FormVerticalSpace(),
                 PrimaryButton(
                     labelText: labels.auth.updateUser,
                     onPressed: () {
@@ -147,7 +134,7 @@ class _UpdateProfileUIState extends State<UpdateProfileUI> {
                             uid: user?.uid,
                             id: _id.text,
                             name: _name.text,
-                            email: _email.text,
+                            email: user?.email,
                             school: selectedSchool,
                             studentvue: user?.studentvue);
                         _updateUserConfirm(context, _updatedUser, user?.email);
