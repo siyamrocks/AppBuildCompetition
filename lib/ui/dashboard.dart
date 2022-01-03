@@ -30,7 +30,6 @@ class Dashboard extends StatefulWidget {
 class _DashboardState extends State<Dashboard> {
   String _id = '';
   String _name = '';
-  String _email = '';
   String _school = '';
 
   @override
@@ -51,7 +50,6 @@ class _DashboardState extends State<Dashboard> {
         _id = user.id;
         _name = user.name;
         _school = user.school;
-        _email = user.email;
       });
     }
 

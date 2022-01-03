@@ -17,7 +17,6 @@ class EmailSender extends StatefulWidget {
 
 class _EmailSenderState extends State<EmailSender> {
   List<String> attachments = [];
-  bool isHTML = false;
 
   final _recipientController = TextEditingController();
   final _subjectController = TextEditingController(text: 'The subject');
@@ -32,7 +31,7 @@ class _EmailSenderState extends State<EmailSender> {
       subject: _subjectController.text,
       recipients: [_recipientController.text],
       attachmentPaths: attachments,
-      isHTML: isHTML,
+      isHTML: false,
     );
 
     String platformResponse;
@@ -59,6 +58,7 @@ class _EmailSenderState extends State<EmailSender> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Email Teacher'),
+        backgroundColor: Colors.black,
         actions: <Widget>[
           IconButton(
             onPressed: send,
@@ -106,68 +106,9 @@ class _EmailSenderState extends State<EmailSender> {
                 ),
               ),
             ),
-            CheckboxListTile(
-              contentPadding:
-                  EdgeInsets.symmetric(vertical: 0.0, horizontal: 8.0),
-              title: Text('HTML'),
-              onChanged: (bool value) {
-                if (value != null) {
-                  setState(() {
-                    isHTML = value;
-                  });
-                }
-              },
-              value: isHTML,
-            ),
-            Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Column(
-                children: <Widget>[
-                  for (var i = 0; i < attachments.length; i++)
-                    Row(
-                      children: <Widget>[
-                        Expanded(
-                          child: Text(
-                            attachments[i],
-                            softWrap: false,
-                            overflow: TextOverflow.fade,
-                          ),
-                        ),
-                        IconButton(
-                          icon: Icon(Icons.remove_circle),
-                          onPressed: () => {_removeAttachment(i)},
-                        )
-                      ],
-                    ),
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: IconButton(
-                      icon: Icon(Icons.attach_file),
-                      onPressed: _openImagePicker,
-                    ),
-                  ),
-                ],
-              ),
-            ),
           ],
         ),
       ),
     );
-  }
-
-  void _openImagePicker() async {
-    final picker = ImagePicker();
-    PickedFile pick = await picker.getImage(source: ImageSource.gallery);
-    if (pick != null) {
-      setState(() {
-        attachments.add(pick.path);
-      });
-    }
-  }
-
-  void _removeAttachment(int index) {
-    setState(() {
-      attachments.removeAt(index);
-    });
   }
 }

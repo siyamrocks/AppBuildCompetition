@@ -1,5 +1,6 @@
 import 'package:flutter_starter/helpers/event.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_starter/ui/clubs.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:flutter_starter/models/models.dart';
 import 'package:flutter_starter/ui/calendar.dart';
@@ -33,11 +34,13 @@ class _HelperState extends State<Helper> {
   final List<MenuOptionsModel> options = [
     MenuOptionsModel(key: "0", value: "Events", icon: Icons.event),
     MenuOptionsModel(key: "1", value: "Todo", icon: Icons.list_alt_rounded),
+    MenuOptionsModel(key: "2", value: "Clubs", icon: Icons.schedule),
   ];
 
   final List<Widget> _screens = [
     Expanded(child: Calendar()),
-    Expanded(child: Todo())
+    Expanded(child: Todo()),
+    Expanded(child: Clubs()),
   ];
 
   @override

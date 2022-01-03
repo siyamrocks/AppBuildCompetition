@@ -36,7 +36,6 @@ class _HomeUIState extends State<HomeUI> {
   int _selectedIndex = 0;
 
   Widget build(BuildContext context) {
-    final labels = AppLocalizations.of(context);
     final UserModel user = Provider.of<UserModel>(context);
     if (user != null) {
       setState(() {
@@ -86,7 +85,7 @@ class _HomeUIState extends State<HomeUI> {
         bottomNavigationBar: CurvedNavigationBar(
             index: _selectedIndex,
             onTap: (index) => setState(() => _selectedIndex = index),
-            height: 50,
+            height: 75,
             backgroundColor: Colors.white,
             buttonBackgroundColor: Colors.grey[700],
             color: Colors.black,

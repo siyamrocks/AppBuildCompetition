@@ -53,28 +53,17 @@ class GradeCalcState extends State<GradeCalc> {
   double newClassGrade = 0;
 
   void calcGrade() {
-    List<double> weighedGrades = [];
-    for (int i = 0; i < assignments.length; i++) {
-      double correctWeight = 0;
-      for (int j = 0; j < weight.length; j++) {
-        if (weight[j].name == assignments[i].category) {
-          correctWeight = weight[j].weight / 100;
-        }
-      }
+    double correctWeight = 0;
 
-      if (assignments[i].earnedPoints != -1.0) {
-        weighedGrades.add((assignments[i].earnedPoints * 100) * correctWeight);
-        print((assignments[i].earnedPoints * 100) * correctWeight);
+    for (int i = 0; i < weight.length; i++) {
+      if (category == weight[i].name) {
+        correctWeight = weight[i].weight;
       }
     }
-    // Get each item in list and add it
-    double gradeSum = 0;
-
-    weighedGrades.forEach((num e) {
-      gradeSum += e;
-    });
-
-    newClassGrade = gradeSum / 1;
+    newClassGrade =
+        (((newGrade * 100 - double.parse(classGrade) * (correctWeight / 100)) /
+                (100 - correctWeight)) *
+            100);
   }
 
   Widget build(BuildContext context) {
