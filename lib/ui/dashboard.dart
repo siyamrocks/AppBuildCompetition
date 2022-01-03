@@ -11,22 +11,6 @@ class Dashboard extends StatefulWidget {
   _DashboardState createState() => _DashboardState();
 }
 
-/*
- appBar: AppBar(
-          title: Text(labels.home.title),
-          actions: [
-            IconButton(
-                icon: Icon(
-                  Icons.settings,
-                  color: Colors.white,
-                ),
-                onPressed: () {
-                  Navigator.of(context).pushNamed('/settings');
-                }),
-          ],
-        ),
-*/
-
 class _DashboardState extends State<Dashboard> {
   String _id = '';
   String _name = '';
