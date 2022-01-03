@@ -42,9 +42,12 @@ class _SignInUIState extends State<SignInUI> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Container(
-                      child: Image.asset("assets/SSB_Logo.png"),
-                      height: 336,
-                      width: 336,
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 50),
+                        child: Image.asset("assets/SSB_Logo.png"),
+                      ),
+                      height: 256,
+                      width: 256,
                     ),
                   ],
                 ),
@@ -70,10 +73,11 @@ class _SignInUIState extends State<SignInUI> {
                 cursorColor: Colors.orange,
                 decoration: InputDecoration(
                     icon: Icon(
-                      Icons.chrome_reader_mode,
+                      Icons.badge,
                       color: Colors.amberAccent,
                     ),
                     hintText: "Enter Student ID",
+                    hintStyle: TextStyle(color: Colors.grey[600]),
                     enabledBorder: InputBorder.none,
                     focusedBorder: InputBorder.none),
               ),
@@ -103,13 +107,14 @@ class _SignInUIState extends State<SignInUI> {
                       color: Colors.amberAccent,
                     ),
                     hintText: "Enter Password",
+                    hintStyle: TextStyle(color: Colors.grey[600]),
                     enabledBorder: InputBorder.none,
                     focusedBorder: InputBorder.none),
               ),
             ),
             Container(
-              margin: EdgeInsets.only(top: 10, right: 17),
-              alignment: Alignment.centerRight,
+              margin: EdgeInsets.only(top: 10),
+              alignment: Alignment.center,
               child: GestureDetector(
                 child: Text("Forgot Password?"),
                 onTap: () => {},
@@ -162,11 +167,11 @@ class _SignInUIState extends State<SignInUI> {
               ),
             ),
             Container(
-              margin: EdgeInsets.only(top: 10),
+              margin: EdgeInsets.only(top: 10, bottom: 10),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text("Don't have an account?"),
+                  Text("Don't have an account? "),
                   GestureDetector(
                     onTap: () => {
                       Navigator.pushReplacementNamed(context, '/signup'),
