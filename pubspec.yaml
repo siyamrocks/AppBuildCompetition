@@ -67,6 +67,7 @@ flutter:
     - assets/images/default.png
     - assets/images/defaultDark.png
     - assets/SSB_Logo.png
+    - assets/background.png
 
 flutter_icons:
   # To run do: flutter pub run flutter_launcher_icons:main
@@ -85,6 +86,7 @@ flutter_native_splash:
   # flutter pub run flutter_native_splash:remove
   color: "#000000"
   image: assets/SSB_Logo.png
+  background_image: assets/background.png
 
   # To hide the notification bar, use the fullscreen parameter.  Has no affect in web since web 
   # has no notification bar.  Defaults to false.
