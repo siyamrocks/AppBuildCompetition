@@ -144,6 +144,7 @@ class SettingsUI extends StatelessWidget {
                 trailing: Container(
                   child: ElevatedButton(
                     onPressed: () {
+                      Provider.of<StudentVueProvider>(context).resetData();
                       AuthService _auth = AuthService();
                       _auth.signOut();
                       //Navigator.pushReplacementNamed(context, '/signin');
