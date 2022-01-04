@@ -84,8 +84,8 @@ flutter_native_splash:
   # flutter pub run flutter_native_splash:create
   # To restore Flutter's default white splash screen, run the following command in the terminal:
   # flutter pub run flutter_native_splash:remove
-  image: assets/SSB_Logo.png
-  background_image: assets/background.png
+  image: assets/background.png
+  color: "#000000"
 
   # To hide the notification bar, use the fullscreen parameter.  Has no affect in web since web 
   # has no notification bar.  Defaults to false.
