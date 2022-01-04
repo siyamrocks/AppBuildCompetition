@@ -70,7 +70,7 @@ class _SignUpUIState extends State<SignUpUI> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
                     LogoGraphicHeader(),
-                    Text("USE YOUR ECLASS/STUDENTVUE PASSWORD"),
+                    Text("USE YOUR ECLASS PASSWORD"),
                     SizedBox(height: 48.0),
                     FutureBuilder<List<School>>(
                         future: _schools,
@@ -78,7 +78,7 @@ class _SignUpUIState extends State<SignUpUI> {
                           if (snapshot.data == null) {
                             return Container(
                               child: Center(
-                                child: Text("Loading schools..."),
+                                child: Text("Loading Schools..."),
                               ),
                             );
                           } else {
