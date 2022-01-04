@@ -33,7 +33,7 @@ class GradeAssignment extends StatelessWidget {
       if (percent < 0) percent = 0;
 
       return CircularPercentIndicator(
-        radius: 85,
+        radius: 100,
         lineWidth: 5.0,
         percent: percent / 100,
         center: Row(
