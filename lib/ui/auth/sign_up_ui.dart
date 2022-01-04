@@ -78,7 +78,7 @@ class _SignUpUIState extends State<SignUpUI> {
                           if (snapshot.data == null) {
                             return Container(
                               child: Center(
-                                child: Text("Loading schools..."),
+                                child: Text("Loading Schools..."),
                               ),
                             );
                           } else {
