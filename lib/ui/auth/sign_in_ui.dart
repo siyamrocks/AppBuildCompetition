@@ -178,15 +178,14 @@ class _SignInUIState extends State<SignInUI> {
                   Text("Don't have an account? "),
                   GestureDetector(
                     onTap: () => {
-                      if (_loading) setState(() => _loading = true),
                       Navigator.pushReplacementNamed(context, '/signup'),
                     },
                     child: Text("Register Now",
                         style: TextStyle(color: Colors.amber)),
-                  )
+                  ),
                 ],
               ),
-            )
+            ),
           ],
         ),
       ),
