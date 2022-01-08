@@ -162,10 +162,12 @@ class _SignInUIState extends State<SignInUI> {
                     )
                   ],
                 ),
-                child: Text(
-                  "Login",
-                  style: TextStyle(color: Colors.amber),
-                ),
+                child: _loading
+                    ? CircularProgressIndicator(color: Colors.white)
+                    : Text(
+                        "Login",
+                        style: TextStyle(color: Colors.amber),
+                      ),
               ),
             ),
             Container(
@@ -176,6 +178,7 @@ class _SignInUIState extends State<SignInUI> {
                   Text("Don't have an account? "),
                   GestureDetector(
                     onTap: () => {
+                      if (_loading) setState(() => _loading = true),
                       Navigator.pushReplacementNamed(context, '/signup'),
                     },
                     child: Text("Register Now",
