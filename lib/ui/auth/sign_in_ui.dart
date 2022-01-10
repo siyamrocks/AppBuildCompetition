@@ -11,7 +11,6 @@ class SignInUI extends StatefulWidget {
 }
 
 class _SignInUIState extends State<SignInUI> {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _id = new TextEditingController();
   final TextEditingController _password = new TextEditingController();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -178,14 +177,15 @@ class _SignInUIState extends State<SignInUI> {
                   Text("Don't have an account? "),
                   GestureDetector(
                     onTap: () => {
+                      //_loading = true,
                       Navigator.pushReplacementNamed(context, '/signup'),
                     },
                     child: Text("Register Now",
                         style: TextStyle(color: Colors.amber)),
-                  ),
+                  )
                 ],
               ),
-            ),
+            )
           ],
         ),
       ),
