@@ -63,7 +63,7 @@ class _DashboardState extends State<Dashboard> {
                 children: [
                   Avatar(user),
                   const SizedBox(height: 12),
-                  Icon(Icons.card_giftcard),
+                  Icon(Icons.badge),
                   Text("Student ID" + ': ' + _id,
                       style: TextStyle(fontSize: 16, color: Colors.amber)),
                   FormVerticalSpace(),
