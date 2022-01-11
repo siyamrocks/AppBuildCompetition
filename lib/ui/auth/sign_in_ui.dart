@@ -130,16 +130,18 @@ class _SignInUIState extends State<SignInUI> {
                 bool status = await _auth
                     .signInWithEmailAndPassword(_id.text, _password.text)
                     .then((status) {
-                  Provider.of<StudentVueProvider>(context).resetData();
+                  Provider.of<StudentVueProvider>(context, listen: false)
+                      .resetData();
                   setState(() {
                     _loading = false;
                   });
                   return status;
                 });
                 if (!status) {
-                  _scaffoldKey.currentState.showSnackBar(SnackBar(
-                    content: Text("Wrong username or password."),
-                  ));
+                  final snackBar = SnackBar(
+                    content: const Text("Wrong username or password."),
+                  );
+                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
                 }
               },
               child: Container(
@@ -177,7 +179,6 @@ class _SignInUIState extends State<SignInUI> {
                   Text("Don't have an account? "),
                   GestureDetector(
                     onTap: () => {
-                      //_loading = true,
                       Navigator.pushReplacementNamed(context, '/signup'),
                     },
                     child: Text("Register Now",

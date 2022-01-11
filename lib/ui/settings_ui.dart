@@ -148,7 +148,6 @@ class SettingsUI extends StatelessWidget {
                           .resetData();
                       AuthService _auth = AuthService();
                       _auth.signOut();
-                      //Navigator.pushReplacementNamed(context, '/signin');
                     },
                     style: ButtonStyle(
                         backgroundColor:

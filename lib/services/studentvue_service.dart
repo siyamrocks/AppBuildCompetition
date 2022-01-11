@@ -36,7 +36,8 @@ class StudentVueProvider extends ChangeNotifier {
   }
 
   void resetData() {
-    _classes.clear();
+    if (_classes != null) _classes.clear();
+    if (_student != null) _student = StudentData();
     _isInit = false;
   }
 }
