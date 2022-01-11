@@ -39,7 +39,8 @@ class _DashboardState extends State<Dashboard> {
 
     // Correct school name
     setState(() {
-      _school = toBeginningOfSentenceCase(_school.replaceAll("-", " "));
+      if (_school != null)
+        _school = toBeginningOfSentenceCase(_school.replaceAll("-", " "));
     });
 
     return Container(
