@@ -18,7 +18,7 @@ class Grade extends StatelessWidget {
   Widget build(BuildContext context) {
     if (double.tryParse(grade) != null) {
       return CircularPercentIndicator(
-        radius: 60.0,
+        radius: 77.0,
         lineWidth: 5.0,
         percent: (double.parse(grade) / 100).clamp(0, 1.0),
         center: Row(
@@ -26,7 +26,7 @@ class Grade extends StatelessWidget {
           children: [
             Text(
               grade,
-              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
             ),
             Text("%")
           ],

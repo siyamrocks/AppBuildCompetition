@@ -135,8 +135,7 @@ class _UpdateProfileUIState extends State<UpdateProfileUI> {
                             id: _id.text,
                             name: _name.text,
                             email: user?.email,
-                            school: selectedSchool,
-                            studentvue: user?.studentvue);
+                            school: selectedSchool);
                         _updateUserConfirm(context, _updatedUser, user?.email);
                       }
                     }),
