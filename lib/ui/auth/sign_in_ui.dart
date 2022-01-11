@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_starter/localizations.dart';
-import 'package:flutter_starter/ui/components/components.dart';
-import 'package:flutter_starter/helpers/helpers.dart';
+import 'package:flutter_starter/store/store.dart';
 import 'package:flutter_starter/services/services.dart';
 import 'package:provider/provider.dart';
 
@@ -13,7 +10,6 @@ class SignInUI extends StatefulWidget {
 class _SignInUIState extends State<SignInUI> {
   final TextEditingController _id = new TextEditingController();
   final TextEditingController _password = new TextEditingController();
-  final _scaffoldKey = GlobalKey<ScaffoldState>();
   bool _loading = false;
 
   @override
@@ -29,6 +25,10 @@ class _SignInUIState extends State<SignInUI> {
   }
 
   Widget build(BuildContext context) {
+    // shared pref object
+    SharedPreferenceHelper _sharedPrefsHelper =
+        Provider.of<StudentVueProvider>(context).sharedPrefsHelper;
+
     return Scaffold(
       backgroundColor: Colors.black,
       body: SingleChildScrollView(
@@ -126,6 +126,8 @@ class _SignInUIState extends State<SignInUI> {
                 setState(() {
                   _loading = true;
                 });
+                // Save password for StudentVUE login.
+                _sharedPrefsHelper.setPassword(_password.text);
                 AuthService _auth = AuthService();
                 bool status = await _auth
                     .signInWithEmailAndPassword(_id.text, _password.text)

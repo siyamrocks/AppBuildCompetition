@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_starter/localizations.dart';
+import 'package:flutter_starter/store/store.dart';
 import 'package:flutter_starter/services/services.dart';
 import 'package:flutter_starter/models/models.dart';
 import 'package:flutter_starter/ui/helper.dart';
@@ -16,12 +16,8 @@ class HomeUI extends StatefulWidget {
 }
 
 class _HomeUIState extends State<HomeUI> {
-  bool _loading = true;
   String _id = '';
-  String _name = '';
-  String _email = '';
-  String _school = '';
-  String _admin = '';
+  String _pass = '';
 
   @override
   void initState() {
@@ -36,20 +32,22 @@ class _HomeUIState extends State<HomeUI> {
   int _selectedIndex = 0;
 
   Widget build(BuildContext context) {
+    // shared pref object
+    SharedPreferenceHelper _sharedPrefsHelper =
+        Provider.of<StudentVueProvider>(context).sharedPrefsHelper;
+
     final UserModel user = Provider.of<UserModel>(context);
     if (user != null) {
       setState(() {
-        _loading = false;
         _id = user.id;
-        _name = user.name;
-        _school = user.school;
-        _email = user.email;
       });
     }
 
-    _isUserAdmin();
+    Provider.of<StudentVueProvider>(context).initData(_id, _pass);
 
-    Provider.of<StudentVueProvider>(context).initData(_id, user.studentvue);
+    _sharedPrefsHelper.getPassword.then((value) {
+      _pass = value;
+    });
 
     List<Widget> _widgetOptions = <Widget>[
       Dashboard(),
@@ -114,15 +112,5 @@ class _HomeUIState extends State<HomeUI> {
             animationDuration: Duration(milliseconds: 200),
             animationCurve: Curves.bounceInOut),
         body: _widgetOptions.elementAt(_selectedIndex));
-  }
-
-  _isUserAdmin() async {
-    bool _isAdmin = await AuthService().isAdmin();
-    //handle setState bug  //https://stackoverflow.com/questions/49340116/setstate-called-after-dispose
-    if (mounted) {
-      setState(() {
-        _admin = _isAdmin.toString();
-      });
-    }
   }
 }

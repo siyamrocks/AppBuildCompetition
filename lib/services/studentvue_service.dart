@@ -1,7 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_starter/store/store.dart';
 import 'package:flutter_starter/studentvue/studentvueclient.dart';
 
 class StudentVueProvider extends ChangeNotifier {
+  // shared pref object
+  SharedPreferenceHelper sharedPrefsHelper;
+
+  StudentVueProvider() {
+    sharedPrefsHelper = SharedPreferenceHelper();
+  }
+
   List<SchoolClass> _classes;
   StudentData _student;
   bool _isInit = false;

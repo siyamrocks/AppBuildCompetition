@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_starter/services/services.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_starter/localizations.dart';
 import 'package:flutter_starter/models/models.dart';
 import 'package:flutter_starter/ui/components/components.dart';
 import 'package:barcode_widget/barcode_widget.dart';
+
 import 'package:intl/intl.dart' show toBeginningOfSentenceCase;
 
 class Dashboard extends StatefulWidget {
@@ -15,6 +17,7 @@ class _DashboardState extends State<Dashboard> {
   String _id = '';
   String _name = '';
   String _school = '';
+  bool _admin = false;
 
   @override
   void initState() {
@@ -43,6 +46,8 @@ class _DashboardState extends State<Dashboard> {
         _school = toBeginningOfSentenceCase(_school.replaceAll("-", " "));
     });
 
+    _isUserAdmin();
+
     return Container(
         child: Center(
       child: SingleChildScrollView(
@@ -69,6 +74,7 @@ class _DashboardState extends State<Dashboard> {
                   Icon(Icons.account_balance),
                   Text(labels.home.nameLabel + ': ' + _name,
                       style: TextStyle(fontSize: 16, color: Colors.amber)),
+                  // Container(child: _admin ? Text("You are an admin!") : Container()),
                 ],
               ),
             ),
@@ -110,5 +116,15 @@ class _DashboardState extends State<Dashboard> {
         ],
       ),
     );
+  }
+
+  _isUserAdmin() async {
+    bool _isAdmin = await AuthService().isAdmin();
+    //handle setState bug  //https://stackoverflow.com/questions/49340116/setstate-called-after-dispose
+    if (mounted) {
+      setState(() {
+        _admin = _isAdmin;
+      });
+    }
   }
 }

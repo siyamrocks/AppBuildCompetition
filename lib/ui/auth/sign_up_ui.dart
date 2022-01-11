@@ -141,13 +141,14 @@ class _SignUpUIState extends State<SignUpUI> {
                                     _id.text,
                                     _password.text,
                                     _id.text,
-                                    selectedSchool,
-                                    _password.text);
+                                    selectedSchool);
 
                             if (_isRegisterSucccess == false) {
-                              _scaffoldKey.currentState.showSnackBar(SnackBar(
+                              final snackBar = SnackBar(
                                 content: Text(labels.auth.signUpError),
-                              ));
+                              );
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(snackBar);
                             }
                           }
                         }),

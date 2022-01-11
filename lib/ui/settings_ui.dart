@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_starter/store/store.dart';
 import 'package:flutter_starter/ui/components/segmented_selector.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_starter/localizations.dart';
@@ -20,6 +21,10 @@ class SettingsUI extends StatelessWidget {
   }
 
   Widget _buildLayoutSection(BuildContext context) {
+    // shared pref object
+    SharedPreferenceHelper _sharedPrefsHelper =
+        Provider.of<StudentVueProvider>(context).sharedPrefsHelper;
+
     final labels = AppLocalizations.of(context);
     final List<MenuOptionsModel> themeOptions = [
       MenuOptionsModel(
@@ -146,6 +151,7 @@ class SettingsUI extends StatelessWidget {
                     onPressed: () {
                       Provider.of<StudentVueProvider>(context, listen: false)
                           .resetData();
+                      _sharedPrefsHelper.setPassword("");
                       AuthService _auth = AuthService();
                       _auth.signOut();
                     },
