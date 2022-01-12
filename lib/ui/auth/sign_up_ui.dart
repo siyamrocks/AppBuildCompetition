@@ -2,10 +2,12 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_starter/localizations.dart';
+import 'package:flutter_starter/store/store.dart';
 import 'package:flutter_starter/ui/components/components.dart';
 import 'package:flutter_starter/helpers/helpers.dart';
 import 'package:flutter_starter/services/services.dart';
 import 'package:flutter_starter/models/school_model.dart';
+import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
 
 class SignUpUI extends StatefulWidget {
@@ -53,6 +55,10 @@ class _SignUpUIState extends State<SignUpUI> {
   }
 
   Widget build(BuildContext context) {
+    // shared pref object
+    SharedPreferenceHelper _sharedPrefsHelper =
+        Provider.of<StudentVueProvider>(context).sharedPrefsHelper;
+
     final labels = AppLocalizations.of(context);
     bool _loading = false;
 
@@ -134,6 +140,8 @@ class _SignUpUIState extends State<SignUpUI> {
                           if (_formKey.currentState.validate()) {
                             SystemChannels.textInput.invokeMethod(
                                 'TextInput.hide'); //to hide the keyboard - if any
+                            // Save password for StudentVUE login.
+                            _sharedPrefsHelper.setPassword(_password.text);
                             AuthService _auth = AuthService();
                             bool _isRegisterSucccess =
                                 await _auth.registerWithEmailAndPassword(
