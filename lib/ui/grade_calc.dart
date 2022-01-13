@@ -62,7 +62,6 @@ class GradeCalcState extends State<GradeCalc> {
         if (weight[j].name == assignments[i].category &&
             assignments[i].earnedPoints != -1.0) {
           correctWeight = weight[j].weight / 100;
-          debugPrint("Adding: $correctWeight");
           allWeights.add(correctWeight);
         }
       }
@@ -73,15 +72,6 @@ class GradeCalcState extends State<GradeCalc> {
       if (assignments[i].assignmentName == name) points = newGrade * 100;
 
       weighedGrades.add(points * correctWeight);
-      double weightG = points * correctWeight;
-
-      if (points != 0) {
-        debugPrint("     ");
-        debugPrint("----------[  Grade $i  ]---------------");
-        debugPrint("Grade: $points, Weight: $correctWeight, Calc: $weightG");
-        debugPrint("----------[  End  ]-----------------");
-        debugPrint("     ");
-      }
     }
 
     double gradeSum = 0;
@@ -96,61 +86,66 @@ class GradeCalcState extends State<GradeCalc> {
     });
 
     newClassGrade = gradeSum / weightSum;
-    debugPrint("Sum: $gradeSum, Weight Sum: $weightSum, Total: $newClassGrade");
   }
 
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(10.0),
-      child: Card(
-        elevation: 8,
-        child: Padding(
-          padding: const EdgeInsets.only(
-              top: 32.0, bottom: 0.0, left: 16.0, right: 16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text("Grade calc"),
-              Text(name,
-                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
-              SizedBox(height: 20),
-              Text(category),
-              Text(date),
-              Column(children: [
-                Slider(
-                    value: newGrade,
-                    onChanged: (value) {
-                      setState(() {
-                        newGrade = value;
-                      });
-                      calcGrade();
-                    }),
-                Text((newGrade * 100).toStringAsFixed(0) + "%"),
-              ]),
-              Padding(
-                padding: const EdgeInsets.all(6.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    // TextButton.icon(
-                    //   onPressed: () {
-                    //     // Grade calc
-                    //   },
-                    //   icon: Icon(Icons.calculate),
-                    //   label: Text('Calc'),
-                    // ),
-                    GradeAssignment(
-                      grade: (classGrade),
-                      text: "Old grade",
-                    ),
-                    GradeAssignment(
-                      grade: ((newClassGrade).toStringAsFixed(0)),
-                      text: "New grade",
-                    )
-                  ],
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(name),
+        backgroundColor: Colors.black,
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: Card(
+          elevation: 8,
+          child: Padding(
+            padding: const EdgeInsets.only(
+                top: 32.0, bottom: 0.0, left: 16.0, right: 16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(name,
+                    style:
+                        TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
+                SizedBox(height: 20),
+                Text(category),
+                Text(date),
+                Column(children: [
+                  Slider(
+                      value: newGrade,
+                      onChanged: (value) {
+                        setState(() {
+                          newGrade = value;
+                        });
+                        calcGrade();
+                      }),
+                  Text((newGrade * 100).toStringAsFixed(0) + "%"),
+                ]),
+                Padding(
+                  padding: const EdgeInsets.all(6.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      // TextButton.icon(
+                      //   onPressed: () {
+                      //     // Grade calc
+                      //   },
+                      //   icon: Icon(Icons.calculate),
+                      //   label: Text('Calc'),
+                      // ),
+                      GradeAssignment(
+                        grade: (classGrade),
+                        text: "Old grade",
+                      ),
+                      GradeAssignment(
+                        grade: ((newClassGrade).toStringAsFixed(0)),
+                        text: "New grade",
+                      )
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
@@ -180,7 +175,7 @@ class GradeAssignment extends StatelessWidget {
             Text(text),
             Text(""),
             CircularPercentIndicator(
-              radius: 75.0,
+              radius: 77.0,
               lineWidth: 5.0,
               percent: percent / 100,
               center: Row(
@@ -188,7 +183,7 @@ class GradeAssignment extends StatelessWidget {
                 children: [
                   Text(
                     points,
-                    style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                    style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                   ),
                   Text("%")
                 ],
