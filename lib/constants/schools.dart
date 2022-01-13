@@ -83,7 +83,7 @@ class SchoolData {
           "https://calendar.google.com/calendar/embed?src=kjfv8jac8hbl17sc7bpil8lljofcp81d%40import.calendar.google.com&ctz=America%2FNew_York"
     },
     {
-      "name": "peachtree-high",
+      "name": "peachtree-ridge-high",
       "url":
           "https://calendar.google.com/calendar/embed?src=gwinnett.k12.ga.us_kdtt7msae5tpktmnpjhtadqvc8%40group.calendar.google.com&ctz=America%2FNew_York"
     },
