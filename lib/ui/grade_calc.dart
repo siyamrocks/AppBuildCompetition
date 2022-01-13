@@ -180,7 +180,7 @@ class GradeAssignment extends StatelessWidget {
             Text(text),
             Text(""),
             CircularPercentIndicator(
-              radius: 60.0,
+              radius: 75.0,
               lineWidth: 5.0,
               percent: percent / 100,
               center: Row(
