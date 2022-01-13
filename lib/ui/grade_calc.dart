@@ -53,17 +53,50 @@ class GradeCalcState extends State<GradeCalc> {
   double newClassGrade = 0;
 
   void calcGrade() {
-    double correctWeight = 0;
+    List<double> weighedGrades = [];
+    List<double> allWeights = [];
 
-    for (int i = 0; i < weight.length; i++) {
-      if (category == weight[i].name) {
-        correctWeight = weight[i].weight;
+    for (int i = 0; i < assignments.length; i++) {
+      double correctWeight = 0;
+      for (int j = 0; j < weight.length; j++) {
+        if (weight[j].name == assignments[i].category &&
+            assignments[i].earnedPoints != -1.0) {
+          correctWeight = weight[j].weight / 100;
+          debugPrint("Adding: $correctWeight");
+          allWeights.add(correctWeight);
+        }
+      }
+
+      double points = assignments[i].earnedPoints * 100;
+
+      if (assignments[i].earnedPoints == -1.0) points = 0;
+      if (assignments[i].assignmentName == name) points = newGrade * 100;
+
+      weighedGrades.add(points * correctWeight);
+      double weightG = points * correctWeight;
+
+      if (points != 0) {
+        debugPrint("     ");
+        debugPrint("----------[  Grade $i  ]---------------");
+        debugPrint("Grade: $points, Weight: $correctWeight, Calc: $weightG");
+        debugPrint("----------[  End  ]-----------------");
+        debugPrint("     ");
       }
     }
-    newClassGrade =
-        (((newGrade * 100 - double.parse(classGrade) * (correctWeight / 100)) /
-                (100 - correctWeight)) *
-            100);
+
+    double gradeSum = 0;
+    double weightSum = 0;
+
+    weighedGrades.forEach((num e) {
+      gradeSum += e;
+    });
+
+    allWeights.forEach((num e) {
+      weightSum += e;
+    });
+
+    newClassGrade = gradeSum / weightSum;
+    debugPrint("Sum: $gradeSum, Weight Sum: $weightSum, Total: $newClassGrade");
   }
 
   Widget build(BuildContext context) {

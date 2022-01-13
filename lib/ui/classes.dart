@@ -98,6 +98,7 @@ class _ClassesState extends State<Classes> {
                                               .assignmentCategories,
                                           classGrade:
                                               classes[index].letterGrade,
+                                          className: classes[index].className,
                                         )),
                               );
                             },
