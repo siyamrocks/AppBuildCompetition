@@ -64,6 +64,7 @@ class _SignUpUIState extends State<SignUpUI> {
 
     return Scaffold(
       key: _scaffoldKey,
+      backgroundColor: Colors.black,
       body: LoadingScreen(
         child: Form(
           key: _formKey,
@@ -76,7 +77,11 @@ class _SignUpUIState extends State<SignUpUI> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
                     LogoGraphicHeader(),
-                    Text("USE YOUR ECLASS PASSWORD"),
+                    Text(
+                      "Use your eClass password",
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    ),
                     SizedBox(height: 48.0),
                     FutureBuilder<List<School>>(
                         future: _schools,
@@ -89,7 +94,7 @@ class _SignUpUIState extends State<SignUpUI> {
                             );
                           } else {
                             return DropdownButton<String>(
-                                hint: Text("Select"),
+                                hint: Text("Select your school"),
                                 value: selectedSchool,
                                 onChanged: (newValue) {
                                   setState(() {
@@ -105,61 +110,163 @@ class _SignUpUIState extends State<SignUpUI> {
                           }
                         }),
                     FormVerticalSpace(),
-                    FormInputFieldWithIcon(
-                      controller: _id,
-                      iconPrefix: Icons.credit_card,
-                      labelText: "Student ID",
-                      // validator: Validator(labels).name,
-                      onChanged: (value) => null,
-                      onSaved: (value) => _id.text = value,
+                    Container(
+                      margin: EdgeInsets.only(left: 20, right: 20, top: 30),
+                      padding: EdgeInsets.only(left: 20, right: 20),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.amber, width: 3),
+                        borderRadius: BorderRadius.circular(50),
+                        color: Colors.grey[200],
+                        boxShadow: [
+                          BoxShadow(
+                              offset: Offset(0, 4),
+                              blurRadius: 70,
+                              color: Colors.grey.shade900)
+                        ],
+                      ),
+                      alignment: Alignment.center,
+                      child: TextFormField(
+                        controller: _id,
+                        onChanged: (value) => null,
+                        onSaved: (value) => _id.text = value,
+                        inputFormatters: <TextInputFormatter>[
+                          FilteringTextInputFormatter.digitsOnly
+                        ],
+                        cursorColor: Colors.orange,
+                        style: TextStyle(color: Colors.black),
+                        decoration: InputDecoration(
+                            icon: Icon(
+                              Icons.credit_card,
+                              color: Colors.amberAccent,
+                            ),
+                            hintText: "Student ID",
+                            hintStyle: TextStyle(color: Colors.grey[600]),
+                            enabledBorder: InputBorder.none,
+                            focusedBorder: InputBorder.none),
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(left: 20, right: 20, top: 30),
+                      padding: EdgeInsets.only(left: 20, right: 20),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.amber, width: 3),
+                        borderRadius: BorderRadius.circular(50),
+                        color: Colors.grey[200],
+                        boxShadow: [
+                          BoxShadow(
+                              offset: Offset(0, 4),
+                              blurRadius: 70,
+                              color: Colors.grey.shade900)
+                        ],
+                      ),
+                      alignment: Alignment.center,
+                      child: TextFormField(
+                        controller: _name,
+                        validator: Validator(labels).name,
+                        onChanged: (value) => null,
+                        onSaved: (value) => _name.text = value,
+                        cursorColor: Colors.orange,
+                        style: TextStyle(color: Colors.black),
+                        decoration: InputDecoration(
+                            icon: Icon(
+                              Icons.person,
+                              color: Colors.amberAccent,
+                            ),
+                            hintText: labels.auth.nameFormField,
+                            hintStyle: TextStyle(color: Colors.grey[600]),
+                            enabledBorder: InputBorder.none,
+                            focusedBorder: InputBorder.none),
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(left: 20, right: 20, top: 30),
+                      padding: EdgeInsets.only(left: 20, right: 20),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.amber, width: 3),
+                        borderRadius: BorderRadius.circular(50),
+                        color: Colors.grey[200],
+                        boxShadow: [
+                          BoxShadow(
+                              offset: Offset(0, 4),
+                              blurRadius: 70,
+                              color: Colors.grey.shade900)
+                        ],
+                      ),
+                      alignment: Alignment.center,
+                      child: TextFormField(
+                        controller: _password,
+                        cursorColor: Colors.orange,
+                        validator: Validator(labels).password,
+                        obscureText: true,
+                        maxLines: 1,
+                        onChanged: (value) => null,
+                        onSaved: (value) => _password.text = value,
+                        style: TextStyle(color: Colors.black),
+                        decoration: InputDecoration(
+                            icon: Icon(
+                              Icons.lock,
+                              color: Colors.amberAccent,
+                            ),
+                            hintText: labels.auth.passwordFormField,
+                            hintStyle: TextStyle(color: Colors.grey[600]),
+                            enabledBorder: InputBorder.none,
+                            focusedBorder: InputBorder.none),
+                      ),
                     ),
                     FormVerticalSpace(),
-                    FormInputFieldWithIcon(
-                      controller: _name,
-                      iconPrefix: Icons.person,
-                      labelText: labels.auth.nameFormField,
-                      validator: Validator(labels).name,
-                      onChanged: (value) => null,
-                      onSaved: (value) => _name.text = value,
-                    ),
-                    FormVerticalSpace(),
-                    FormInputFieldWithIcon(
-                      controller: _password,
-                      iconPrefix: Icons.lock,
-                      labelText: labels.auth.passwordFormField,
-                      validator: Validator(labels).password,
-                      obscureText: true,
-                      maxLines: 1,
-                      onChanged: (value) => null,
-                      onSaved: (value) => _password.text = value,
-                    ),
-                    FormVerticalSpace(),
-                    PrimaryButton(
-                        labelText: labels.auth.signUpButton,
-                        onPressed: () async {
-                          if (_formKey.currentState.validate()) {
-                            SystemChannels.textInput.invokeMethod(
-                                'TextInput.hide'); //to hide the keyboard - if any
-                            // Save password for StudentVUE login.
-                            _sharedPrefsHelper.setPassword(_password.text);
-                            AuthService _auth = AuthService();
-                            bool _isRegisterSucccess =
-                                await _auth.registerWithEmailAndPassword(
-                                    _name.text,
-                                    _id.text,
-                                    _password.text,
-                                    _id.text,
-                                    selectedSchool);
+                    GestureDetector(
+                      onTap: () async {
+                        if (_formKey.currentState.validate()) {
+                          SystemChannels.textInput.invokeMethod(
+                              'TextInput.hide'); //to hide the keyboard - if any
+                          // Save password for StudentVUE login.
+                          _sharedPrefsHelper.setPassword(_password.text);
+                          AuthService _auth = AuthService();
+                          bool _isRegisterSucccess =
+                              await _auth.registerWithEmailAndPassword(
+                                  _name.text,
+                                  _id.text,
+                                  _password.text,
+                                  _id.text,
+                                  selectedSchool);
 
-                            if (_isRegisterSucccess == false) {
-                              final snackBar = SnackBar(
-                                content: Text(labels.auth.signUpError),
-                              );
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(snackBar);
-                            }
+                          if (_isRegisterSucccess == false) {
+                            final snackBar = SnackBar(
+                              content: Text(labels.auth.signUpError),
+                            );
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(snackBar);
                           }
-                        }),
+                        }
+                      },
+                      child: Container(
+                        margin: EdgeInsets.only(left: 20, right: 20, top: 25),
+                        alignment: Alignment.center,
+                        height: 54,
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.amber, width: 2),
+                          gradient: LinearGradient(
+                              colors: [
+                                (new Color(0xDD000000)),
+                                (new Color(0xFF263238))
+                              ],
+                              begin: Alignment.centerLeft,
+                              end: Alignment.centerRight),
+                          borderRadius: BorderRadius.circular(50),
+                          boxShadow: [
+                            BoxShadow(
+                              offset: Offset(0, 10),
+                              blurRadius: 50,
+                              color: Colors.grey.shade800,
+                            )
+                          ],
+                        ),
+                        child: Text(
+                          labels.auth.signUpButton,
+                          style: TextStyle(color: Colors.amber),
+                        ),
+                      ),
+                    ),
                     FormVerticalSpace(),
                     LabelButton(
                       labelText: labels.auth.signInLabelButton,

@@ -8,7 +8,7 @@ class LogoGraphicHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
-    String _imageLogo = 'assets/images/default.png';
+    String _imageLogo = 'assets/images/defaultDark.png';
     if (themeProvider.isDarkModeOn == true) {
       _imageLogo = 'assets/images/defaultDark.png';
     }
