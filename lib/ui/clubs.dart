@@ -18,7 +18,7 @@ class _ClubsState extends State<Clubs> {
 
     if (index == -1) return Center(child: Text("No clubs found for: $school"));
 
-    String url = SchoolData.Calendar[index]['url'];
+    String url = SchoolData.Clubs[index]['url'];
     return WebView(
         javascriptMode: JavascriptMode.unrestricted, initialUrl: url);
   }
