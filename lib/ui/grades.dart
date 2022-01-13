@@ -7,16 +7,22 @@ class AssignmentPage extends StatefulWidget {
   final List<Assignment> assignments;
   final List<AssignmentCategory> category;
   final String classGrade;
+  final String className;
+
   const AssignmentPage(
       {Key key,
       @required this.assignments,
       @required this.category,
-      @required this.classGrade})
+      @required this.classGrade,
+      @required this.className})
       : super(key: key);
 
   @override
   _AssignmentState createState() => _AssignmentState(
-      assignments: assignments, category: category, classGrade: classGrade);
+      assignments: assignments,
+      category: category,
+      classGrade: classGrade,
+      className: className);
 }
 
 class GradeAssignment extends StatelessWidget {
@@ -68,10 +74,14 @@ class _AssignmentState extends State<AssignmentPage> {
   final List<Assignment> assignments;
   final List<AssignmentCategory> category;
   final String classGrade;
+  final String className;
+
   _AssignmentState(
       {@required this.assignments,
       @required this.category,
-      @required this.classGrade});
+      @required this.classGrade,
+      @required this.className});
+
   @override
   void initState() {
     super.initState();
@@ -81,7 +91,7 @@ class _AssignmentState extends State<AssignmentPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Grades"),
+        title: Text(className),
         backgroundColor: Colors.black,
       ),
       body: ListView.builder(
@@ -109,25 +119,25 @@ class _AssignmentState extends State<AssignmentPage> {
                       child: ButtonBar(
                         alignment: MainAxisAlignment.end,
                         children: [
-                          // TextButton.icon(
-                          //   onPressed: () {
-                          //     Navigator.push(
-                          //         context,
-                          //         MaterialPageRoute(
-                          //             builder: (context) => GradeCalc(
-                          //                 assignments: assignments,
-                          //                 name:
-                          //                     assignments[index].assignmentName,
-                          //                 category: assignments[index].category,
-                          //                 date: assignments[index].date,
-                          //                 weight: category,
-                          //                 grade:
-                          //                     assignments[index].earnedPoints,
-                          //                 classGrade: classGrade)));
-                          //   },
-                          //   icon: Icon(Icons.calculate),
-                          //   label: Text('Calc'),
-                          // ),
+                          TextButton.icon(
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => GradeCalc(
+                                          assignments: assignments,
+                                          name:
+                                              assignments[index].assignmentName,
+                                          category: assignments[index].category,
+                                          date: assignments[index].date,
+                                          weight: category,
+                                          grade:
+                                              assignments[index].earnedPoints,
+                                          classGrade: classGrade)));
+                            },
+                            icon: Icon(Icons.calculate),
+                            label: Text('Calc'),
+                          ),
                           GradeAssignment(
                               grade: (assignments[index].earnedPoints * 100)
                                   .toStringAsFixed(0))
