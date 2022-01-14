@@ -59,10 +59,13 @@ class GradeCalcState extends State<GradeCalc> {
     for (int i = 0; i < assignments.length; i++) {
       double correctWeight = 0;
       for (int j = 0; j < weight.length; j++) {
-        if (weight[j].name == assignments[i].category &&
-            assignments[i].earnedPoints != -1.0) {
+        if (weight[j].name == assignments[i].category) {
           correctWeight = weight[j].weight / 100;
-          allWeights.add(correctWeight);
+          if (assignments[i].earnedPoints != -1.0) {
+            allWeights.add(correctWeight);
+          } else if (assignments[i].assignmentName == name) {
+            allWeights.add(correctWeight);
+          }
         }
       }
 
@@ -161,9 +164,10 @@ class GradeAssignment extends StatelessWidget {
       : super(key: key);
 
   Widget build(BuildContext context) {
-    double percent = double.parse(grade);
-    String points = grade;
     if (double.tryParse(grade) != null) {
+      double percent = double.parse(grade);
+      String points = grade;
+
       if (percent > 100) percent = 100;
       if (percent < 0) points = "N/A";
       if (percent < 0) percent = 0;
@@ -200,10 +204,29 @@ class GradeAssignment extends StatelessWidget {
             fontSize: 25, fontWeight: FontWeight.bold, color: Colors.black54),
       );
     } else {
-      return Text(
-        "No grade",
-        style: TextStyle(
-            fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black54),
+      return Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Column(
+          children: [
+            Text(text),
+            Text(""),
+            CircularPercentIndicator(
+              radius: 77.0,
+              lineWidth: 5.0,
+              percent: 0,
+              center: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "N/A",
+                    style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
+              progressColor: Colors.green,
+            ),
+          ],
+        ),
       );
     }
   }
