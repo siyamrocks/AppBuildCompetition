@@ -50,7 +50,8 @@ class Grade extends StatelessWidget {
 }
 
 class _ClassesState extends State<Classes> {
-  List<SchoolClass> classes;
+  List<ReportPeriod> periods;
+  int _index = 0;
 
   @override
   void initState() {
@@ -59,63 +60,96 @@ class _ClassesState extends State<Classes> {
 
   @override
   Widget build(BuildContext context) {
-    classes = Provider.of<StudentVueProvider>(context).classes;
-    return Container(
-      child: ListView.builder(
-        itemBuilder: (context, index) {
-          return Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Card(
-              elevation: 8,
-              child: Padding(
-                padding: const EdgeInsets.only(
-                    top: 32.0, bottom: 0.0, left: 16.0, right: 16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(classes[index].className,
-                        style: TextStyle(
-                            fontSize: 22, fontWeight: FontWeight.bold)),
-                    SizedBox(height: 20),
-                    Text("Teacher: " + classes[index].classTeacher),
-                    Text("Email: " + classes[index].classTeacherEmail),
-                    Text("Room: " + classes[index].roomNumber),
-                    Text("Period: " + classes[index].period.toString()),
-                    Padding(
-                      padding: const EdgeInsets.all(6.0),
-                      child: ButtonBar(
-                        alignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          TextButton.icon(
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => AssignmentPage(
-                                          assignments:
-                                              classes[index].assignments,
-                                          category: classes[index]
-                                              .assignmentCategories,
-                                          classGrade:
-                                              classes[index].letterGrade,
-                                          className: classes[index].className,
-                                        )),
-                              );
-                            },
-                            icon: Icon(Icons.arrow_forward),
-                            label: Text('View'),
-                          ),
-                          Grade(grade: classes[index].letterGrade)
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
+    periods = Provider.of<StudentVueProvider>(context).periods;
+    List<SchoolClass> classes = periods[_index].classes;
+    return SingleChildScrollView(
+      physics: ScrollPhysics(),
+      child: Column(
+        children: [
+          DropdownButton<int>(
+              value: _index,
+              icon: const Icon(Icons.arrow_downward),
+              iconSize: 24,
+              elevation: 16,
+              underline: Container(
+                height: 2,
+                color: Colors.grey,
               ),
-            ),
-          );
-        },
-        itemCount: classes.length,
+              onChanged: (int newValue) {
+                setState(() {
+                  _index = newValue;
+                });
+              },
+              items: periods.map((ReportPeriod value) {
+                return DropdownMenuItem<int>(
+                  value: int.parse(value.index),
+                  child: Text(value.name),
+                );
+              }).toList()),
+          Text(
+            "${periods[_index].startDate} - ${periods[_index].endDate}",
+            style: TextStyle(fontSize: 10),
+          ),
+          ListView.builder(
+            physics: NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+            itemBuilder: (context, index) {
+              return Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Card(
+                  elevation: 8,
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                        top: 32.0, bottom: 0.0, left: 16.0, right: 16.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(classes[index].className,
+                            style: TextStyle(
+                                fontSize: 22, fontWeight: FontWeight.bold)),
+                        SizedBox(height: 20),
+                        Text("Teacher: " + classes[index].classTeacher),
+                        Text("Email: " + classes[index].classTeacherEmail),
+                        Text("Room: " + classes[index].roomNumber),
+                        Text("Period: " + classes[index].period.toString()),
+                        Padding(
+                          padding: const EdgeInsets.all(6.0),
+                          child: ButtonBar(
+                            alignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              TextButton.icon(
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => AssignmentPage(
+                                              assignments:
+                                                  classes[index].assignments,
+                                              category: classes[index]
+                                                  .assignmentCategories,
+                                              classGrade:
+                                                  classes[index].letterGrade,
+                                              className:
+                                                  classes[index].className,
+                                            )),
+                                  );
+                                },
+                                icon: Icon(Icons.arrow_forward),
+                                label: Text('View'),
+                              ),
+                              Grade(grade: classes[index].letterGrade)
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              );
+            },
+            itemCount: classes.length,
+          ),
+        ],
       ),
     );
   }

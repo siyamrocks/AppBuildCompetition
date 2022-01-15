@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:html_unescape/html_unescape.dart';
 import 'mockresponses.dart';
 import 'zip_code_result.dart';
@@ -24,7 +25,7 @@ class StudentVueClient {
 
   final Dio _dio = Dio(BaseOptions(validateStatus: (_) => true));
 
-  Future<StudentGradeData> loadGradebook({Function(double) callback}) async {
+  Future<List<SchoolClass>> addClasses(String index) async {
     String resData;
     if (!mock) {
       var requestData = '''<?xml version="1.0" encoding="utf-8"?>
@@ -37,23 +38,18 @@ class StudentVueClient {
               <parent>${studentAccount ? '0' : '1'}</parent>
               <webServiceHandleName>PXPWebServices</webServiceHandleName>
               <methodName>Gradebook</methodName>
-              <paramStr>&lt;Parms&gt;&lt;ChildIntID&gt;0&lt;/ChildIntID&gt;&lt;/Parms&gt;</paramStr>
+              ReportPeriod
+              <paramStr>&lt;Parms&gt;&lt;ChildIntID&gt;0&lt;/ChildIntID&gt;&lt;ReportPeriod&gt;$index&lt;/ReportPeriod&gt;&lt;/Parms&gt;</paramStr>
           </ProcessWebServiceRequest>
       </soap:Body>
     </soap:Envelope>''';
 
       _dio.options.headers['content-Type'] = 'text/xml';
 
-      var res = await _dio.post(reqURL, data: requestData,
-          onSendProgress: (one, two) {
-        if (callback != null) {
-          callback((one / two) * 0.5);
-        }
-      }, onReceiveProgress: (one, two) {
-        if (callback != null) {
-          callback((one / two) * 0.5 + 0.5);
-        }
-      });
+      var res = await _dio.post(
+        reqURL,
+        data: requestData,
+      );
 
       resData = res.data;
     } else {
@@ -61,20 +57,9 @@ class StudentVueClient {
     }
 
     final document = XmlDocument.parse(HtmlUnescape().convert(resData));
-    // await Future.delayed(const Duration(milliseconds: 1500));
-//    final document = XmlDocument.parse(testData);
-    if (resData.contains('Invalid user id or password')) {
-      return StudentGradeData()..error = 'Invalid user id or password';
-    }
-    if (resData.contains('The user name or password is incorrect')) {
-      return StudentGradeData()
-        ..error = 'The user name or password is incorrect';
-    }
-    // var currentMP = document.findAllElements('ReportingPeriod').first.getAttribute('GradePeriod');
-
-    var svData = StudentGradeData();
 
     var courses = document.findAllElements('Courses').first;
+
     var classes = List<SchoolClass>();
     for (int i = 0; i < courses.children.length; i++) {
       XmlNode current = courses.children[i];
@@ -181,7 +166,75 @@ class StudentVueClient {
 
       classes.add(_class);
     }
-    svData.classes = classes;
+    return classes;
+  }
+
+  Future<StudentGradeData> loadGradebook({Function(double) callback}) async {
+    String resData;
+    if (!mock) {
+      var requestData = '''<?xml version="1.0" encoding="utf-8"?>
+    <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+      <soap:Body>
+          <ProcessWebServiceRequest xmlns="http://edupoint.com/webservices/">
+              <userID>$username</userID>
+              <password>$password</password>
+              <skipLoginLog>1</skipLoginLog>
+              <parent>${studentAccount ? '0' : '1'}</parent>
+              <webServiceHandleName>PXPWebServices</webServiceHandleName>
+              <methodName>Gradebook</methodName>
+              ReportPeriod
+              <paramStr>&lt;Parms&gt;&lt;ChildIntID&gt;0&lt;/ChildIntID&gt;&lt;/Parms&gt;</paramStr>
+          </ProcessWebServiceRequest>
+      </soap:Body>
+    </soap:Envelope>''';
+
+      _dio.options.headers['content-Type'] = 'text/xml';
+
+      var res = await _dio.post(reqURL, data: requestData,
+          onSendProgress: (one, two) {
+        if (callback != null) {
+          callback((one / two) * 0.5);
+        }
+      }, onReceiveProgress: (one, two) {
+        if (callback != null) {
+          callback((one / two) * 0.5 + 0.5);
+        }
+      });
+
+      resData = res.data;
+    } else {
+      resData = MockResponses.GradebookResponse;
+    }
+
+    final document = XmlDocument.parse(HtmlUnescape().convert(resData));
+    // await Future.delayed(const Duration(milliseconds: 1500));
+//    final document = XmlDocument.parse(testData);
+    if (resData.contains('Invalid user id or password')) {
+      return StudentGradeData()..error = 'Invalid user id or password';
+    }
+    if (resData.contains('The user name or password is incorrect')) {
+      return StudentGradeData()
+        ..error = 'The user name or password is incorrect';
+    }
+    // var currentMP = document.findAllElements('ReportingPeriod').first.getAttribute('GradePeriod');
+
+    var svData = StudentGradeData();
+    var periods = List<ReportPeriod>();
+
+    var reportPeriods = document.findAllElements("ReportingPeriods").first;
+    for (int i = 0; i < reportPeriods.children.length; i++) {
+      XmlNode current = reportPeriods.children[i];
+      if (current.getAttribute("GradePeriod") == null) continue;
+      ReportPeriod _period = ReportPeriod();
+      _period.index = current.getAttribute("Index");
+      _period.name = current.getAttribute("GradePeriod");
+      _period.startDate = current.getAttribute("StartDate");
+      _period.endDate = current.getAttribute("EndDate");
+      _period.classes = await addClasses(_period.index);
+      periods.add(_period);
+    }
+
+    svData.periods = periods;
 
     return svData;
   }

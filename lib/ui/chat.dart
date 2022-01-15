@@ -11,7 +11,8 @@ class Chat extends StatefulWidget {
 }
 
 class _ChatState extends State<Chat> {
-  List<SchoolClass> classes;
+  List<ReportPeriod> periods;
+  int _index = 0;
 
   @override
   void initState() {
@@ -20,14 +21,48 @@ class _ChatState extends State<Chat> {
 
   @override
   Widget build(BuildContext context) {
-    classes = Provider.of<StudentVueProvider>(context).classes;
-    return ListView.builder(
-      itemBuilder: (context, index) {
-        return TeacherCard(
-            name: classes[index].classTeacher,
-            email: classes[index].classTeacherEmail);
-      },
-      itemCount: classes.length,
+    periods = Provider.of<StudentVueProvider>(context).periods;
+    List<SchoolClass> classes = periods[_index].classes;
+    return SingleChildScrollView(
+      physics: ScrollPhysics(),
+      child: Column(
+        children: [
+          DropdownButton<int>(
+              value: _index,
+              icon: const Icon(Icons.arrow_downward),
+              iconSize: 24,
+              elevation: 16,
+              underline: Container(
+                height: 2,
+                color: Colors.grey,
+              ),
+              onChanged: (int newValue) {
+                setState(() {
+                  _index = newValue;
+                });
+              },
+              items: periods.map((ReportPeriod value) {
+                return DropdownMenuItem<int>(
+                  value: int.parse(value.index),
+                  child: Text(value.name),
+                );
+              }).toList()),
+          Text(
+            "${periods[_index].startDate} - ${periods[_index].endDate}",
+            style: TextStyle(fontSize: 10),
+          ),
+          ListView.builder(
+            physics: NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+            itemBuilder: (context, index) {
+              return TeacherCard(
+                  name: classes[index].classTeacher,
+                  email: classes[index].classTeacherEmail);
+            },
+            itemCount: classes.length,
+          ),
+        ],
+      ),
     );
   }
 }

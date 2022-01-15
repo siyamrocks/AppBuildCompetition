@@ -1,25 +1,48 @@
 class StudentGradeData {
-  List<SchoolClass> classes;
+  List<ReportPeriod> periods;
   String studentName;
 
   String error;
 
-  StudentGradeData({this.classes, this.studentName});
+  StudentGradeData({this.periods, this.studentName});
 
   @override
   String toString() {
-    return 'StudentGradeData{classes: $classes, studentName: $studentName}';
+    return 'StudentGradeData{periods: $periods, studentName: $studentName}';
   }
 }
 
+class ReportPeriod {
+  String index;
+  String name;
+  String startDate;
+  String endDate;
+  List<SchoolClass> classes;
+}
+
 class SchoolClass {
-  String className, classTeacher, classTeacherEmail, markingPeriod, roomNumber, pctGrade, letterGrade;
+  String className,
+      classTeacher,
+      classTeacherEmail,
+      markingPeriod,
+      roomNumber,
+      pctGrade,
+      letterGrade;
   double earnedPoints, possiblePoints;
   int period;
   List<AssignmentCategory> assignmentCategories;
   List<Assignment> assignments;
 
-  SchoolClass({this.className, this.classTeacher, this.classTeacherEmail, this.markingPeriod, this.period, this.earnedPoints, this.possiblePoints, this.assignmentCategories, this.assignments});
+  SchoolClass(
+      {this.className,
+      this.classTeacher,
+      this.classTeacherEmail,
+      this.markingPeriod,
+      this.period,
+      this.earnedPoints,
+      this.possiblePoints,
+      this.assignmentCategories,
+      this.assignments});
 
   @override
   String toString() {
@@ -32,7 +55,8 @@ class Assignment {
   // earn points = -1 means grade not added
   double earnedPoints, possiblePoints;
 
-  Assignment({this.assignmentName, this.date, this.earnedPoints, this.possiblePoints});
+  Assignment(
+      {this.assignmentName, this.date, this.earnedPoints, this.possiblePoints});
 
   @override
   String toString() {
