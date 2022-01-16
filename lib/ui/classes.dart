@@ -52,8 +52,7 @@ class Grade extends StatelessWidget {
 
 class _ClassesState extends State<Classes> {
   List<ReportPeriod> periods;
-  List<ReportPeriod> _startedPeriods;
-  int _index = 0;
+  List<ReportPeriod> _startedPeriods = [];
 
   @override
   void initState() {
@@ -85,11 +84,11 @@ class _ClassesState extends State<Classes> {
               child: Column(
                 children: [
                   Text(
-                    periods[index].name,
+                    _startedPeriods[index].name,
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
                   Text(
-                    "${periods[index].startDate} - ${periods[index].endDate}",
+                    "${_startedPeriods[index].startDate} - ${_startedPeriods[index].endDate}",
                     style: TextStyle(fontSize: 10),
                   ),
                   Divider(
