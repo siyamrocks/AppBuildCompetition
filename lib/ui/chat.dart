@@ -1,16 +1,69 @@
+import 'package:flutter_starter/models/menu_option_model.dart';
 import 'package:flutter_starter/studentvue/src/studentgradedata.dart';
+import 'package:flutter_starter/ui/components/segmented_selector.dart';
 import 'package:flutter_starter/ui/email.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_starter/services/services.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter_html/flutter_html.dart';
 
 class Chat extends StatefulWidget {
   @override
   _ChatState createState() => _ChatState();
 }
 
+class Teachers extends StatefulWidget {
+  @override
+  _TeacherState createState() => _TeacherState();
+}
+
+class Message extends StatefulWidget {
+  @override
+  _MessageState createState() => _MessageState();
+}
+
 class _ChatState extends State<Chat> {
+  String currentOption = "0";
+
+  final List<MenuOptionsModel> options = [
+    MenuOptionsModel(
+        key: "0", value: "Teachers", icon: Icons.person_pin_rounded),
+    MenuOptionsModel(key: "1", value: "Messages", icon: Icons.message),
+  ];
+
+  final List<Widget> _screens = [
+    Teachers(),
+    Message(),
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Center(
+            child: Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: SegmentedSelector(
+                selectedOption: currentOption,
+                menuOptions: options,
+                onValueChanged: (value) {
+                  setState(() {
+                    currentOption = value;
+                  });
+                },
+              ),
+            ),
+          ),
+          _screens[int.parse(currentOption)]
+        ],
+      ),
+    );
+  }
+}
+
+class _TeacherState extends State<Teachers> {
   List<ReportPeriod> periods;
   int _index = 0;
 
@@ -21,7 +74,7 @@ class _ChatState extends State<Chat> {
 
   @override
   Widget build(BuildContext context) {
-    periods = Provider.of<StudentVueProvider>(context).periods;
+    periods = Provider.of<StudentVueProvider>(context).grades.periods;
     List<SchoolClass> classes = periods[_index].classes;
     return SingleChildScrollView(
       physics: ScrollPhysics(),
@@ -67,6 +120,26 @@ class _ChatState extends State<Chat> {
   }
 }
 
+class _MessageState extends State<Message> {
+  List<Messages> messages;
+
+  Widget build(BuildContext context) {
+    messages = Provider.of<StudentVueProvider>(context).grades.messages;
+    return ListView.builder(
+      physics: NeverScrollableScrollPhysics(),
+      shrinkWrap: true,
+      itemBuilder: (context, index) {
+        return MessageCard(
+          subject: messages[index].subject,
+          content: messages[index].content,
+          date: messages[index].startDate,
+        );
+      },
+      itemCount: messages.length,
+    );
+  }
+}
+
 class TeacherCard extends StatelessWidget {
   final String name;
   final String email;
@@ -108,6 +181,99 @@ class TeacherCard extends StatelessWidget {
               ],
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class MessageCard extends StatelessWidget {
+  final String subject;
+  final String content;
+  final String date;
+
+  const MessageCard(
+      {Key key, @required this.subject, @required this.content, this.date})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(20.0),
+      child: Card(
+        elevation: 20,
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(5.0),
+              child: ListTile(
+                title: Text(subject),
+                subtitle: Text(
+                  date,
+                  style: TextStyle(fontSize: 10),
+                ),
+              ),
+            ),
+            ButtonBar(
+              alignment: MainAxisAlignment.start,
+              children: [
+                TextButton.icon(
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ViewMessage(
+                                  subject: subject,
+                                  content: content,
+                                  date: date,
+                                )));
+                  },
+                  icon: Icon(Icons.arrow_forward),
+                  label: Text('Read'),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class ViewMessage extends StatelessWidget {
+  final String subject;
+  final String content;
+  final String date;
+
+  const ViewMessage(
+      {Key key, @required this.subject, @required this.content, this.date})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text(subject)),
+      body: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Card(
+          elevation: 8,
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(subject,
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                  SizedBox(height: 4),
+                  Text(date, style: TextStyle(fontSize: 10)),
+                  SizedBox(height: 20),
+                  Html(content),
+                ],
+              ),
+            ),
+          ),
         ),
       ),
     );

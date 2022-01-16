@@ -169,6 +169,57 @@ class StudentVueClient {
     return classes;
   }
 
+  Future<List<Messages>> getMessages() async {
+    String resData;
+    if (!mock) {
+      var requestData = '''<?xml version="1.0" encoding="utf-8"?>
+    <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+      <soap:Body>
+          <ProcessWebServiceRequest xmlns="http://edupoint.com/webservices/">
+              <userID>$username</userID>
+              <password>$password</password>
+              <skipLoginLog>1</skipLoginLog>
+              <parent>${studentAccount ? '0' : '1'}</parent>
+              <webServiceHandleName>PXPWebServices</webServiceHandleName>
+              <methodName>GetPXPMessages</methodName>
+              ReportPeriod
+              <paramStr>&lt;Parms&gt;&lt;ChildIntID&gt;0&lt;/ChildIntID&gt;&lt;/Parms&gt;</paramStr>
+          </ProcessWebServiceRequest>
+      </soap:Body>
+    </soap:Envelope>''';
+
+      _dio.options.headers['content-Type'] = 'text/xml';
+
+      var res = await _dio.post(
+        reqURL,
+        data: requestData,
+      );
+
+      resData = res.data;
+    } else {
+      resData = MockResponses.GradebookResponse;
+    }
+
+    final document = XmlDocument.parse(HtmlUnescape().convert(resData));
+
+    var messages = List<Messages>();
+
+    var listings = document.findAllElements("MessageListings").first;
+    for (int i = 0; i < listings.children.length; i++) {
+      XmlNode current = listings.children[i];
+      if (current.getAttribute("Subject") == null) continue;
+      Messages _m = Messages();
+      _m.id = current.getAttribute("ID");
+      _m.startDate = current.getAttribute("BeginDate");
+      _m.type = current.getAttribute("Type");
+      _m.subject = current.getAttribute("Subject");
+      _m.content = current.getAttribute("Content");
+      messages.add(_m);
+    }
+
+    return messages;
+  }
+
   Future<StudentGradeData> loadGradebook({Function(double) callback}) async {
     String resData;
     if (!mock) {
@@ -235,6 +286,7 @@ class StudentVueClient {
     }
 
     svData.periods = periods;
+    svData.messages = await getMessages();
 
     return svData;
   }

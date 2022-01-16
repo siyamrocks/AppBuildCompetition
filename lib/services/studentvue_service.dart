@@ -10,12 +10,12 @@ class StudentVueProvider extends ChangeNotifier {
     sharedPrefsHelper = SharedPreferenceHelper();
   }
 
-  List<ReportPeriod> _periods;
+  StudentGradeData _grades;
   StudentData _student;
   bool _isInit = false;
 
-  List<ReportPeriod> get periods {
-    return _periods;
+  StudentGradeData get grades {
+    return _grades;
   }
 
   StudentData get student {
@@ -36,7 +36,7 @@ class StudentVueProvider extends ChangeNotifier {
           mock: false);
 
       var gradebook = await client.loadGradebook();
-      _periods = gradebook.periods;
+      _grades = gradebook;
 
       var info = await client.loadStudentData();
       _student = info;
@@ -44,7 +44,7 @@ class StudentVueProvider extends ChangeNotifier {
   }
 
   void resetData() {
-    if (_periods != null) _periods.clear();
+    if (_grades != null) _grades = StudentGradeData();
     if (_student != null) _student = StudentData();
     _isInit = false;
   }

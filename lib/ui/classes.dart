@@ -61,7 +61,7 @@ class _ClassesState extends State<Classes> {
 
   @override
   Widget build(BuildContext context) {
-    periods = Provider.of<StudentVueProvider>(context).periods;
+    periods = Provider.of<StudentVueProvider>(context).grades.periods;
 
     for (int i = 0; i < periods.length; i++) {
       List<String> dateVals = periods[i].endDate.split("/");

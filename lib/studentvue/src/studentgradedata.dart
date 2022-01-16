@@ -1,5 +1,6 @@
 class StudentGradeData {
   List<ReportPeriod> periods;
+  List<Messages> messages;
   String studentName;
 
   String error;
@@ -10,6 +11,14 @@ class StudentGradeData {
   String toString() {
     return 'StudentGradeData{periods: $periods, studentName: $studentName}';
   }
+}
+
+class Messages {
+  String id;
+  String startDate;
+  String type;
+  String subject;
+  String content;
 }
 
 class ReportPeriod {

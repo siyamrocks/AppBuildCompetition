@@ -51,6 +51,7 @@ dependencies:
   image_picker:
   flutter_email_sender:
   curved_navigation_bar:
+  flutter_html:
   # flutter_auth_buttons:
 
 dev_dependencies:

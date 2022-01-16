@@ -13,14 +13,8 @@ class Helper extends StatefulWidget {
 }
 
 class _HelperState extends State<Helper> {
-  Map<DateTime, List<Event>> selectedEvents;
-  CalendarFormat format = CalendarFormat.month;
-  DateTime selectedDay = DateTime.now();
-  DateTime focusedDay = DateTime.now();
-
   @override
   void initState() {
-    selectedEvents = {};
     super.initState();
   }
 
