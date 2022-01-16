@@ -20,7 +20,7 @@ class AppThemes {
 
   //Background Colors
   static const Color _lightBackgroundColor = whiteLilac;
-  static const Color _lightBackgroundAppBarColor = _lightPrimaryColor;
+  static const Color _lightBackgroundAppBarColor = Colors.black;
   static const Color _lightBackgroundSecondaryColor = white;
   static const Color _lightBackgroundAlertColor = blackPearl;
   static const Color _lightBackgroundErrorColor = brinkPink;
@@ -47,7 +47,7 @@ class AppThemes {
 
   //Background Colors
   static const Color _darkBackgroundColor = Colors.black;
-  static const Color _darkBackgroundAppBarColor = _darkPrimaryColor;
+  static const Color _darkBackgroundAppBarColor = Colors.black;
   static const Color _darkBackgroundSecondaryColor =
       Color.fromRGBO(0, 0, 0, .6);
   static const Color _darkBackgroundAlertColor = Colors.black;
@@ -93,7 +93,7 @@ class AppThemes {
     ),
     appBarTheme: AppBarTheme(
       color: _lightBackgroundAppBarColor,
-      iconTheme: IconThemeData(color: _lightTextColor),
+      iconTheme: IconThemeData(color: _darkTextColor),
       textTheme: _lightTextTheme,
     ),
     colorScheme: ColorScheme.light(
