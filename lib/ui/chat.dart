@@ -80,7 +80,6 @@ class TeacherCard extends StatelessWidget {
       padding: const EdgeInsets.all(20.0),
       child: Card(
         elevation: 20,
-        clipBehavior: Clip.antiAlias,
         child: Column(
           children: [
             ListTile(

@@ -158,14 +158,14 @@ class AppThemes {
       fontWeight: FontWeight.w100);*/
 
   static final TextTheme _darkTextTheme = TextTheme(
-    headline1: TextStyle(fontSize: 20.0, color: _darkTextColor),
-    bodyText1: TextStyle(fontSize: 16.0, color: _darkTextColor),
-    bodyText2: TextStyle(fontSize: 14.0, color: Colors.grey),
+    headline1: TextStyle(fontSize: 20.0, color: Colors.white),
+    bodyText1: TextStyle(fontSize: 16.0, color: Colors.white),
+    bodyText2: TextStyle(fontSize: 14.0, color: Colors.white),
     button: TextStyle(
-        fontSize: 15.0, color: _darkTextColor, fontWeight: FontWeight.w600),
-    headline6: TextStyle(fontSize: 16.0, color: _darkTextColor),
-    subtitle1: TextStyle(fontSize: 16.0, color: _darkTextColor),
-    caption: TextStyle(fontSize: 12.0, color: _darkBackgroundAppBarColor),
+        fontSize: 15.0, color: Colors.white, fontWeight: FontWeight.w600),
+    headline6: TextStyle(fontSize: 16.0, color: Colors.white),
+    subtitle1: TextStyle(fontSize: 16.0, color: Colors.white),
+    caption: TextStyle(fontSize: 12.0, color: Colors.white),
   );
 
   //the dark theme
