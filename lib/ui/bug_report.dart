@@ -42,7 +42,6 @@ class _BugReportState extends State<BugReport> {
     return Scaffold(
         appBar: AppBar(
           title: Text("Bug Report"),
-          backgroundColor: Colors.black,
         ),
         body: Padding(
           padding: const EdgeInsets.all(12.0),

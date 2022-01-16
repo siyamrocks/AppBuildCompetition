@@ -14,8 +14,7 @@ class SettingsUI extends StatelessWidget {
   Widget build(BuildContext context) {
     final labels = AppLocalizations.of(context);
     return Scaffold(
-      appBar: AppBar(
-          title: Text(labels.settings.title), backgroundColor: Colors.black),
+      appBar: AppBar(title: Text(labels.settings.title)),
       body: _buildLayoutSection(context),
     );
   }

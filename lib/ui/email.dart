@@ -58,7 +58,6 @@ class _EmailSenderState extends State<EmailSender> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Email Teacher'),
-        backgroundColor: Colors.black,
         actions: <Widget>[
           IconButton(
             onPressed: send,

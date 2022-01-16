@@ -67,7 +67,6 @@ class _HomeUIState extends State<HomeUI> {
 
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.black,
           title: Text(pages[_selectedIndex]),
           actions: [
             IconButton(

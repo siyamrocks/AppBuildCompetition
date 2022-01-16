@@ -95,7 +95,6 @@ class GradeCalcState extends State<GradeCalc> {
     return Scaffold(
       appBar: AppBar(
         title: Text(name),
-        backgroundColor: Colors.black,
       ),
       body: Padding(
         padding: const EdgeInsets.all(10.0),

@@ -92,7 +92,6 @@ class _AssignmentState extends State<AssignmentPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(className),
-        backgroundColor: Colors.black,
       ),
       body: ListView.builder(
         itemBuilder: (context, index) {
