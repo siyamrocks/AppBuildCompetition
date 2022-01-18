@@ -269,7 +269,7 @@ class ViewMessage extends StatelessWidget {
                   SizedBox(height: 4),
                   Text(date, style: TextStyle(fontSize: 10)),
                   SizedBox(height: 20),
-                  Html(content),
+                  Html(data: content),
                 ],
               ),
             ),
