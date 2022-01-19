@@ -1,9 +1,10 @@
 import 'dart:convert';
+import 'package:flutter_starter/models/models.dart';
+import 'package:flutter_starter/ui/components/segmented_selector.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_starter/models/food_model.dart';
-import 'package:flutter_starter/models/user_model.dart';
-import 'package:flutter_starter/services/services.dart';
+import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
 
 class Menu extends StatefulWidget {
@@ -20,9 +21,15 @@ class FoodImage extends StatelessWidget {
     if (img != "null") {
       return Image.network(img);
     } else {
-      return Text(
-        "No image",
-        style: TextStyle(fontStyle: FontStyle.italic),
+      return Row(
+        children: [
+          Icon(Icons.fastfood),
+          SizedBox(width: 10),
+          Text(
+            "No image",
+            style: TextStyle(fontStyle: FontStyle.italic),
+          ),
+        ],
       );
     }
   }
@@ -31,14 +38,18 @@ class FoodImage extends StatelessWidget {
 class _MenuState extends State<Menu> {
   Future<Food> _menu;
   String school;
-  String dropdownValue = "Breakfast";
+  String currentOption = "Breakfast";
   DateTime currentDate = DateTime.now();
+
+  final List<MenuOptionsModel> options = [
+    MenuOptionsModel(
+        key: "Breakfast", value: "Breakfast", icon: Icons.free_breakfast),
+    MenuOptionsModel(key: "Lunch", value: "Lunch", icon: Icons.dining_rounded),
+  ];
 
   @override
   void initState() {
     super.initState();
-    _menu = fetchMenu(
-        "grayson-high", dropdownValue.toLowerCase(), convertDate(currentDate));
   }
 
   Future<Food> fetchMenu(String school, String type, String date) async {
@@ -52,7 +63,6 @@ class _MenuState extends State<Menu> {
       var menu = json.decode(result.body);
       items = Food.fromJson(menu);
     }
-
     return items;
   }
 
@@ -67,7 +77,7 @@ class _MenuState extends State<Menu> {
         currentDate = pickedDate;
       });
       _menu = fetchMenu(
-          school, dropdownValue.toLowerCase(), convertDate(currentDate));
+          school, currentOption.toLowerCase(), convertDate(currentDate));
     }
   }
 
@@ -86,6 +96,8 @@ class _MenuState extends State<Menu> {
       setState(() {
         school = user.school;
       });
+      _menu = fetchMenu(
+          school, currentOption.toLowerCase(), convertDate(currentDate));
     }
     if (currentDate.weekday == DateTime.saturday ||
         currentDate.weekday == DateTime.sunday) {
@@ -96,7 +108,7 @@ class _MenuState extends State<Menu> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text("No school."),
-              RaisedButton(
+              ElevatedButton(
                 onPressed: () => selectDate(context),
                 child: Text('Select date'),
               )
@@ -118,39 +130,20 @@ class _MenuState extends State<Menu> {
             return Column(
               children: [
                 SizedBox(height: 5),
-                Text(convertDate(currentDate)),
+                Text(new DateFormat("E MMM d, y").format(currentDate)),
                 Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                  Padding(
-                    padding: const EdgeInsets.only(right: 10.0),
-                    child: DropdownButton<String>(
-                      value: dropdownValue,
-                      icon: const Icon(Icons.arrow_downward),
-                      iconSize: 24,
-                      elevation: 16,
-                      underline: Container(
-                        height: 2,
-                        color: Colors.grey,
-                      ),
-                      onChanged: (String newValue) {
-                        setState(() {
-                          dropdownValue = newValue;
-                          _menu = fetchMenu(school, dropdownValue.toLowerCase(),
-                              convertDate(currentDate));
-                        });
-                      },
-                      items: <String>['Breakfast', 'Lunch']
-                          .map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
-                    ),
+                  SegmentedSelector(
+                    selectedOption: currentOption,
+                    menuOptions: options,
+                    onValueChanged: (value) {
+                      setState(() {
+                        currentOption = value;
+                      });
+                    },
                   ),
-                  RaisedButton(
-                    onPressed: () => selectDate(context),
-                    child: Text('Select date'),
-                  )
+                  IconButton(
+                      onPressed: () => selectDate(context),
+                      icon: Icon(Icons.date_range))
                 ]),
                 Expanded(
                   child: ListView.builder(
