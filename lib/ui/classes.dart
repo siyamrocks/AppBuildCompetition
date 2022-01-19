@@ -52,7 +52,7 @@ class Grade extends StatelessWidget {
 
 class _ClassesState extends State<Classes> {
   List<ReportPeriod> periods;
-  List<ReportPeriod> _startedPeriods = [];
+  List<ReportPeriod> _startedPeriods;
 
   @override
   void initState() {
@@ -61,8 +61,9 @@ class _ClassesState extends State<Classes> {
 
   @override
   Widget build(BuildContext context) {
-    periods = Provider.of<StudentVueProvider>(context).grades.periods;
+    _startedPeriods = [];
 
+    periods = Provider.of<StudentVueProvider>(context).grades.periods;
     for (int i = 0; i < periods.length; i++) {
       List<String> dateVals = periods[i].endDate.split("/");
       if (DateTime.now().isBefore(DateTime.utc(int.parse(dateVals[2]),

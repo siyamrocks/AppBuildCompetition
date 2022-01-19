@@ -104,7 +104,8 @@ class GradeCalcState extends State<GradeCalc> {
             padding: const EdgeInsets.only(
                 top: 32.0, bottom: 0.0, left: 16.0, right: 16.0),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(name,
                     style:
