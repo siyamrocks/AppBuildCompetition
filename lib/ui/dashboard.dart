@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_starter/constants/schools.dart';
 import 'package:flutter_starter/services/services.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_starter/localizations.dart';
@@ -42,8 +43,7 @@ class _DashboardState extends State<Dashboard> {
 
     // Correct school name
     setState(() {
-      if (_school != null)
-        _school = toBeginningOfSentenceCase(_school.replaceAll("-", " "));
+      if (_school != null) _school = SchoolData.convertToTitleCase(_school);
     });
 
     _isUserAdmin();

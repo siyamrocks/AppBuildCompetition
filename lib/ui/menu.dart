@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter_starter/constants/schools.dart';
 import 'package:flutter_starter/models/models.dart';
 import 'package:flutter_starter/ui/components/segmented_selector.dart';
 import 'package:provider/provider.dart';
@@ -130,7 +131,9 @@ class _MenuState extends State<Menu> {
             return Column(
               children: [
                 SizedBox(height: 5),
-                Text(new DateFormat("E MMM d, y").format(currentDate)),
+                Text(new DateFormat("E MMM d").format(currentDate) +
+                    " @ " +
+                    SchoolData.convertToTitleCase(school)),
                 Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                   SegmentedSelector(
                     selectedOption: currentOption,
