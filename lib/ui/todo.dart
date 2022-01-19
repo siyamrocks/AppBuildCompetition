@@ -52,7 +52,7 @@ class _TodoState extends State<Todo> {
                 context: context,
                 builder: (BuildContext context) {
                   return AlertDialog(
-                    title: Text("Add TodoList"),
+                    title: Text("Add item"),
                     content: TextField(
                       onChanged: (String value) {
                         input = value;
@@ -98,17 +98,18 @@ class _TodoState extends State<Todo> {
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(16)),
                         child: ListTile(
-                          title: Text(todos[index]),
-                          trailing: IconButton(
-                              icon: const Icon(
-                                Icons.delete,
-                                color: Colors.red,
-                              ),
-                              onPressed: () {
-                                setState(() {
-                                  deleteTodos(todos[index]);
-                                });
-                              }),
+                          title: Row(
+                            children: [
+                              IconButton(
+                                  icon: const Icon(Icons.check),
+                                  onPressed: () {
+                                    setState(() {
+                                      deleteTodos(todos[index]);
+                                    });
+                                  }),
+                              Text(todos[index]),
+                            ],
+                          ),
                         ),
                       ));
                 });

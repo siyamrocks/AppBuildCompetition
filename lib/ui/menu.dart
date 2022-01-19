@@ -132,7 +132,7 @@ class _MenuState extends State<Menu> {
               children: [
                 SizedBox(height: 5),
                 Text(new DateFormat("E MMM d").format(currentDate) +
-                    " @ " +
+                    " at " +
                     SchoolData.convertToTitleCase(school)),
                 Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                   SegmentedSelector(
