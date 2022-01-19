@@ -76,13 +76,24 @@ class _SignUpUIState extends State<SignUpUI> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
-                    LogoGraphicHeader(),
-                    Text(
-                      "Use your eClass password",
-                      style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    Container(
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 50),
+                        child: Image.asset("assets/SSB_Logo.png"),
+                      ),
+                      height: 128,
+                      width: 128,
                     ),
-                    SizedBox(height: 48.0),
+                    Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: Center(
+                        child: Text(
+                          "Use your eClass password",
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ),
                     FutureBuilder<List<School>>(
                         future: _schools,
                         builder: (context, snapshot) {
@@ -162,7 +173,6 @@ class _SignUpUIState extends State<SignUpUI> {
                       alignment: Alignment.center,
                       child: TextFormField(
                         controller: _name,
-                        validator: Validator(labels).name,
                         onChanged: (value) => null,
                         onSaved: (value) => _name.text = value,
                         cursorColor: Colors.orange,
@@ -196,7 +206,6 @@ class _SignUpUIState extends State<SignUpUI> {
                       child: TextFormField(
                         controller: _password,
                         cursorColor: Colors.orange,
-                        validator: Validator(labels).password,
                         obscureText: true,
                         maxLines: 1,
                         onChanged: (value) => null,

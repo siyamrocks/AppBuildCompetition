@@ -114,11 +114,19 @@ class _SignInUIState extends State<SignInUI> {
               ),
             ),
             Container(
-              margin: EdgeInsets.only(top: 10),
-              alignment: Alignment.center,
-              child: GestureDetector(
-                child: Text("Forgot Password?"),
-                onTap: () => {},
+              margin: EdgeInsets.only(top: 10, bottom: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text("Don't have an account? "),
+                  GestureDetector(
+                    onTap: () => {
+                      Navigator.pushReplacementNamed(context, '/signup'),
+                    },
+                    child: Text("Register Now",
+                        style: TextStyle(color: Colors.amber)),
+                  )
+                ],
               ),
             ),
             GestureDetector(
@@ -147,7 +155,7 @@ class _SignInUIState extends State<SignInUI> {
                 }
               },
               child: Container(
-                margin: EdgeInsets.only(left: 20, right: 20, top: 25),
+                margin: EdgeInsets.all(20),
                 alignment: Alignment.center,
                 height: 54,
                 decoration: BoxDecoration(
@@ -173,22 +181,6 @@ class _SignInUIState extends State<SignInUI> {
                       ),
               ),
             ),
-            Container(
-              margin: EdgeInsets.only(top: 10, bottom: 10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text("Don't have an account? "),
-                  GestureDetector(
-                    onTap: () => {
-                      Navigator.pushReplacementNamed(context, '/signup'),
-                    },
-                    child: Text("Register Now",
-                        style: TextStyle(color: Colors.amber)),
-                  )
-                ],
-              ),
-            )
           ],
         ),
       ),
