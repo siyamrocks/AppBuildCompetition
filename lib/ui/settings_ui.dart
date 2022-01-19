@@ -38,6 +38,7 @@ class SettingsUI extends StatelessWidget {
           key: "dark", value: labels.settings.dark, icon: Icons.brightness_3)
     ];
     return ListView(
+      shrinkWrap: true,
       padding: EdgeInsets.all(15.0),
       children: <Widget>[
         Text(
