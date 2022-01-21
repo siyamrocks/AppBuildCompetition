@@ -10,7 +10,7 @@ class Globals {
   static final List<MenuOptionsModel> languageOptions = [
     MenuOptionsModel(key: "zh", value: "中文"), //Chinese
     MenuOptionsModel(key: "de", value: "Deutsche"), //German
-    MenuOptionsModel(key: "en", value: "English"), //English
+    MenuOptionsModel(key: "en_US", value: "English"), //English
     MenuOptionsModel(key: "es", value: "Español"), //Spanish
     MenuOptionsModel(key: "fr", value: "Français"), //French
     MenuOptionsModel(key: "hi", value: "हिन्दी"), //Hindi
