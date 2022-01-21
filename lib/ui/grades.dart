@@ -35,7 +35,7 @@ class GradeAssignment extends StatelessWidget {
     String points = grade;
     if (double.tryParse(grade) != null) {
       if (percent > 100) percent = 100;
-      if (percent < 0) points = "N/A";
+      if (percent < 0) points = "I/P";
       if (percent < 0) percent = 0;
 
       return CircularPercentIndicator(
