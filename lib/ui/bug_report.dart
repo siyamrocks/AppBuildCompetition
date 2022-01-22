@@ -67,6 +67,9 @@ class _BugReportState extends State<BugReport> {
                     ScaffoldMessenger.of(context).showSnackBar(snackBar);
                   },
                   icon: Icon(Icons.bug_report),
+                  style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all<Color>(Colors.amber)),
                   label: Text("Report Bug"))
             ],
           ),

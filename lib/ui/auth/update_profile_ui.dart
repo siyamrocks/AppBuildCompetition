@@ -141,6 +141,9 @@ class _UpdateProfileUIState extends State<UpdateProfileUI> {
                     }),
                 FormVerticalSpace(),
                 LabelButton(
+                    style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.all<Color>(Colors.amber)),
                     labelText: labels.auth.changePasswordLabelButton,
                     onPressed: () => Navigator.pushNamed(
                         context, '/reset-password',
