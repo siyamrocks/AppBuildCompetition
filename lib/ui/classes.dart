@@ -37,14 +37,12 @@ class Grade extends StatelessWidget {
     } else if (grade != "N/A") {
       return Text(
         grade,
-        style: TextStyle(
-            fontSize: 25, fontWeight: FontWeight.bold, color: Colors.black54),
+        style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
       );
     } else {
       return Text(
         "No grade",
-        style: TextStyle(
-            fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black54),
+        style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
       );
     }
   }
