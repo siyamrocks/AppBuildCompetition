@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
 import 'package:html_unescape/html_unescape.dart';
 import 'mockresponses.dart';
 import 'zip_code_result.dart';

@@ -7,8 +7,6 @@ import 'package:flutter_starter/models/models.dart';
 import 'package:flutter_starter/ui/components/components.dart';
 import 'package:barcode_widget/barcode_widget.dart';
 
-import 'package:intl/intl.dart' show toBeginningOfSentenceCase;
-
 class Dashboard extends StatefulWidget {
   @override
   _DashboardState createState() => _DashboardState();
@@ -109,6 +107,7 @@ class _DashboardState extends State<Dashboard> {
                   data: _id,
                   barcode: Barcode.code128(),
                   backgroundColor: Colors.white,
+                  color: Colors.black,
                 ),
               ),
             ),
