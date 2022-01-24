@@ -45,7 +45,6 @@ class _SignUpUIState extends State<SignUpUI> {
 
     var list = List<School>();
 
-    print(result.body);
     if (result.statusCode == 200) {
       var schools = json.decode(result.body);
       for (var school in schools) list.add(School.fromJson(school));
@@ -226,22 +225,31 @@ class _SignUpUIState extends State<SignUpUI> {
                     GestureDetector(
                       onTap: () async {
                         if (_formKey.currentState.validate()) {
-                          SystemChannels.textInput.invokeMethod(
-                              'TextInput.hide'); //to hide the keyboard - if any
-                          // Save password for StudentVUE login.
-                          _sharedPrefsHelper.setPassword(_password.text);
-                          AuthService _auth = AuthService();
-                          bool _isRegisterSucccess =
-                              await _auth.registerWithEmailAndPassword(
-                                  _name.text,
-                                  _id.text,
-                                  _password.text,
-                                  _id.text,
-                                  selectedSchool);
+                          //to hide the keyboard - if any
+                          SystemChannels.textInput
+                              .invokeMethod('TextInput.hide');
+                          if (selectedSchool != null) {
+                            // Save password for StudentVUE login.
+                            _sharedPrefsHelper.setPassword(_password.text);
+                            AuthService _auth = AuthService();
+                            bool _isRegisterSucccess =
+                                await _auth.registerWithEmailAndPassword(
+                                    _name.text,
+                                    _id.text,
+                                    _password.text,
+                                    _id.text,
+                                    selectedSchool);
 
-                          if (_isRegisterSucccess == false) {
+                            if (_isRegisterSucccess == false) {
+                              final snackBar = SnackBar(
+                                content: Text(labels.auth.signUpError),
+                              );
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(snackBar);
+                            }
+                          } else if (selectedSchool == null) {
                             final snackBar = SnackBar(
-                              content: Text(labels.auth.signUpError),
+                              content: Text("Please select a school."),
                             );
                             ScaffoldMessenger.of(context)
                                 .showSnackBar(snackBar);
