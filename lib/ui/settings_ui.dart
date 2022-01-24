@@ -92,7 +92,7 @@ class SettingsUI extends StatelessWidget {
                 leading: Icon(Icons.person),
                 title: Text(labels.settings.updateProfile),
                 trailing: Container(
-                  width: 90,
+                  width: 100,
                   child: ElevatedButton(
                     onPressed: () async {
                       Navigator.of(context).pushNamed('/update-profile');
