@@ -107,7 +107,7 @@ class _DashboardState extends State<Dashboard> {
                   data: _id,
                   barcode: Barcode.code128(),
                   backgroundColor: Colors.white,
-                  color: Colors.black,
+                  style: TextStyle(color: Colors.black),
                 ),
               ),
             ),
