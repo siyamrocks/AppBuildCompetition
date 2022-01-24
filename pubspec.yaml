@@ -70,7 +70,6 @@ flutter:
     - assets/images/default.png
     - assets/images/defaultDark.png
     - assets/SSB_Logo.png
-    - assets/background.png
 
 flutter_icons:
   # To run do: flutter pub run flutter_launcher_icons:main
@@ -87,7 +86,7 @@ flutter_native_splash:
   # flutter pub run flutter_native_splash:create
   # To restore Flutter's default white splash screen, run the following command in the terminal:
   # flutter pub run flutter_native_splash:remove
-  image: assets/background.png
+  image: assets/SSB_Logo.png
   color: "#000000"
 
   # To hide the notification bar, use the fullscreen parameter.  Has no affect in web since web 
