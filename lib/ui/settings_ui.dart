@@ -79,8 +79,6 @@ class SettingsUI extends StatelessWidget {
                 trailing: Container(
                   child: DropdownPicker(
                     menuOptions: Globals.languageOptions,
-                    selectedOption:
-                        Provider.of<LanguageProvider>(context).currentLanguage,
                     onChanged: (value) {
                       Provider.of<LanguageProvider>(context, listen: false)
                           .updateLanguage(value);
