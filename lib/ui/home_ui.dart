@@ -43,7 +43,14 @@ class _HomeUIState extends State<HomeUI> {
       });
     }
 
-    Provider.of<StudentVueProvider>(context).initData(_id, _pass);
+    // (Username: 20221234, Password: SSB1234)
+
+    if (user.id == "20221234") {
+      print("omg!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+      Provider.of<StudentVueProvider>(context).initData(_id, _pass, true);
+    } else {
+      Provider.of<StudentVueProvider>(context).initData(_id, _pass, false);
+    }
 
     _sharedPrefsHelper.getPassword.then((value) {
       _pass = value;

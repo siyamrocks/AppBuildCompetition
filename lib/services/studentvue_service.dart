@@ -22,7 +22,7 @@ class StudentVueProvider extends ChangeNotifier {
     return _student;
   }
 
-  void initData(String id, String pass) async {
+  void initData(String id, String pass, bool isTestUser) async {
     if (!_isInit) {
       if (id == null || pass == null) {
         return;
@@ -33,7 +33,7 @@ class StudentVueProvider extends ChangeNotifier {
       _isInit = true;
 
       var client = StudentVueClient(id, pass, 'apps.gwinnett.k12.ga.us/spvue',
-          mock: false);
+          mock: isTestUser);
 
       var gradebook = await client.loadGradebook();
       _grades = gradebook;

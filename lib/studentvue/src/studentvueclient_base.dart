@@ -196,7 +196,7 @@ class StudentVueClient {
 
       resData = res.data;
     } else {
-      resData = MockResponses.GradebookResponse;
+      resData = MockResponses.Messages;
     }
 
     final document = XmlDocument.parse(HtmlUnescape().convert(resData));
