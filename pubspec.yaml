@@ -12,6 +12,7 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   cupertino_icons:
+  font_awesome_flutter:
 
   http:
   

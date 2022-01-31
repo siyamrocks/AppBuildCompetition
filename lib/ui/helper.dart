@@ -5,6 +5,7 @@ import 'package:flutter_starter/ui/calendar.dart';
 import 'package:flutter_starter/ui/todo.dart';
 import 'package:flutter_starter/ui/social.dart';
 import 'package:flutter_starter/ui/components/segmented_selector.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class Helper extends StatefulWidget {
   @override
@@ -28,7 +29,7 @@ class _HelperState extends State<Helper> {
     MenuOptionsModel(key: "0", value: "Events", icon: Icons.event),
     MenuOptionsModel(key: "1", value: "Todo", icon: Icons.list_alt_rounded),
     MenuOptionsModel(key: "2", value: "Clubs", icon: Icons.schedule),
-    MenuOptionsModel(key: "3", value: "Twitter", icon: Icons.whatshot)
+    MenuOptionsModel(key: "3", value: "Social", icon: Icons.info),
   ];
 
   final List<Widget> _screens = [
