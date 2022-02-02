@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 class School {
   School({
     this.id,

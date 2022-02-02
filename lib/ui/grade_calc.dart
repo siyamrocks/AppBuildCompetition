@@ -20,7 +20,6 @@ class GradeCalc extends StatefulWidget {
       @required this.grade,
       @required this.classGrade});
 
-  double newGrade = 0;
   GradeCalcState createState() => GradeCalcState(
       assignments: assignments,
       name: name,

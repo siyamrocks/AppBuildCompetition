@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:dio/dio.dart';
 import 'package:html_unescape/html_unescape.dart';
 import 'mockresponses.dart';
@@ -308,10 +310,6 @@ class StudentVueClient {
       </soap:Body>
   </soap:Envelope>''';
 
-      var headers = <String, List<String>>{
-        'Content-Type': ['text/xml']
-      };
-
       _dio.options.headers['content-Type'] = 'text/xml';
 
       var res = await _dio.post(reqURL, data: requestData,
@@ -381,10 +379,6 @@ class StudentVueClient {
         </ProcessWebServiceRequestMultiWeb>
     </v:Body>
 </v:Envelope>''';
-
-      var headers = <String, List<String>>{
-        'Content-Type': ['text/xml']
-      };
 
       final _dio = Dio(BaseOptions(validateStatus: (_) => true));
       _dio.options.headers['content-Type'] = 'text/xml';

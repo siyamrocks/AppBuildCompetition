@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:flutter_starter/store/store.dart';
 import 'package:flutter_starter/services/services.dart';
 import 'package:flutter_starter/models/models.dart';
-import 'package:flutter_starter/ui/helper.dart';
+import 'package:flutter_starter/ui/events.dart';
 import 'package:flutter_starter/ui/menu.dart';
 import 'package:flutter_starter/ui/dashboard.dart';
 import 'package:flutter_starter/ui/classes.dart';
@@ -46,7 +46,6 @@ class _HomeUIState extends State<HomeUI> {
     // (Username: 20221234, Password: SSB1234)
 
     if (user.id == "20221234") {
-      print("omg!!!!!!!!!!!!!!!!!!!!!!!!!!!");
       Provider.of<StudentVueProvider>(context).initData(_id, _pass, true);
     } else {
       Provider.of<StudentVueProvider>(context).initData(_id, _pass, false);

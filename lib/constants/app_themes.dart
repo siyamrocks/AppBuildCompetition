@@ -23,13 +23,9 @@ class AppThemes {
   static const Color _lightBackgroundAppBarColor = Colors.black;
   static const Color _lightBackgroundSecondaryColor = white;
   static const Color _lightBackgroundAlertColor = blackPearl;
-  static const Color _lightBackgroundErrorColor = brinkPink;
-  static const Color _lightBackgroundSuccessColor = juneBud;
 
   //Text Colors
   static const Color _lightTextColor = Colors.black;
-  static const Color _lightAlertTextColor = Colors.black;
-  static const Color _lightTextSecondaryColor = Colors.black;
 
   //Border Color
   static const Color _lightBorderColor = nevada;
@@ -38,7 +34,6 @@ class AppThemes {
   static const Color _lightIconColor = nevada;
 
   //form input colors
-  static const Color _lightInputFillColor = _lightBackgroundSecondaryColor;
   static const Color _lightBorderActiveColor = _lightPrimaryColor;
   static const Color _lightBorderErrorColor = brinkPink;
 
@@ -51,15 +46,9 @@ class AppThemes {
   static const Color _darkBackgroundSecondaryColor =
       Color.fromRGBO(0, 0, 0, .6);
   static const Color _darkBackgroundAlertColor = Colors.black;
-  static const Color _darkBackgroundErrorColor =
-      Color.fromRGBO(255, 97, 136, 1);
-  static const Color _darkBackgroundSuccessColor =
-      Color.fromRGBO(186, 215, 97, 1);
 
   //Text Colors
   static const Color _darkTextColor = Colors.white;
-  static const Color _darkAlertTextColor = Colors.black;
-  static const Color _darkTextSecondaryColor = Colors.black;
 
   //Border Color
   static const Color _darkBorderColor = nevada;
@@ -94,7 +83,8 @@ class AppThemes {
     appBarTheme: AppBarTheme(
       color: _lightBackgroundAppBarColor,
       iconTheme: IconThemeData(color: _darkTextColor),
-      textTheme: _lightTextTheme,
+      toolbarTextStyle: _lightTextTheme.bodyText2,
+      titleTextStyle: _lightTextTheme.headline6,
     ),
     colorScheme: ColorScheme.light(
       primary: _lightPrimaryColor,
@@ -170,9 +160,7 @@ class AppThemes {
 
   //the dark theme
   static final ThemeData darkTheme = ThemeData(
-    brightness: Brightness.dark,
-    //primarySwatch: _darkPrimaryColor, //cant be Color on MaterialColor so it can compute different shades.
-    accentColor: _darkPrimaryColor, //prefix icon color form input on focus
+    brightness: Brightness.dark, //prefix icon color form input on focus
 
     fontFamily: font1,
     scaffoldBackgroundColor: _darkBackgroundColor,
@@ -182,13 +170,8 @@ class AppThemes {
     appBarTheme: AppBarTheme(
       color: _darkBackgroundAppBarColor,
       iconTheme: IconThemeData(color: _darkTextColor),
-      textTheme: _darkTextTheme,
-    ),
-    colorScheme: ColorScheme.dark(
-      primary: _darkPrimaryColor,
-      primaryVariant: _darkBackgroundColor,
-
-      // secondary: _darkSecondaryColor,
+      toolbarTextStyle: _darkTextTheme.bodyText2,
+      titleTextStyle: _darkTextTheme.headline6,
     ),
     snackBarTheme: SnackBarThemeData(
         contentTextStyle: TextStyle(color: Colors.white),
@@ -232,5 +215,11 @@ class AppThemes {
       fillColor: _darkInputFillColor,
       //focusColor: _darkBorderActiveColor,
     ),
+    colorScheme: ColorScheme.dark(
+      primary: _darkPrimaryColor,
+      primaryVariant: _darkBackgroundColor,
+
+      // secondary: _darkSecondaryColor,
+    ).copyWith(secondary: _darkPrimaryColor),
   );
 }

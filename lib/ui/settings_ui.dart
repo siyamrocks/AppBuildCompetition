@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_starter/store/store.dart';
 import 'package:flutter_starter/ui/components/segmented_selector.dart';
 import 'package:provider/provider.dart';

@@ -28,6 +28,7 @@ class _UpdateProfileUIState extends State<UpdateProfileUI> {
     var url = "https://gwinnett.nutrislice.com/menu/api/schools/?format=json";
     var result = await http.get(Uri.parse(url));
 
+    // ignore: deprecated_member_use
     var list = List<School>();
 
     print(result.body);
@@ -206,11 +207,10 @@ class _UpdateProfileUIState extends State<UpdateProfileUI> {
                       });
 
                       if (result == true) {
-                        _scaffoldKey.currentState.showSnackBar(
-                          SnackBar(
-                            content: Text(labels.auth.updateUserSuccessNotice),
-                          ),
+                        final snackBar = SnackBar(
+                          content: Text(labels.auth.updateUserSuccessNotice),
                         );
+                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
                       }
                     });
                   } on PlatformException catch (error) {
@@ -226,9 +226,10 @@ class _UpdateProfileUIState extends State<UpdateProfileUI> {
                         authError = labels.auth.unknownError;
                         break;
                     }
-                    _scaffoldKey.currentState.showSnackBar(SnackBar(
+                    final snackBar = SnackBar(
                       content: Text(authError),
-                    ));
+                    );
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
                     setState(() {
                       _loading = false;
                     });

@@ -46,6 +46,8 @@ class _DashboardState extends State<Dashboard> {
 
     _isUserAdmin();
 
+    if (_admin) print("User is admin.");
+
     return Container(
         child: Center(
       child: SingleChildScrollView(

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_starter/localizations.dart';
 import 'package:flutter_starter/ui/components/components.dart';
 import 'package:flutter_starter/helpers/helpers.dart';
@@ -71,11 +70,12 @@ class _ResetPasswordUIState extends State<ResetPasswordUI> {
                                   await _auth
                                       .sendPasswordResetEmail(_email.text);
 
-                                  _scaffoldKey.currentState
-                                      .showSnackBar(SnackBar(
+                                  final snackBar = SnackBar(
                                     content:
                                         Text(labels.auth.resetPasswordNotice),
-                                  ));
+                                  );
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(snackBar);
                                 }
                               }),
                     FormVerticalSpace(),

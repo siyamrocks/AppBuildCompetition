@@ -5,7 +5,6 @@ import 'package:flutter_starter/ui/calendar.dart';
 import 'package:flutter_starter/ui/todo.dart';
 import 'package:flutter_starter/ui/social.dart';
 import 'package:flutter_starter/ui/components/segmented_selector.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class Helper extends StatefulWidget {
   @override

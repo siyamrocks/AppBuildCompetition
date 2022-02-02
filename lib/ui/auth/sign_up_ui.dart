@@ -4,7 +4,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_starter/localizations.dart';
 import 'package:flutter_starter/store/store.dart';
 import 'package:flutter_starter/ui/components/components.dart';
-import 'package:flutter_starter/helpers/helpers.dart';
 import 'package:flutter_starter/services/services.dart';
 import 'package:flutter_starter/models/school_model.dart';
 import 'package:provider/provider.dart';
@@ -43,6 +42,7 @@ class _SignUpUIState extends State<SignUpUI> {
     var url = "https://gwinnett.nutrislice.com/menu/api/schools/?format=json";
     var result = await http.get(Uri.parse(url));
 
+    // ignore: deprecated_member_use
     var list = List<School>();
 
     if (result.statusCode == 200) {
