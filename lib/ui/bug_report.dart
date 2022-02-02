@@ -1,3 +1,7 @@
+/*
+This the UI code for Bug reporting.
+*/
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_starter/models/models.dart';
@@ -9,7 +13,10 @@ class BugReport extends StatefulWidget {
 }
 
 class _BugReportState extends State<BugReport> {
+  // Text controller for feedback
   var _feedback = new TextEditingController();
+
+  // User info variables
   String input = "";
   String _id = '';
   String _name = '';
@@ -18,6 +25,7 @@ class _BugReportState extends State<BugReport> {
 
   @override
   Widget build(BuildContext context) {
+    // Get the user data and set the variables.
     final UserModel user = Provider.of<UserModel>(context);
     if (user != null) {
       setState(() {
@@ -28,6 +36,7 @@ class _BugReportState extends State<BugReport> {
       });
     }
 
+    // Function to add a bug report the the Firebase DB (feedback table)
     addReport() {
       Map<String, String> data = {
         "feedback": input,
@@ -55,21 +64,25 @@ class _BugReportState extends State<BugReport> {
                   controller: _feedback,
                   onChanged: (value) {
                     setState(() {
-                      input = value;
+                      input = value; // Set value to input variable
                     });
                   },
                 ),
               ),
+              // Sumbit feedback button
               ElevatedButton.icon(
                   onPressed: () {
                     if (_feedback.text.isNotEmpty) {
+                      // If text input is not empty then add the bug report.
                       addReport();
                       _feedback.clear();
+                      // Inform the user that the feedback has been sent.
                       final snackBar = SnackBar(
                         content: const Text('Feedback has been sent!'),
                       );
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
                     } else if (_feedback.text.isEmpty) {
+                      // If text input is empty the inform the user.
                       final snackBar = SnackBar(
                         content: const Text('Please type something.'),
                       );

@@ -1,6 +1,6 @@
-import 'package:flutter_starter/localizations.dart';
+// Matching various patterns for kinds of data.
 
-// matching various patterns for kinds of data
+import 'package:flutter_starter/localizations.dart';
 
 class Validator {
   AppLocalizations_Labels labels;

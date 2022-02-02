@@ -1,3 +1,7 @@
+/*
+This is the file for the Settings UI.
+*/
+
 import 'package:flutter/material.dart';
 import 'package:flutter_starter/store/store.dart';
 import 'package:flutter_starter/ui/components/segmented_selector.dart';
@@ -18,12 +22,15 @@ class SettingsUI extends StatelessWidget {
     );
   }
 
+  // Build settings screen.
   Widget _buildLayoutSection(BuildContext context) {
-    // shared pref object
+    // Shared preference helper
     SharedPreferenceHelper _sharedPrefsHelper =
         Provider.of<StudentVueProvider>(context).sharedPrefsHelper;
 
     final labels = AppLocalizations.of(context);
+
+    // Theme options
     final List<MenuOptionsModel> themeOptions = [
       MenuOptionsModel(
           key: "system",
@@ -36,10 +43,12 @@ class SettingsUI extends StatelessWidget {
       MenuOptionsModel(
           key: "dark", value: labels.settings.dark, icon: Icons.brightness_3)
     ];
+
     return ListView(
       shrinkWrap: true,
       padding: EdgeInsets.all(15.0),
       children: <Widget>[
+        // Theme options
         Text(
           "Theme",
           style: TextStyle(
@@ -69,6 +78,7 @@ class SettingsUI extends StatelessWidget {
           elevation: 4.0,
           child: Column(
             children: <Widget>[
+              // Language picker
               ListTile(
                 leading: Icon(Icons.translate),
                 title: Text(
@@ -85,6 +95,7 @@ class SettingsUI extends StatelessWidget {
                   ),
                 ),
               ),
+              // Update profile button
               ListTile(
                 leading: Icon(Icons.person),
                 title: Text(labels.settings.updateProfile),
@@ -104,6 +115,7 @@ class SettingsUI extends StatelessWidget {
                   ),
                 ),
               ),
+              // Report bug button
               ListTile(
                 leading: Icon(Icons.bug_report),
                 title: Text("Report Bug"),
@@ -122,6 +134,7 @@ class SettingsUI extends StatelessWidget {
                   ),
                 ),
               ),
+              // View license info
               ListTile(
                 leading: Icon(Icons.settings_applications),
                 title: Text("License"),
@@ -140,6 +153,7 @@ class SettingsUI extends StatelessWidget {
                   ),
                 ),
               ),
+              // Sign out
               ListTile(
                 leading: Icon(Icons.switch_account),
                 title: Text(labels.settings.signOut),

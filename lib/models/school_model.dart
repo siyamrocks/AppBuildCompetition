@@ -1,3 +1,5 @@
+/* School model for SSB (API) */
+
 class School {
   School({
     this.id,

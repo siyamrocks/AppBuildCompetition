@@ -1,3 +1,5 @@
+/* Auth Builder Widget */
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_starter/models/models.dart';
@@ -5,7 +7,6 @@ import 'package:flutter_starter/services/auth_service.dart';
 import 'package:flutter_starter/services/services.dart';
 import 'package:provider/provider.dart';
 
-//https://www.youtube.com/watch?v=B0QX2woHxaU from this tutorial
 class AuthWidgetBuilder extends StatelessWidget {
   const AuthWidgetBuilder({Key key, @required this.builder}) : super(key: key);
   final Widget Function(BuildContext, AsyncSnapshot<User>) builder;

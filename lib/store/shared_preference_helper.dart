@@ -1,3 +1,5 @@
+/* Shared Preference Helder */
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPreferenceHelper {
@@ -14,24 +16,24 @@ class SharedPreferenceHelper {
     });
   }
 
-  //gets the current password stored in sharedpreferences.
+  // Gets the current password stored in sharedpreferences.
   Future<String> get getPassword {
     return _sharedPreference.then((prefs) {
       return prefs.getString("password");
     });
   }
 
-  //Theme
+  // Theme
 
-  //Sets the theme to a new value and stores in sharedpreferences
+  // Sets the theme to a new value and stores in sharedpreferences
   Future<void> changeTheme(String value) {
     return _sharedPreference.then((prefs) {
       return prefs.setString("theme", value);
     });
   }
 
-  //gets the current theme stored in sharedpreferences.
-  //If no theme returns 'system'
+  // Gets the current theme stored in sharedpreferences.
+  // If no theme returns 'system'
   Future<String> get getCurrentTheme {
     return _sharedPreference.then((prefs) {
       String currentTheme = prefs.getString("theme") ?? 'system';
@@ -39,16 +41,16 @@ class SharedPreferenceHelper {
     });
   }
 
-  //Language
+  // Language
 
-  //Sets the language to a new value and stores in sharedpreferences
+  // Sets the language to a new value and stores in sharedpreferences
   Future<void> changeLanguage(String value) {
     return _sharedPreference.then((prefs) {
       return prefs.setString("lang", value);
     });
   }
 
-  //gets the current language stored in sharedpreferences.
+  // Gets the current language stored in sharedpreferences.
   Future<String> get appCurrentLanguage {
     return _sharedPreference.then((prefs) {
       return prefs.getString("lang");

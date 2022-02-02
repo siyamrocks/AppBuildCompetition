@@ -1,6 +1,5 @@
-/// Support for doing something awesome.
-///
-/// More dartdocs go here.
+/* StudentVUE Client Library for SSB */
+
 library studentvueclient;
 
 export 'src/studentvueclient_base.dart';

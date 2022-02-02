@@ -1,8 +1,10 @@
+/* Theme Provider */
+
 import 'package:flutter/material.dart';
 import 'package:flutter_starter/store/store.dart';
 
 class ThemeProvider extends ChangeNotifier {
-  // shared pref object
+  // Shared pref object
   SharedPreferenceHelper _sharedPrefsHelper;
   String _currentTheme = "system";
 
@@ -10,7 +12,7 @@ class ThemeProvider extends ChangeNotifier {
     _sharedPrefsHelper = SharedPreferenceHelper();
   }
 
-  // checks whether darkmode is set via system or previously by user
+  // Checks whether darkmode is set via system or previously by user
   bool get isDarkModeOn {
     if (getTheme == 'system') {
       if (WidgetsBinding.instance.window.platformBrightness ==
@@ -24,7 +26,7 @@ class ThemeProvider extends ChangeNotifier {
     return false;
   }
 
-  // gets currentTheme stored in shared preferences
+  // Gets currentTheme stored in shared preferences
   String get getTheme {
     _sharedPrefsHelper.getCurrentTheme.then((theme) {
       _currentTheme = theme;
@@ -32,7 +34,7 @@ class ThemeProvider extends ChangeNotifier {
     return _currentTheme;
   }
 
-  // updates selected theme into sharepreferences
+  // Updates selected theme into sharepreferences
   // and notifies ui to update via provider
   void updateTheme(String theme) {
     _sharedPrefsHelper.changeTheme(theme);

@@ -1,10 +1,12 @@
+/* Language Provider */
+
 import 'package:flutter/material.dart';
 import 'dart:ui' as ui;
 import 'package:flutter_starter/localizations.dart';
 import 'package:flutter_starter/store/store.dart';
 
 class LanguageProvider extends ChangeNotifier {
-  // shared pref object
+  // Shared pref object
   SharedPreferenceHelper _sharedPrefsHelper;
 
   String _currentLanguage = '';
@@ -36,7 +38,7 @@ class LanguageProvider extends ChangeNotifier {
     return _currentLanguage;
   }
 
-  // gets the language app is set to
+  // Gets the language app is set to
   Locale get getLocale {
     // gets the default language key (from the translation language system)
     Locale _updatedLocal = AppLocalizations.languages.keys.first;
@@ -49,7 +51,7 @@ class LanguageProvider extends ChangeNotifier {
     return _updatedLocal;
   }
 
-  // updates the language stored in sharepreferences
+  // Updates the language stored in sharepreferences
   void updateLanguage(String selectedLanguage) {
     _sharedPrefsHelper.changeLanguage(selectedLanguage);
     _sharedPrefsHelper.appCurrentLanguage.then((languageSelected) {

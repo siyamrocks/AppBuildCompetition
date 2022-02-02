@@ -1,3 +1,7 @@
+/*
+This file is the code to show all of the user's classes with overall grade.
+*/
+
 import 'dart:core';
 import 'package:flutter_starter/studentvue/src/studentgradedata.dart';
 import 'package:provider/provider.dart';
@@ -11,6 +15,7 @@ class Classes extends StatefulWidget {
   _ClassesState createState() => _ClassesState();
 }
 
+// Convert grade (0.98) into a percent widget (98%)
 class Grade extends StatelessWidget {
   final String grade;
 
@@ -34,12 +39,14 @@ class Grade extends StatelessWidget {
         ),
         progressColor: Colors.green,
       );
+      // If no grade then show user.
     } else if (grade != "N/A") {
       return Text(
         grade,
         style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
       );
     } else {
+      // Fallback, show user no grade.
       return Text(
         "No grade",
         style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
@@ -59,9 +66,13 @@ class _ClassesState extends State<Classes> {
 
   @override
   Widget build(BuildContext context) {
+    // List of active reporting periods
     _startedPeriods = [];
 
+    // Get all of the reporting periods
     periods = Provider.of<StudentVueProvider>(context).grades.periods;
+
+    // Loop to check if period is active then add it to the _startedPeriods list.
     for (int i = 0; i < periods.length; i++) {
       List<String> dateVals = periods[i].endDate.split("/");
       if (DateTime.now().isBefore(DateTime.utc(int.parse(dateVals[2]),
@@ -80,6 +91,7 @@ class _ClassesState extends State<Classes> {
             List<SchoolClass> classes = _startedPeriods[index].classes;
             return Padding(
               padding: const EdgeInsets.only(top: 8.0),
+              // Show info about reporting period.
               child: Column(
                 children: [
                   Text(
@@ -93,6 +105,7 @@ class _ClassesState extends State<Classes> {
                   Divider(
                     color: Colors.grey,
                   ),
+                  // Show each class.
                   ListView.builder(
                     physics: NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
@@ -124,6 +137,7 @@ class _ClassesState extends State<Classes> {
                                 Padding(
                                   padding: const EdgeInsets.all(6.0),
                                   child: ButtonBar(
+                                    // Button to view class grades.
                                     alignment: MainAxisAlignment.spaceBetween,
                                     children: [
                                       TextButton.icon(

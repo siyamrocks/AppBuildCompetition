@@ -1,3 +1,7 @@
+/*
+This file is the home screen pages such shows the user's ID and basic details.
+*/
+
 import 'package:flutter/material.dart';
 import 'package:flutter_starter/constants/schools.dart';
 import 'package:flutter_starter/services/services.dart';
@@ -13,6 +17,7 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
+  // User's data variables
   String _id = '';
   String _name = '';
   String _school = '';
@@ -30,6 +35,7 @@ class _DashboardState extends State<Dashboard> {
 
   Widget build(BuildContext context) {
     final labels = AppLocalizations.of(context);
+    // Get the user data and set the variables.
     final UserModel user = Provider.of<UserModel>(context);
     if (user != null) {
       setState(() {
@@ -39,13 +45,13 @@ class _DashboardState extends State<Dashboard> {
       });
     }
 
-    // Correct school name
+    // Convert school name into title case (grayson-high -> Grayson High)
     setState(() {
       if (_school != null) _school = SchoolData.convertToTitleCase(_school);
     });
 
+    // Check if the user is an admin (not used)
     _isUserAdmin();
-
     if (_admin) print("User is admin.");
 
     return Container(
@@ -53,7 +59,7 @@ class _DashboardState extends State<Dashboard> {
       child: SingleChildScrollView(
         child: Column(
           children: <Widget>[
-            id(),
+            id(), // <- Show ID Card
             SizedBox(height: 10),
             Container(
               padding: const EdgeInsets.all(16),
@@ -61,7 +67,7 @@ class _DashboardState extends State<Dashboard> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Avatar(user),
+                  Avatar(user), // <- User's image
                   const SizedBox(height: 12),
                   Icon(Icons.badge),
                   Text("Student ID" + ': ' + _id,
@@ -84,6 +90,7 @@ class _DashboardState extends State<Dashboard> {
     ));
   }
 
+  // Widget for ID Card
   Container id() {
     return Container(
       padding: const EdgeInsets.all(20.0),
@@ -119,9 +126,9 @@ class _DashboardState extends State<Dashboard> {
     );
   }
 
+  // Check if the user is an admin.
   _isUserAdmin() async {
     bool _isAdmin = await AuthService().isAdmin();
-    //handle setState bug  //https://stackoverflow.com/questions/49340116/setstate-called-after-dispose
     if (mounted) {
       setState(() {
         _admin = _isAdmin;

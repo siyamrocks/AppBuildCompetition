@@ -1,3 +1,7 @@
+/*
+This is the file to view all the teachers and view messages.
+*/
+
 import 'package:flutter_starter/models/menu_option_model.dart';
 import 'package:flutter_starter/studentvue/src/studentgradedata.dart';
 import 'package:flutter_starter/ui/components/segmented_selector.dart';
@@ -7,16 +11,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_starter/services/services.dart';
 import 'package:flutter_html/flutter_html.dart';
 
+// Main widget (holds Teachers and Message)
 class Chat extends StatefulWidget {
   @override
   _ChatState createState() => _ChatState();
 }
 
+// Teacher screen widget
 class Teachers extends StatefulWidget {
   @override
   _TeacherState createState() => _TeacherState();
 }
 
+// Messages screen widget
 class Message extends StatefulWidget {
   @override
   _MessageState createState() => _MessageState();
@@ -25,12 +32,14 @@ class Message extends StatefulWidget {
 class _ChatState extends State<Chat> {
   String currentOption = "0";
 
+  // Create menu with option to view Teachers or Messages
   final List<MenuOptionsModel> options = [
     MenuOptionsModel(
         key: "0", value: "Teachers", icon: Icons.person_pin_rounded),
     MenuOptionsModel(key: "1", value: "Messages", icon: Icons.message),
   ];
 
+  // List of screens
   final List<Widget> _screens = [
     Teachers(),
     Message(),
@@ -44,6 +53,7 @@ class _ChatState extends State<Chat> {
         children: [
           Center(
             child: Padding(
+              // Show the segmented selector for the user to choose an option
               padding: const EdgeInsets.all(10.0),
               child: SegmentedSelector(
                 selectedOption: currentOption,
@@ -56,6 +66,7 @@ class _ChatState extends State<Chat> {
               ),
             ),
           ),
+          // Show the screen based on the current option.
           _screens[int.parse(currentOption)]
         ],
       ),
@@ -74,12 +85,15 @@ class _TeacherState extends State<Teachers> {
 
   @override
   Widget build(BuildContext context) {
+    // Get all the reporting periods.
     periods = Provider.of<StudentVueProvider>(context).grades.periods;
+    // Get all of the user's classes.
     List<SchoolClass> classes = periods[_index].classes;
     return SingleChildScrollView(
       physics: ScrollPhysics(),
       child: Column(
         children: [
+          // Allow the user to pick a reporting period.
           DropdownButton<int>(
               value: _index,
               icon: const Icon(Icons.arrow_downward),
@@ -104,6 +118,7 @@ class _TeacherState extends State<Teachers> {
             "${periods[_index].startDate} - ${periods[_index].endDate}",
             style: TextStyle(fontSize: 10),
           ),
+          // Create a list showing all the teachers with option to email them.
           ListView.builder(
             physics: NeverScrollableScrollPhysics(),
             shrinkWrap: true,
@@ -124,7 +139,9 @@ class _MessageState extends State<Message> {
   List<Messages> messages;
 
   Widget build(BuildContext context) {
+    // Get all the messages.
     messages = Provider.of<StudentVueProvider>(context).grades.messages;
+    // Show each message by creating a massage card.
     return ListView.builder(
       physics: NeverScrollableScrollPhysics(),
       shrinkWrap: true,
@@ -156,6 +173,7 @@ class TeacherCard extends StatelessWidget {
         child: Column(
           children: [
             ListTile(
+              // Show initals image (ex: SA)
               leading: ClipOval(
                 child: Image.network("https://ui-avatars.com/api/?name=$name"),
               ),
@@ -170,6 +188,7 @@ class TeacherCard extends StatelessWidget {
               children: [
                 TextButton.icon(
                   onPressed: () {
+                    // Button to email teacher
                     Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -240,6 +259,7 @@ class MessageCard extends StatelessWidget {
   }
 }
 
+// View message in full screen
 class ViewMessage extends StatelessWidget {
   final String subject;
   final String content;

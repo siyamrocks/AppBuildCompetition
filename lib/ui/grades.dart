@@ -1,3 +1,7 @@
+/*
+This file is the code to show all of the user's grades for a single class.
+*/
+
 import 'package:flutter_starter/studentvue/src/studentgradedata.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/percent_indicator.dart';
@@ -25,6 +29,7 @@ class AssignmentPage extends StatefulWidget {
       className: className);
 }
 
+// Convert grade (0.98) into a percent widget (98%)
 class GradeAssignment extends StatelessWidget {
   final String grade;
 
@@ -54,6 +59,7 @@ class GradeAssignment extends StatelessWidget {
         ),
         progressColor: Colors.green,
       );
+      // If no grade then show user.
     } else if (grade != "N/A" && grade.length == 1) {
       return Text(
         grade,
@@ -61,6 +67,7 @@ class GradeAssignment extends StatelessWidget {
             fontSize: 25, fontWeight: FontWeight.bold, color: Colors.black54),
       );
     } else {
+      // Fallback, show user no grade.
       return Text(
         "No grade",
         style: TextStyle(
@@ -93,6 +100,7 @@ class _AssignmentState extends State<AssignmentPage> {
       appBar: AppBar(
         title: Text(className),
       ),
+      // Show each assignment for class.
       body: ListView.builder(
         itemBuilder: (context, index) {
           if (assignments[index].category == "No Category")
@@ -116,6 +124,7 @@ class _AssignmentState extends State<AssignmentPage> {
                     Padding(
                       padding: const EdgeInsets.all(6.0),
                       child: ButtonBar(
+                        // Button to calc grade.
                         alignment: MainAxisAlignment.end,
                         children: [
                           TextButton.icon(

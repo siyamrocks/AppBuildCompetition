@@ -1,3 +1,7 @@
+/*
+This file is UI code resetting password.
+*/
+
 import 'package:flutter/material.dart';
 import 'package:flutter_starter/localizations.dart';
 import 'package:flutter_starter/ui/components/components.dart';
@@ -9,9 +13,11 @@ class ResetPasswordUI extends StatefulWidget {
 }
 
 class _ResetPasswordUIState extends State<ResetPasswordUI> {
+  // Create text controllers and keys
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _email = new TextEditingController();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
+
   bool _isButtonDisabled = false;
   String email = '';
   @override
@@ -47,6 +53,7 @@ class _ResetPasswordUIState extends State<ResetPasswordUI> {
                   children: <Widget>[
                     LogoGraphicHeader(),
                     SizedBox(height: 48.0),
+                    // Email field
                     FormInputFieldWithIcon(
                       controller: _email,
                       iconPrefix: Icons.email,
@@ -58,8 +65,8 @@ class _ResetPasswordUIState extends State<ResetPasswordUI> {
                       onSaved: (value) => _email.text = value,
                     ),
                     FormVerticalSpace(),
-                    PrimaryButton(
-                        labelText: labels.auth.resetPasswordButton,
+                    ElevatedButton(
+                        child: Text(labels.auth.resetPasswordButton),
                         onPressed: _isButtonDisabled
                             ? null
                             : () async {

@@ -1,3 +1,7 @@
+/*
+This is the code for the sign up UI.
+*/
+
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -14,6 +18,7 @@ class SignUpUI extends StatefulWidget {
 }
 
 class _SignUpUIState extends State<SignUpUI> {
+  // Create text controllers and keys
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _name = new TextEditingController();
   final TextEditingController _email = new TextEditingController();
@@ -21,6 +26,7 @@ class _SignUpUIState extends State<SignUpUI> {
   final TextEditingController _id = new TextEditingController();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
+  // List of schools to retrived using API
   Future<List<School>> _schools;
   String selectedSchool;
 
@@ -38,6 +44,7 @@ class _SignUpUIState extends State<SignUpUI> {
     super.dispose();
   }
 
+  // Fetch schools from API
   Future<List<School>> fetchSchool() async {
     var url = "https://gwinnett.nutrislice.com/menu/api/schools/?format=json";
     var result = await http.get(Uri.parse(url));
@@ -47,6 +54,7 @@ class _SignUpUIState extends State<SignUpUI> {
 
     if (result.statusCode == 200) {
       var schools = json.decode(result.body);
+      // For each school add it to the list.
       for (var school in schools) list.add(School.fromJson(school));
     }
 
@@ -54,7 +62,7 @@ class _SignUpUIState extends State<SignUpUI> {
   }
 
   Widget build(BuildContext context) {
-    // shared pref object
+    // Shared preference helper
     SharedPreferenceHelper _sharedPrefsHelper =
         Provider.of<StudentVueProvider>(context).sharedPrefsHelper;
 
@@ -75,6 +83,7 @@ class _SignUpUIState extends State<SignUpUI> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
+                    // Logo on top center
                     Container(
                       child: Padding(
                         padding: const EdgeInsets.only(top: 50),
@@ -83,6 +92,7 @@ class _SignUpUIState extends State<SignUpUI> {
                       height: 128,
                       width: 128,
                     ),
+                    // Text to inform user
                     Padding(
                       padding: const EdgeInsets.all(20.0),
                       child: Center(
@@ -93,12 +103,14 @@ class _SignUpUIState extends State<SignUpUI> {
                         ),
                       ),
                     ),
+                    // Create a dropdown based on the school list
                     FutureBuilder<List<School>>(
                         future: _schools,
                         builder: (context, snapshot) {
                           if (snapshot.data == null) {
                             return Container(
                               child: Center(
+                                // If waiting for data then show "loading."
                                 child: Text("Loading Schools..."),
                               ),
                             );
@@ -111,6 +123,7 @@ class _SignUpUIState extends State<SignUpUI> {
                                     selectedSchool = newValue;
                                   });
                                 },
+                                // For each item in the list return a dropdown item
                                 items: snapshot.data
                                     .map((s) => DropdownMenuItem<String>(
                                           child: Text(s.name),
@@ -120,6 +133,7 @@ class _SignUpUIState extends State<SignUpUI> {
                           }
                         }),
                     FormVerticalSpace(),
+                    // Student ID input
                     Container(
                       margin: EdgeInsets.only(left: 20, right: 20, top: 30),
                       padding: EdgeInsets.only(left: 20, right: 20),
@@ -155,6 +169,7 @@ class _SignUpUIState extends State<SignUpUI> {
                             focusedBorder: InputBorder.none),
                       ),
                     ),
+                    // Name input
                     Container(
                       margin: EdgeInsets.only(left: 20, right: 20, top: 30),
                       padding: EdgeInsets.only(left: 20, right: 20),
@@ -187,6 +202,7 @@ class _SignUpUIState extends State<SignUpUI> {
                             focusedBorder: InputBorder.none),
                       ),
                     ),
+                    // Password input
                     Container(
                       margin: EdgeInsets.only(left: 20, right: 20, top: 30),
                       padding: EdgeInsets.only(left: 20, right: 20),
@@ -222,16 +238,18 @@ class _SignUpUIState extends State<SignUpUI> {
                       ),
                     ),
                     FormVerticalSpace(),
+                    // Sign up button action
                     GestureDetector(
                       onTap: () async {
                         if (_formKey.currentState.validate()) {
-                          //to hide the keyboard - if any
+                          // To hide the keyboard - if any.
                           SystemChannels.textInput
                               .invokeMethod('TextInput.hide');
                           if (selectedSchool != null) {
-                            // Save password for StudentVUE login.
+                            // Cache password for StudentVUE login.
                             _sharedPrefsHelper.setPassword(_password.text);
                             AuthService _auth = AuthService();
+                            // Sign up using Firebase
                             bool _isRegisterSucccess =
                                 await _auth.registerWithEmailAndPassword(
                                     _name.text,
@@ -240,6 +258,7 @@ class _SignUpUIState extends State<SignUpUI> {
                                     _id.text,
                                     selectedSchool);
 
+                            // If an error show it to the user using a snackbar.
                             if (_isRegisterSucccess == false) {
                               final snackBar = SnackBar(
                                 content: Text(labels.auth.signUpError),
@@ -248,6 +267,7 @@ class _SignUpUIState extends State<SignUpUI> {
                                   .showSnackBar(snackBar);
                             }
                           } else if (selectedSchool == null) {
+                            // If the user did not pick a school then tell them using a snackbar.
                             final snackBar = SnackBar(
                               content: Text("Please select a school."),
                             );
@@ -256,6 +276,7 @@ class _SignUpUIState extends State<SignUpUI> {
                           }
                         }
                       },
+                      // Sign up button UI
                       child: Container(
                         margin: EdgeInsets.only(left: 20, right: 20, top: 25),
                         alignment: Alignment.center,
@@ -284,6 +305,7 @@ class _SignUpUIState extends State<SignUpUI> {
                         ),
                       ),
                     ),
+                    // Button to go back.
                     FormVerticalSpace(),
                     LabelButton(
                       labelText: labels.auth.signInLabelButton,

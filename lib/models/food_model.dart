@@ -1,3 +1,5 @@
+/* Food model for SSB */
+
 class Food {
   Food({
     this.date,

@@ -1,3 +1,5 @@
+/* All routes in SSB app */
+
 import 'package:flutter/material.dart';
 import 'package:flutter_starter/ui/bug_report.dart';
 import 'package:flutter_starter/ui/ui.dart';

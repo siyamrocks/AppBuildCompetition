@@ -1,9 +1,11 @@
+/* StudentVUE Service for SSB */
+
 import 'package:flutter/material.dart';
 import 'package:flutter_starter/store/store.dart';
 import 'package:flutter_starter/studentvue/studentvueclient.dart';
 
 class StudentVueProvider extends ChangeNotifier {
-  // shared pref object
+  // Shared pref object
   SharedPreferenceHelper sharedPrefsHelper;
 
   StudentVueProvider() {
@@ -32,6 +34,7 @@ class StudentVueProvider extends ChangeNotifier {
 
       _isInit = true;
 
+      /* GCPS StudentVUE URL */
       var client = StudentVueClient(id, pass, 'apps.gwinnett.k12.ga.us/spvue',
           mock: isTestUser);
 

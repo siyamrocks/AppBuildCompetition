@@ -1,3 +1,5 @@
+/* School data for SSB */
+
 class SchoolData {
   SchoolData._();
 
@@ -19,6 +21,7 @@ class SchoolData {
     return capitalizedWords.join(' ');
   }
 
+  // Calendar data
   static const List Calendar = [
     {
       "name": "grayson-high",
@@ -117,6 +120,7 @@ class SchoolData {
     }
   ];
 
+  // Club data
   static const List Clubs = [
     {
       "name": "grayson-high",

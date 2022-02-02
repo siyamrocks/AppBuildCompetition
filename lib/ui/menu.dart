@@ -1,3 +1,7 @@
+/*
+This is the file that shows the user's breakfeast/lunch menu for their school.
+*/
+
 import 'dart:convert';
 import 'package:flutter_starter/constants/schools.dart';
 import 'package:flutter_starter/models/models.dart';
@@ -13,6 +17,7 @@ class Menu extends StatefulWidget {
   _MenuState createState() => _MenuState();
 }
 
+// Widget to show food image.
 class FoodImage extends StatelessWidget {
   final String img;
 
@@ -37,11 +42,12 @@ class FoodImage extends StatelessWidget {
 }
 
 class _MenuState extends State<Menu> {
-  Future<Food> _menu;
-  String school;
-  String currentOption = "Breakfast";
-  DateTime currentDate = DateTime.now();
+  Future<Food> _menu; // List of food in menu (lunch / breakfast)
+  String school; // Variable to hold user's school.
+  String currentOption = "Breakfast"; // Current menu option.
+  DateTime currentDate = DateTime.now(); // Current date.
 
+  // List of menu options.
   final List<MenuOptionsModel> options = [
     MenuOptionsModel(
         key: "Breakfast", value: "Breakfast", icon: Icons.free_breakfast),
@@ -53,6 +59,7 @@ class _MenuState extends State<Menu> {
     super.initState();
   }
 
+  // Function to fetch menu based on school, type, and date.
   Future<Food> fetchMenu(String school, String type, String date) async {
     var url =
         "https://gwinnett.nutrislice.com/menu/api/digest/school/$school/menu-type/$type/date/$date";
@@ -67,6 +74,7 @@ class _MenuState extends State<Menu> {
     return items;
   }
 
+  // Function to allow user to pick any date.
   Future<void> selectDate(BuildContext context) async {
     final DateTime pickedDate = await showDatePicker(
         context: context,
@@ -75,13 +83,15 @@ class _MenuState extends State<Menu> {
         lastDate: DateTime(2050));
     if (pickedDate != null && pickedDate != currentDate) {
       setState(() {
-        currentDate = pickedDate;
+        currentDate = pickedDate; // Set picked date to current date variable.
       });
+      // Set menu to result of new date.
       _menu = fetchMenu(
           school, currentOption.toLowerCase(), convertDate(currentDate));
     }
   }
 
+  // Function to convert date for API.
   String convertDate(DateTime date) {
     String year, month, day;
     year = date.year.toString();
@@ -92,14 +102,17 @@ class _MenuState extends State<Menu> {
 
   @override
   Widget build(BuildContext context) {
+    // Get the school from the user data.
     final UserModel user = Provider.of<UserModel>(context);
     if (user != null) {
       setState(() {
         school = user.school;
       });
+      // Set the lunch menu based on the user's school.
       _menu = fetchMenu(
           school, currentOption.toLowerCase(), convertDate(currentDate));
     }
+    // If it's a weekend then tell the user there is no school.
     if (currentDate.weekday == DateTime.saturday ||
         currentDate.weekday == DateTime.sunday) {
       return Container(
@@ -118,10 +131,12 @@ class _MenuState extends State<Menu> {
         ),
       );
     } else {
+      // Show list of food from menu variable.
       return FutureBuilder<Food>(
         future: _menu,
         builder: (context, snapshot) {
           if (snapshot.data == null) {
+            // If waiting for data then show the user.
             return Container(
               child: Center(
                 child: Text("Loading..."),
@@ -131,6 +146,7 @@ class _MenuState extends State<Menu> {
             return Column(
               children: [
                 SizedBox(height: 5),
+                // Show the user's school and date.
                 Text(new DateFormat("E MMM d").format(currentDate) +
                     " at " +
                     SchoolData.convertToTitleCase(school)),
@@ -144,10 +160,12 @@ class _MenuState extends State<Menu> {
                       });
                     },
                   ),
+                  // Button to pick a custom date.
                   IconButton(
                       onPressed: () => selectDate(context),
                       icon: Icon(Icons.date_range))
                 ]),
+                // List of items.
                 Expanded(
                   child: ListView.builder(
                     itemBuilder: (context, index) {

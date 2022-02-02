@@ -1,3 +1,7 @@
+/*
+This is UI code for the homepage which contains the navbar.
+*/
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_starter/store/store.dart';
@@ -16,6 +20,7 @@ class HomeUI extends StatefulWidget {
 }
 
 class _HomeUIState extends State<HomeUI> {
+  // Variables to hold user info.
   String _id = '';
   String _pass = '';
 
@@ -29,13 +34,15 @@ class _HomeUIState extends State<HomeUI> {
     super.dispose();
   }
 
+  // Selected screen (navbar)
   int _selectedIndex = 0;
 
   Widget build(BuildContext context) {
-    // shared pref object
+    // Shared preference helper
     SharedPreferenceHelper _sharedPrefsHelper =
         Provider.of<StudentVueProvider>(context).sharedPrefsHelper;
 
+    // Get user data and set the ID.
     final UserModel user = Provider.of<UserModel>(context);
     if (user != null) {
       setState(() {
@@ -43,18 +50,20 @@ class _HomeUIState extends State<HomeUI> {
       });
     }
 
-    // (Username: 20221234, Password: SSB1234)
-
-    if (user.id == "20221234") {
-      Provider.of<StudentVueProvider>(context).initData(_id, _pass, true);
-    } else {
-      Provider.of<StudentVueProvider>(context).initData(_id, _pass, false);
-    }
-
+    // Get cached password (local)
     _sharedPrefsHelper.getPassword.then((value) {
       _pass = value;
     });
 
+    if (user.id == "20221234") {
+      // If the user is the test account then use mock data.
+      Provider.of<StudentVueProvider>(context).initData(_id, _pass, true);
+    } else {
+      // Login and set data using user ID.
+      Provider.of<StudentVueProvider>(context).initData(_id, _pass, false);
+    }
+
+    // List of screens
     List<Widget> _widgetOptions = <Widget>[
       Dashboard(),
       Helper(),
@@ -63,6 +72,7 @@ class _HomeUIState extends State<HomeUI> {
       Menu()
     ];
 
+    // List of respective screen names
     List<String> pages = <String>[
       "Dashboard",
       "Events",
@@ -72,8 +82,11 @@ class _HomeUIState extends State<HomeUI> {
     ];
 
     return Scaffold(
+        // App Bar
         appBar: AppBar(
+          // Set appbar title based on current screen
           title: Text(pages[_selectedIndex]),
+          // Create settings action
           actions: [
             IconButton(
                 icon: Icon(
@@ -85,13 +98,16 @@ class _HomeUIState extends State<HomeUI> {
                 }),
           ],
         ),
+        // Create bottom navigation bar
         bottomNavigationBar: CurvedNavigationBar(
-            index: _selectedIndex,
-            onTap: (index) => setState(() => _selectedIndex = index),
+            index: _selectedIndex, // Use variable for index
+            onTap: (index) =>
+                setState(() => _selectedIndex = index), // Update index variable
             height: 75,
             backgroundColor: Colors.amber,
             buttonBackgroundColor: Colors.grey[900],
             color: Colors.black,
+            // Create navbar items with icons
             items: <Widget>[
               Icon(
                 Icons.home,

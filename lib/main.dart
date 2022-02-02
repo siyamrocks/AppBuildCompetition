@@ -1,6 +1,17 @@
-import 'package:firebase_core/firebase_core.dart';
+/* 
+
+-------------- [ Students Study Better ] -----------------
+Created by: Shafil Alam, Suraj Hussain, and Benito Karkada
+----------------------------------------------------------
+
+This is the main file where the theme, translations, auth, and student providers are setup. 
+After this process is done, the code will open the sign in screen or the home screen.
+
+*/
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'localizations.dart';
@@ -10,67 +21,70 @@ import 'package:flutter_starter/ui/auth/auth.dart';
 import 'package:flutter_starter/ui/ui.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
-  LanguageProvider().setInitialLocalLanguage();
-  //found bug https://github.com/flutter/flutter/issues/55892
-  //SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]).then((_) async {
+  WidgetsFlutterBinding.ensureInitialized(); // Ensure that Flutter is ready
+  await Firebase.initializeApp(); // Wait for Firebase to be initialized
+  LanguageProvider().setInitialLocalLanguage(); // Set lang based on the device
   runApp(
+    // Create the providers
     MultiProvider(
       providers: [
+        /* Theme Provider */
         ChangeNotifierProvider<ThemeProvider>(
           create: (context) => ThemeProvider(),
         ),
+        /* Language Provider */
         ChangeNotifierProvider<LanguageProvider>(
           create: (context) => LanguageProvider(),
         ),
+        /* Auth Service */
         ChangeNotifierProvider<AuthService>(
           create: (context) => AuthService(),
         ),
+        /* Student Service */
         ChangeNotifierProvider<StudentVueProvider>(
           create: (context) => StudentVueProvider(),
         )
       ],
-      child: MyApp(),
+      child: MainApp(),
     ),
   );
-  /* });*/
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key key}) : super(key: key);
+class MainApp extends StatelessWidget {
+  const MainApp({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    // Build Language provider ->
     return Consumer<LanguageProvider>(
       builder: (_, languageProviderRef, __) {
+        // Build Theme provider ->
         return Consumer<ThemeProvider>(
           builder: (_, themeProviderRef, __) {
-            //{context, data, child}
+            // Build Auth provider ->
             return AuthWidgetBuilder(
               builder:
                   (BuildContext context, AsyncSnapshot<User> userSnapshot) {
                 return MaterialApp(
-                  //begin language translation stuff
-                  //https://github.com/aloisdeniel/flutter_sheet_localization
-                  //https://github.com/aloisdeniel/flutter_sheet_localization/tree/master/flutter_sheet_localization_generator/example
+                  // Begin language translation code
                   locale: languageProviderRef.getLocale, // <- Current locale
                   localizationsDelegates: [
-                    const AppLocalizationsDelegate(), // <- Your custom delegate
+                    const AppLocalizationsDelegate(), // <- Set app localizations
                     GlobalMaterialLocalizations.delegate,
                     GlobalWidgetsLocalizations.delegate,
                   ],
                   supportedLocales: AppLocalizations.languages.keys
                       .toList(), // <- Supported locales
-                  //end language translation stuff
+                  // End language translation
                   debugShowCheckedModeBanner: false,
-                  //title: labels.app.title,
-                  routes: Routes.routes,
-                  theme: AppThemes.lightTheme,
-                  darkTheme: AppThemes.darkTheme,
+                  routes: Routes.routes, // <- Create the routes
+                  theme: AppThemes.lightTheme, // <- Set the light theme
+                  darkTheme: AppThemes.darkTheme, // <- Set the dark theme
+                  // Set the theme based on the user's device or setting.
                   themeMode: themeProviderRef.isDarkModeOn
                       ? ThemeMode.dark
                       : ThemeMode.light,
+                  // If a user is logged in (not null) then show the home screen else show the sign in page.
                   home:
                       (userSnapshot?.data?.uid != null) ? HomeUI() : SignInUI(),
                 );

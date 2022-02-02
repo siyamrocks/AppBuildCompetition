@@ -1,3 +1,5 @@
+/* StudentVUE Client for SSB */
+
 // ignore_for_file: deprecated_member_use
 
 import 'package:dio/dio.dart';
@@ -7,10 +9,6 @@ import 'zip_code_result.dart';
 import 'studentdata.dart';
 import 'package:xml/xml.dart';
 import 'studentgradedata.dart';
-
-// void debugPrint(dynamic d) {
-//   print(d);
-// }
 
 class StudentVueClient {
   final domain;
@@ -64,12 +62,8 @@ class StudentVueClient {
     var classes = List<SchoolClass>();
     for (int i = 0; i < courses.children.length; i++) {
       XmlNode current = courses.children[i];
-//      debugPrint('adding: $current');
       if (current.getAttribute('Title') == null) continue;
       SchoolClass _class = SchoolClass();
-      // when regex in doubt
-//      _class.className = current.getAttribute('Title').replaceAll(RegExp('\(([A-Z])\w+\)'), '');
-      // take the easy way out
       _class.className = current
           .getAttribute('Title')
           .substring(0, current.getAttribute('Title').indexOf('('));
@@ -98,7 +92,7 @@ class StudentVueClient {
               current.children[i].getAttribute('PointsPossible') ?? '');
           _class.pctGrade ??= current.children[i]
               .getAttribute('WeightedPct'); // replace only if it's already null
-        } // else {
+        }
         AssignmentCategory category = AssignmentCategory();
         category.name = current.children[i].getAttribute('Type');
         category.weight = double.tryParse(
@@ -112,8 +106,6 @@ class StudentVueClient {
                 current.children[i].getAttribute('PointsPossible') ?? '') ??
             0.0;
         _class.assignmentCategories.add(category);
-//          debugPrint('added category for class ${_class.className} : ${category}');
-        // }
       }
 
       current = current.parent.findAllElements('Assignments').first;
@@ -143,7 +135,6 @@ class StudentVueClient {
               (current.children[i].getAttribute('Points') ?? '')
                   .replaceAll(' Points Possible', ''));
         } else {
-//          ass.possiblePoints = double.tryParse(current.children[i].getAttribute('Score') ?? '') == null ? -1 : double.tryParse((current.children[i].getAttribute('Points') ?? 'N/A').replaceAll(' ', '').split('/').last) ?? -1;
           if (double.tryParse(
                   current.children[i].getAttribute('Score') ?? 'N/A') ==
               null) {
@@ -259,8 +250,6 @@ class StudentVueClient {
     }
 
     final document = XmlDocument.parse(HtmlUnescape().convert(resData));
-    // await Future.delayed(const Duration(milliseconds: 1500));
-//    final document = XmlDocument.parse(testData);
     if (resData.contains('Invalid user id or password')) {
       return StudentGradeData()..error = 'Invalid user id or password';
     }
@@ -268,7 +257,6 @@ class StudentVueClient {
       return StudentGradeData()
         ..error = 'The user name or password is incorrect';
     }
-    // var currentMP = document.findAllElements('ReportingPeriod').first.getAttribute('GradePeriod');
 
     var svData = StudentGradeData();
     var periods = List<ReportPeriod>();
@@ -399,8 +387,6 @@ class StudentVueClient {
     }
 
     final document = XmlDocument.parse(HtmlUnescape().convert(resData));
-
-    // print('${document.firstElementChild.firstElementChild.firstElementChild.firstElementChild.firstElementChild.firstElementChild.children[1].toString()}');
 
     return document.firstElementChild.firstElementChild.firstElementChild
         .firstElementChild.firstElementChild.firstElementChild.children

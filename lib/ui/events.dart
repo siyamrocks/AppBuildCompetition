@@ -1,3 +1,7 @@
+/*
+This file is the code for the events screen which contains the calander, todo list, clubs, and socials.
+*/
+
 import 'package:flutter/material.dart';
 import 'package:flutter_starter/ui/clubs.dart';
 import 'package:flutter_starter/models/models.dart';
@@ -22,8 +26,10 @@ class _HelperState extends State<Helper> {
     super.dispose();
   }
 
+  // Current selected option
   String currentOption = "0";
 
+  // Lists of screen options
   final List<MenuOptionsModel> options = [
     MenuOptionsModel(key: "0", value: "Events", icon: Icons.event),
     MenuOptionsModel(key: "1", value: "Todo", icon: Icons.list_alt_rounded),
@@ -31,6 +37,7 @@ class _HelperState extends State<Helper> {
     MenuOptionsModel(key: "3", value: "Social", icon: Icons.info),
   ];
 
+  // Lists of screen widgets respective to each option.
   final List<Widget> _screens = [
     Expanded(child: Calendar()),
     Expanded(child: Todo()),
@@ -57,6 +64,7 @@ class _HelperState extends State<Helper> {
             ),
           ),
         ),
+        // Show screen based on the current option.
         _screens[int.parse(currentOption)]
       ],
     );

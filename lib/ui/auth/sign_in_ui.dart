@@ -1,3 +1,7 @@
+/*
+This is the code for the sign in UI.
+*/
+
 import 'package:flutter/material.dart';
 import 'package:flutter_starter/store/store.dart';
 import 'package:flutter_starter/services/services.dart';
@@ -8,8 +12,10 @@ class SignInUI extends StatefulWidget {
 }
 
 class _SignInUIState extends State<SignInUI> {
+  // Create text controllers for ID and password
   final TextEditingController _id = new TextEditingController();
   final TextEditingController _password = new TextEditingController();
+
   bool _loading = false;
 
   @override
@@ -25,7 +31,7 @@ class _SignInUIState extends State<SignInUI> {
   }
 
   Widget build(BuildContext context) {
-    // shared pref object
+    // Shared preference helper
     SharedPreferenceHelper _sharedPrefsHelper =
         Provider.of<StudentVueProvider>(context).sharedPrefsHelper;
 
@@ -42,6 +48,7 @@ class _SignInUIState extends State<SignInUI> {
                   children: [
                     Container(
                       child: Padding(
+                        // Logo in top center
                         padding: const EdgeInsets.only(top: 50),
                         child: Image.asset("assets/SSB_Logo.png"),
                       ),
@@ -52,6 +59,7 @@ class _SignInUIState extends State<SignInUI> {
                 ),
               ),
             ),
+            // Student ID input
             Container(
               margin: EdgeInsets.only(left: 20, right: 20, top: 30),
               padding: EdgeInsets.only(left: 20, right: 20),
@@ -82,6 +90,7 @@ class _SignInUIState extends State<SignInUI> {
                     focusedBorder: InputBorder.none),
               ),
             ),
+            // Password input
             Container(
               margin: EdgeInsets.only(left: 20, right: 20, top: 15),
               padding: EdgeInsets.only(left: 20, right: 20),
@@ -113,6 +122,7 @@ class _SignInUIState extends State<SignInUI> {
                     focusedBorder: InputBorder.none),
               ),
             ),
+            // Register UI
             Container(
               margin: EdgeInsets.only(top: 10, bottom: 10),
               child: Row(
@@ -129,14 +139,16 @@ class _SignInUIState extends State<SignInUI> {
                 ],
               ),
             ),
+            // Login button action
             GestureDetector(
               onTap: () async {
                 setState(() {
                   _loading = true;
                 });
-                // Save password for StudentVUE login.
+                // Cache password for StudentVUE login.
                 _sharedPrefsHelper.setPassword(_password.text);
                 AuthService _auth = AuthService();
+                // Login into Firebase and reset StudentVUE data.
                 bool status = await _auth
                     .signInWithEmailAndPassword(_id.text, _password.text)
                     .then((status) {
@@ -147,6 +159,7 @@ class _SignInUIState extends State<SignInUI> {
                   });
                   return status;
                 });
+                // If wrong username/password then show snackbar showing error.
                 if (!status) {
                   final snackBar = SnackBar(
                     content: const Text("Wrong username or password."),
@@ -154,6 +167,7 @@ class _SignInUIState extends State<SignInUI> {
                   ScaffoldMessenger.of(context).showSnackBar(snackBar);
                 }
               },
+              // Login button UI code
               child: Container(
                 margin: EdgeInsets.all(20),
                 alignment: Alignment.center,
@@ -173,6 +187,7 @@ class _SignInUIState extends State<SignInUI> {
                     )
                   ],
                 ),
+                // If loading, show a progess indicator.
                 child: _loading
                     ? CircularProgressIndicator(color: Colors.white)
                     : Text(

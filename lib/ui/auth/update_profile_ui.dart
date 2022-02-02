@@ -1,3 +1,7 @@
+/*
+This is the code for updating a user's profile.
+*/
+
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
@@ -15,15 +19,18 @@ class UpdateProfileUI extends StatefulWidget {
 }
 
 class _UpdateProfileUIState extends State<UpdateProfileUI> {
+  // Create text controllers and keys
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _name = new TextEditingController();
   final TextEditingController _id = new TextEditingController();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   bool _loading = false;
 
+  // List of schools to retrived using API
   Future<List<School>> _schools;
   String selectedSchool;
 
+  // Fetch schools from API
   Future<List<School>> fetchSchool() async {
     var url = "https://gwinnett.nutrislice.com/menu/api/schools/?format=json";
     var result = await http.get(Uri.parse(url));
@@ -65,6 +72,7 @@ class _UpdateProfileUIState extends State<UpdateProfileUI> {
   }
 
   updateProfileForm(BuildContext context) {
+    // Get user data and set variables.
     final UserModel user = Provider.of<UserModel>(context);
     _name.text = user?.name;
     _id.text = user?.id;
@@ -80,7 +88,7 @@ class _UpdateProfileUIState extends State<UpdateProfileUI> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
-                LogoGraphicHeader(),
+                Avatar(user), // <- User's image
                 SizedBox(height: 48.0),
                 FutureBuilder<List<School>>(
                     future: _schools,
@@ -88,6 +96,7 @@ class _UpdateProfileUIState extends State<UpdateProfileUI> {
                       if (snapshot.data == null) {
                         return Container(
                           child: Center(
+                            // If waiting for data then show "loading."
                             child: Text("Loading schools..."),
                           ),
                         );
@@ -100,6 +109,7 @@ class _UpdateProfileUIState extends State<UpdateProfileUI> {
                                 selectedSchool = newValue;
                               });
                             },
+                            // For each item in the list return a dropdown item
                             items: snapshot.data
                                 .map((s) => DropdownMenuItem<String>(
                                       child: Text(s.name),
@@ -109,6 +119,7 @@ class _UpdateProfileUIState extends State<UpdateProfileUI> {
                       }
                     }),
                 FormVerticalSpace(),
+                // Name input
                 FormInputFieldWithIcon(
                   controller: _name,
                   iconPrefix: Icons.person,
@@ -118,6 +129,7 @@ class _UpdateProfileUIState extends State<UpdateProfileUI> {
                   onSaved: (value) => _name.text = value,
                 ),
                 FormVerticalSpace(),
+                // ID input
                 FormInputFieldWithIcon(
                   controller: _id,
                   iconPrefix: Icons.badge,
@@ -126,26 +138,37 @@ class _UpdateProfileUIState extends State<UpdateProfileUI> {
                   onSaved: (value) => _id.text = value,
                 ),
                 FormVerticalSpace(),
-                PrimaryButton(
-                    labelText: labels.auth.updateUser,
-                    onPressed: () {
-                      if (_formKey.currentState.validate()) {
-                        SystemChannels.textInput.invokeMethod('TextInput.hide');
-                        UserModel _updatedUser = UserModel(
-                            uid: user?.uid,
-                            id: _id.text,
-                            name: _name.text,
-                            email: user?.email,
-                            school: selectedSchool);
-                        _updateUserConfirm(context, _updatedUser, user?.email);
-                      }
-                    }),
+                // Button to update profile
+                ElevatedButton(
+                  style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all<Color>(Colors.amber)),
+                  onPressed: () {
+                    if (_formKey.currentState.validate()) {
+                      // To hide the keyboard - if any.
+                      SystemChannels.textInput.invokeMethod('TextInput.hide');
+                      // Create a new user model based on the new data
+                      UserModel _updatedUser = UserModel(
+                          uid: user?.uid,
+                          id: _id.text,
+                          name: _name.text,
+                          email: user?.email,
+                          school: selectedSchool);
+                      // Ask for confirmation via password.
+                      _updateUserConfirm(context, _updatedUser, user?.email);
+                    }
+                  },
+                  child: Text(labels.auth.updateUser),
+                ),
                 FormVerticalSpace(),
-                LabelButton(
+                // Button to update password.
+                ElevatedButton(
                     style: ButtonStyle(
                         backgroundColor:
                             MaterialStateProperty.all<Color>(Colors.amber)),
-                    labelText: labels.auth.changePasswordLabelButton,
+                    child: Text(labels.auth.changePasswordLabelButton),
+
+                    // Go to reset password screen
                     onPressed: () => Navigator.pushNamed(
                         context, '/reset-password',
                         arguments: user.email)),
@@ -161,16 +184,19 @@ class _UpdateProfileUIState extends State<UpdateProfileUI> {
       BuildContext context, UserModel updatedUser, String oldEmail) async {
     final labels = AppLocalizations.of(context);
     AuthService _auth = AuthService();
-    final TextEditingController _password = new TextEditingController();
+    final TextEditingController _password =
+        new TextEditingController(); // Password text controller
     return showDialog(
         context: context,
         builder: (context) {
+          // Create a alert dialog.
           return AlertDialog(
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(8.0))),
             title: Text(
               labels.auth.enterPassword,
             ),
+            // Password input
             content: FormInputFieldWithIcon(
               controller: _password,
               iconPrefix: Icons.lock,
@@ -181,6 +207,7 @@ class _UpdateProfileUIState extends State<UpdateProfileUI> {
               onSaved: (value) => _password.text = value,
               maxLines: 1,
             ),
+            // Create actions
             actions: <Widget>[
               new TextButton(
                 child: new Text(labels.auth.cancel.toUpperCase()),
@@ -191,13 +218,18 @@ class _UpdateProfileUIState extends State<UpdateProfileUI> {
                   });
                 },
               ),
-              new TextButton(
+              // Sumbit button
+              new ElevatedButton(
                 child: new Text(labels.auth.submit.toUpperCase()),
+                style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.all<Color>(Colors.amber)),
                 onPressed: () async {
                   setState(() {
                     _loading = true;
                   });
                   Navigator.of(context).pop();
+                  // Try to update user account.
                   try {
                     await _auth
                         .updateUser(updatedUser, oldEmail, _password.text)
@@ -206,6 +238,7 @@ class _UpdateProfileUIState extends State<UpdateProfileUI> {
                         _loading = false;
                       });
 
+                      // On success, show user via a snackbar.
                       if (result == true) {
                         final snackBar = SnackBar(
                           content: Text(labels.auth.updateUserSuccessNotice),
@@ -214,8 +247,7 @@ class _UpdateProfileUIState extends State<UpdateProfileUI> {
                       }
                     });
                   } on PlatformException catch (error) {
-                    //List<String> errors = error.toString().split(',');
-                    // print("Error: " + errors[1]);
+                    // If error then show the user.
                     print(error.code);
                     String authError;
                     switch (error.code) {
