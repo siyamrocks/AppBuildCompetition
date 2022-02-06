@@ -19,10 +19,7 @@ class _SocialState extends State<Social> {
 
   // List of options user can choose.
   final List<MenuOptionsModel> options = [
-    MenuOptionsModel(
-        key: "0", value: "Twitter", icon: FontAwesomeIcons.twitter),
-    MenuOptionsModel(
-        key: "1", value: "Facebook", icon: FontAwesomeIcons.facebook),
+    MenuOptionsModel(key: "0", value: "Twitter", icon: FontAwesomeIcons.twitter)
   ];
 
   // Controller for WebView widget.
