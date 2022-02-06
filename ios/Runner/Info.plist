@@ -24,8 +24,6 @@
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<key>OneSignal_app_groups_key</key>
-	<string>group.com.ssb.studentapp.onesignal</string>
 	<key>NSLocationUsageDescription</key>
 	<string>To find school</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
