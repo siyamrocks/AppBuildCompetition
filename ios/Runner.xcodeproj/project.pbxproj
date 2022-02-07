@@ -59,7 +59,6 @@
 		9C943A28E081525A9F6A2ED4 /* Pods_Runner.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Runner.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C276AA4893264FC76325D331 /* Pods-Runner.profile.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.profile.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.profile.xcconfig"; sourceTree = "<group>"; };
 		CF608C6027B0862E005CBA02 /* Runner.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Runner.entitlements; sourceTree = "<group>"; };
-		CF608C7327B087A3005CBA02 /* OneSignal-XCFramework-main */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "OneSignal-XCFramework-main"; path = "../../../Downloads/OneSignal-XCFramework-main"; sourceTree = "<group>"; };
 		CFB57B982783AE5800EBE5C0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -134,7 +133,6 @@
 		CF608C7227B087A3005CBA02 /* Packages */ = {
 			isa = PBXGroup;
 			children = (
-				CF608C7327B087A3005CBA02 /* OneSignal-XCFramework-main */,
 			);
 			name = Packages;
 			sourceTree = "<group>";

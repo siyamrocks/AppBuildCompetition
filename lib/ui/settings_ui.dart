@@ -96,25 +96,25 @@ class SettingsUI extends StatelessWidget {
                 ),
               ),
               // Update profile button
-              ListTile(
-                leading: Icon(Icons.person),
-                title: Text(labels.settings.updateProfile),
-                trailing: Container(
-                  width: 100,
-                  child: ElevatedButton(
-                    onPressed: () async {
-                      Navigator.of(context).pushNamed('/update-profile');
-                    },
-                    style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.all<Color>(Colors.amber)),
-                    child: Text(
-                      labels.settings.updateProfile,
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                ),
-              ),
+              // ListTile(
+              //   leading: Icon(Icons.person),
+              //   title: Text(labels.settings.updateProfile),
+              //   trailing: Container(
+              //     width: 100,
+              //     child: ElevatedButton(
+              //       onPressed: () async {
+              //         Navigator.of(context).pushNamed('/update-profile');
+              //       },
+              //       style: ButtonStyle(
+              //           backgroundColor:
+              //               MaterialStateProperty.all<Color>(Colors.amber)),
+              //       child: Text(
+              //         labels.settings.updateProfile,
+              //         textAlign: TextAlign.center,
+              //       ),
+              //     ),
+              //   ),
+              // ),
               // Report bug button
               ListTile(
                 leading: Icon(Icons.bug_report),

@@ -17,7 +17,7 @@ class MockResponses {
      &lt;/ReportingPeriods&gt;
      &lt;ReportingPeriod GradePeriod="Semester 1" StartDate="8/13/2021" EndDate="9/11/2022" /&gt;
      &lt;Courses&gt;
-          &lt;Course UsesRichContent="false" Period="1" Title="AP Computer Science (02100B)" Room="A1" Staff="Wendy Dyer" StaffEMail="teacher1@ssbapp.com" StaffGU="457CEF3F-569D-4B0D-9B1E-BFF99FB6D7D4" HighlightPercentageCutOffForProgressBar="50"&gt;
+          &lt;Course UsesRichContent="false" Period="1" Title="AP Computer Science (02100B)" Room="A1" Staff="Teacher 1" StaffEMail="teacher1@ssbapp.com" StaffGU="457CEF3F-569D-4B0D-9B1E-BFF99FB6D7D4" HighlightPercentageCutOffForProgressBar="50"&gt;
                &lt;Marks&gt;
                     &lt;Mark MarkName="Q2" CalculatedScoreString="100" CalculatedScoreRaw="100.0"&gt;
                          &lt;StandardViews /&gt;
