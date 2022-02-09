@@ -3,7 +3,7 @@
 import 'package:flutter_starter/localizations.dart';
 
 class Validator {
-  AppLocalizations_Labels labels;
+  AppLocalizationsData labels;
   Validator(this.labels);
 
   String email(String value) {

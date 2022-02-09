@@ -128,7 +128,7 @@ class SettingsUI extends StatelessWidget {
                         backgroundColor:
                             MaterialStateProperty.all<Color>(Colors.amber)),
                     child: Text(
-                      "Report Bug",
+                      labels.setting.bugreport,
                       textAlign: TextAlign.center,
                     ),
                   ),

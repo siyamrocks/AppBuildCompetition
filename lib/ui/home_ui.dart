@@ -3,6 +3,7 @@ This is UI code for the homepage which contains the navbar.
 */
 
 import 'package:flutter/material.dart';
+import 'package:flutter_starter/localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_starter/store/store.dart';
 import 'package:flutter_starter/services/services.dart';
@@ -63,6 +64,8 @@ class _HomeUIState extends State<HomeUI> {
       Provider.of<StudentVueProvider>(context).initData(_id, _pass, false);
     }
 
+    final labels = AppLocalizations.of(context);
+
     // List of screens
     List<Widget> _widgetOptions = <Widget>[
       Dashboard(),
@@ -74,11 +77,11 @@ class _HomeUIState extends State<HomeUI> {
 
     // List of respective screen names
     List<String> pages = <String>[
-      "Dashboard",
-      "Events",
-      "Classes",
-      "Email",
-      "Menu"
+      labels.home.dashboard,
+      labels.home.events,
+      labels.home.classes,
+      labels.home.emailLabel,
+      labels.home.menu
     ];
 
     return Scaffold(
