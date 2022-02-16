@@ -1,7 +1,7 @@
 /* 
 
 -------------- [ Students Study Better ] -----------------
-Created by: Shafil Alam, Suraj Hussain, and Benito Karkada
+Created by: Shafil Alam, Suraj Hussain
 ----------------------------------------------------------
 
 This is the main file where the theme, translations, auth, and student providers are setup. 
