@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <!-- Required meta tags-->
+  <meta charset="utf-8">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <!-- Color theme for statusbar (Android only) -->
+  <meta name="theme-color" content="#2196f3">
+  <!-- Your app title -->
+  <title>Student Manager</title>
+  <!-- Path to Framework7 Library Bundle CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/framework7/framework7-bundle.min.css">
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/framework7-icons@5.0.3/css/framework7-icons.min.css">
+  <!-- Path to CSS -->
+  <link rel="stylesheet" href="src/main.css">
+</head>
+
+<body>
+  <!-- App root element -->
+  <div id="app">
+
+    <!-- Initial Page, "data-name" contains page name -->
+    <div data-name="home" class="page">
+
+      <!-- Top Navbar -->
+      <div class="navbar">
+        <div class="navbar-bg"></div>
+        <div class="navbar-inner">
+          <div class="title">Student Manager</div>
+        </div>
+      </div>
+
+      <!-- Bottom Toolbar -->
+      <div class="toolbar tabbar-labels toolbar-bottom">
+        <div class="toolbar-inner">
+
+          <a href="#home" class="tab-link">
+            <i class="icon f7-icons if-not-md">building_2_crop_circle</i>
+            <span class="tabbar-label">Home</span>
+          </a>
+
+
+          <a href="#schedule" class="tab-link">
+            <i class="icon f7-icons if-not-md">list_number</i>
+            <span class="tabbar-label">Schedule</span>
+          </a>
+
+          <a href="#extra" class="tab-link">
+            <i class="icon f7-icons if-not-md">plus_square_on_square</i>
+            <span class="tabbar-label">Activities</span>
+          </a>
+
+
+          <a href="#email" class="tab-link">
+            <i class="icon f7-icons if-not-md">envelope_fill</i>
+            <span class="tabbar-label">Email</span>
+          </a>
+
+
+          <a href="#cal" class="tab-link">
+            <i class="icon f7-icons if-not-md">calendar</i>
+            <span class="tabbar-label">Calendar</span>
+          </a>
+
+
+
+          <a href="#lunch" class="tab-link">
+            <img src="restaurant.png" alt="FoodPic" width="28px" height="28px">
+            <span class="tabbar-label">Lunch</span>
+          </a>
+
+
+
+        </div>
+      </div>
+
+      <!-- Tabs -->
+      <div class="tabs">
+
+        <div class="page-content tab tab-active" id="home">
+          <div class="block">
+            <div id="homepage">
+              <h1>This is the homepage, Welcome  <span id="greet"></span> </h1>
+             
+            </div>
+            <div id="LoginScreen">
+                   <!-- Benito code -->
+                 <div class="container">
+                <form class="form" id="login">
+                    <h1 class="form__title">Login</h1>
+                    <div class="form__message form__message--error"></div>
+                    <div class="form__input-group">
+                        <input type="text" class="form__input item-input" autofocus placeholder="Username or email">
+                        <div class="form__input-error-message"></div>
+                    </div>
+                    <div class="form__input-group">
+                        <input type="password" class="form__input item-input" autofocus placeholder="Password">
+                        <div class="form__input-error-message"></div>
+                    </div>
+                    <button class="form__button button" type="submit">Continue</button>
+                    <p class="form__text">
+                        <a href="#" class="form__link">Forgot your password?</a>
+                    </p>
+                    <p class="form__text">
+                        <a class="form__link" href="./" id="linkCreateAccount">Don't have an account? Create account</a>
+                    </p>
+                </form>
+                <form class="form form--hidden" id="createAccount">
+                    <h1 class="form__title">Create Account</h1>
+                    <div class="form__message form__message--error"></div>
+                    <div class="form__input-group">
+                        <input type="text" id="signupUsername" class="form__input item-input" autofocus placeholder="Username">
+                        <div class="form__input-error-message"></div>
+                    </div>
+                    <div class="form__input-group">
+                        <input type="text" class="form__input item-input" autofocus placeholder="Email Address">
+                        <div class="form__input-error-message"></div>
+                    </div>
+                    <div class="form__input-group">
+                        <input type="password" class="form__input item-input" autofocus placeholder="Password">
+                        <div class="form__input-error-message"></div>
+                    </div>
+                    <div class="form__input-group">
+                        <input type="password" class="form__input item-input" autofocus placeholder="Confirm password">
+                        <div class="form__input-error-message"></div>
+                    </div>
+                    <button class="form__button button" ype="submit">Continue</button>
+                    <p class="form__text">
+                        <a class="form__link" href="./" id="linkLogin">Already have an account? Sign in</a>
+                    </p>
+                </form>
+            </div>
+            </div>
+          </div>
+        </div>
+<!-- end of Benito's code -->
+
+          <div class="page-content tab" id="schedule">
+            <div class="block">
+              <p><b>Schedule</b></p>
+
+            </div>
+          </div>
+
+          <div class="page-content tab" id="extra">
+            <div class="block">
+              <p><b>Here are your extra stuff</b></p>
+            </div>
+          </div>
+
+
+          <div class="page-content tab " id="email">
+            <div class="block">
+              <p><b>Email your teachers and staff.</b></p>
+
+            </div>
+          </div>
+
+          <div class="page-content tab" id="cal">
+            <div class="block">
+              <p><b>Grayson High School</b></p>
+                <iframe style="width: 100%; height: 100%;" src="https://calendar.google.com/calendar/embed?height=600&wkst=1&bgcolor=%23ffffff&ctz=America%2FNew_York&src=Z3dpbm5ldHQuazEyLmdhLnVzX2Fsdm1lYnBicmQwazVjMGo5ZG1rcjVjNDE0QGdyb3VwLmNhbGVuZGFyLmdvb2dsZS5jb20&src=Z3dpbm5ldHQuazEyLmdhLnVzX2ZhNzV1ZjRnMDk4ZmUzNHZ1YzN2dDRwZnFrQGdyb3VwLmNhbGVuZGFyLmdvb2dsZS5jb20&src=Z3dpbm5ldHQuazEyLmdhLnVzX3QxdjBiNTI4YnZlY2V0bzdlaHVvZDd2b2drQGdyb3VwLmNhbGVuZGFyLmdvb2dsZS5jb20&color=%23F6BF26&color=%230B8043&color=%23D50000&mode=AGENDA&showTitle=0&showTabs=0&showCalendars=0&showTz=0">
+              </iframe>
+            </div>
+          </div>
+
+
+
+          <div class="page-content tab" id="lunch">
+            <div class="block">
+              <h1>Lunch Menu</h1>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <!-- Path to Framework7 Library Bundle JS-->
+  <script src="https://unpkg.com/framework7/framework7-bundle.min.js"></script>
+  <script type="text/javascript" src="app.js"></script>
+</body>
+
+</html>
+

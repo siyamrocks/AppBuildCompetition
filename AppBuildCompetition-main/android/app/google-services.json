@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "774787608917",
+    "project_id": "student-manager-f58c2",
+    "storage_bucket": "student-manager-f58c2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:774787608917:android:e3a083c139217ab4c07fdc",
+        "android_client_info": {
+          "package_name": "com.ssb.studentapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "774787608917-ficcr48vc3hv0vrk9h5qg8jdses6ngn0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAA4s9QIgi0x5wHDpJ4NqDwlVpPQpweJCk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "774787608917-ficcr48vc3hv0vrk9h5qg8jdses6ngn0.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "774787608917-4uj8rqqt4ebt0k129db8b9a0n3plrrdu.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.sbs.student"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
