@@ -17,6 +17,5 @@ https://docs.google.com/spreadsheets/d/1oS7iJ6ocrZBA53SxRfKF0CG9HAaXeKtzvsTBhgG4
     MenuOptionsModel(key: "ja", value: "日本語"), //Japanese
     MenuOptionsModel(key: "pt", value: "Português"), //Portuguese
     MenuOptionsModel(key: "ru", value: "русский"), //Russian
-    MenuOptionsModel(key: "bs", value: "Bosnian"), //Bosnian
   ];
 }
