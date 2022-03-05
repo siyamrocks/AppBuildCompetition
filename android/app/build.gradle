@@ -49,8 +49,8 @@ android {
         applicationId "com.ssb.studentapp"
         minSdkVersion 30
         targetSdkVersion 30
-        versionCode flutterVersionCode.toInteger()
-        versionName flutterVersionName
+        versionCode 2
+        versionName "1.0.9"
     }
 
    signingConfigs {
