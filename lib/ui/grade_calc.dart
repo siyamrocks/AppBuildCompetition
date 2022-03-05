@@ -81,7 +81,7 @@ class GradeCalcState extends State<GradeCalc> {
       // If no grade then set the points to 0.
       if (assignments[i].earnedPoints == -1.0) points = 0;
 
-      // If the current grade in the loop is equal the assignment choosen then set points equal to the user's choosen grade.
+      // If the current grade in the loop is equal the assignment chosen then set points equal to the user's chosen grade.
       if (assignments[i].assignmentName == name) points = newGrade * 100;
 
       // Add the weighted grade to the list.
