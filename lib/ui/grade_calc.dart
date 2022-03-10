@@ -65,9 +65,9 @@ class GradeCalcState extends State<GradeCalc> {
       double correctWeight = 0;
       for (int j = 0; j < weight.length; j++) {
         if (weight[j].name == assignments[i].category) {
-          correctWeight = weight[j].weight / 100;
+          correctWeight = weight[j].weight;
           // Push the respective weight to allWeights.
-          if (assignments[i].earnedPoints != -1.0) {
+          if (assignments[i].earnedPoints != -100.0) {
             allWeights.add(correctWeight);
           } else if (assignments[i].assignmentName == name) {
             allWeights.add(correctWeight);
@@ -79,8 +79,7 @@ class GradeCalcState extends State<GradeCalc> {
       double points = assignments[i].earnedPoints * 100;
 
       // If no grade then set the points to 0.
-      if (assignments[i].earnedPoints == -1.0) points = 0;
-
+      if (assignments[i].earnedPoints == -100.0) points = 0;
       // If the current grade in the loop is equal the assignment chosen then set points equal to the user's chosen grade.
       if (assignments[i].assignmentName == name) points = newGrade * 100;
 
