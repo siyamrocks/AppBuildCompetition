@@ -78,9 +78,9 @@ class GradeCalcState extends State<GradeCalc> {
         allWeights.add(correctWeight);
 
         // If the current grade in the loop is equal the assignment choosen then set points equal to the user's choosen grade.
-        if (assignments[i].assignmentName == name) points = newGrade * 100;
-
-        print(points.toString());
+        if (assignments[i].assignmentName == name) {
+          points = newGrade * 100;
+        }
 
         // Add the weighted grade to the list.
         weighedGrades.add(points * correctWeight);
