@@ -62,31 +62,29 @@ class GradeCalcState extends State<GradeCalc> {
 
     // Get each grade and get the respective weight
     for (int i = 0; i < assignments.length; i++) {
-      double correctWeight = 0;
-      for (int j = 0; j < weight.length; j++) {
-        if (weight[j].name == assignments[i].category) {
-          // Get correct weight for grade
-          correctWeight = weight[j].weight;
-        }
-      }
-
       // Get the grade as a double
       double points = assignments[i].earnedPoints * 100;
 
-      // If no grade then set the points to 0 and weight to 0.
-      if (points == -100.0) {
-        points = 0;
-        correctWeight = 0;
+      if (points != -100.0) {
+        double correctWeight = 0;
+        for (int j = 0; j < weight.length; j++) {
+          if (weight[j].name == assignments[i].category) {
+            // Get correct weight for grade
+            correctWeight = weight[j].weight;
+          }
+        }
+
+        // Add correct weight
+        allWeights.add(correctWeight);
+
+        // If the current grade in the loop is equal the assignment choosen then set points equal to the user's choosen grade.
+        if (assignments[i].assignmentName == name) points = newGrade * 100;
+
+        print(points.toString());
+
+        // Add the weighted grade to the list.
+        weighedGrades.add(points * correctWeight);
       }
-
-      // Add correct weight
-      allWeights.add(correctWeight);
-
-      // If the current grade in the loop is equal the assignment choosen then set points equal to the user's choosen grade.
-      if (assignments[i].assignmentName == name) points = newGrade * 100;
-
-      // Add the weighted grade to the list.
-      weighedGrades.add(points * correctWeight);
     }
 
     double gradeSum = 0; // Sum of all weighted grades.
