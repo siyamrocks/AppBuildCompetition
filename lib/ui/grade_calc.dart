@@ -65,22 +65,24 @@ class GradeCalcState extends State<GradeCalc> {
       double correctWeight = 0;
       for (int j = 0; j < weight.length; j++) {
         if (weight[j].name == assignments[i].category) {
+          // Get correct weight for grade
           correctWeight = weight[j].weight;
-          // Push the respective weight to allWeights.
-          if (assignments[i].earnedPoints != -100.0) {
-            allWeights.add(correctWeight);
-          } else if (assignments[i].assignmentName == name) {
-            allWeights.add(correctWeight);
-          }
         }
       }
 
       // Get the grade as a double
       double points = assignments[i].earnedPoints * 100;
 
-      // If no grade then set the points to 0.
-      if (assignments[i].earnedPoints == -100.0) points = 0;
-      // If the current grade in the loop is equal the assignment chosen then set points equal to the user's chosen grade.
+      // If no grade then set the points to 0 and weight to 0.
+      if (points == -100.0) {
+        points = 0;
+        correctWeight = 0;
+      }
+
+      // Add correct weight
+      allWeights.add(correctWeight);
+
+      // If the current grade in the loop is equal the assignment choosen then set points equal to the user's choosen grade.
       if (assignments[i].assignmentName == name) points = newGrade * 100;
 
       // Add the weighted grade to the list.
@@ -91,17 +93,17 @@ class GradeCalcState extends State<GradeCalc> {
     double weightSum = 0; // Sum of all weights.
 
     // Add each item in grade list.
-    weighedGrades.forEach((num e) {
+    weighedGrades.forEach((double e) {
       gradeSum += e;
     });
 
     // Add each item in weight list.
-    allWeights.forEach((num e) {
+    allWeights.forEach((double e) {
       weightSum += e;
     });
 
     // Set "newClassGrade" to the calc grade.
-    newClassGrade = gradeSum / weightSum;
+    newClassGrade = (gradeSum / weightSum);
   }
 
   Widget build(BuildContext context) {
