@@ -52,7 +52,7 @@ class _DashboardState extends State<Dashboard> {
 
     // Check if the user is an admin (not used)
     _isUserAdmin();
-    if (_admin) print("User is admin.");
+    // if (_admin) print("User is admin.");
 
     return Container(
         child: Center(

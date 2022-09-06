@@ -3,11 +3,9 @@ This file is the code for the events screen which contains the calander, todo li
 */
 
 import 'package:flutter/material.dart';
-import 'package:flutter_starter/ui/clubs.dart';
 import 'package:flutter_starter/models/models.dart';
 import 'package:flutter_starter/ui/calendar.dart';
 import 'package:flutter_starter/ui/todo.dart';
-import 'package:flutter_starter/ui/social.dart';
 import 'package:flutter_starter/ui/components/segmented_selector.dart';
 
 class Helper extends StatefulWidget {
@@ -33,16 +31,12 @@ class _HelperState extends State<Helper> {
   final List<MenuOptionsModel> options = [
     MenuOptionsModel(key: "0", value: "Events", icon: Icons.event),
     MenuOptionsModel(key: "1", value: "Todo", icon: Icons.list_alt_rounded),
-    MenuOptionsModel(key: "2", value: "Clubs", icon: Icons.schedule),
-    MenuOptionsModel(key: "3", value: "Social", icon: Icons.info),
   ];
 
   // Lists of screen widgets respective to each option.
   final List<Widget> _screens = [
     Expanded(child: Calendar()),
-    Expanded(child: Todo()),
-    Expanded(child: Clubs()),
-    Expanded(child: Social()),
+    Expanded(child: Todo())
   ];
 
   @override
