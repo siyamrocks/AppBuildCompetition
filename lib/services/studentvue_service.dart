@@ -35,7 +35,7 @@ class StudentVueProvider extends ChangeNotifier {
       _isInit = true;
 
       /* GCPS StudentVUE URL */
-      var client = StudentVueClient(id, pass, 'apps.gwinnett.k12.ga.us/spvue',
+      var client = StudentVueClient(id, pass, 'ga-gcps-psv.edupoint.com',
           mock: isTestUser);
 
       var gradebook = await client.loadGradebook();
